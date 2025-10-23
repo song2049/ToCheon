@@ -45,6 +45,7 @@ header > .header-left > .logo-icon {
     height: 24px;
     background-image: url("../image/toodayChoen-Marker.png");
     background-size: contain;
+    
     background-repeat: no-repeat;
     background-position: center;
 }
