@@ -1,21 +1,26 @@
-// db/connection.js
 import mysql from "mysql2/promise";
 
-const dbConfig = {
-  host: "127.0.0.1",
-  user: "tocheon",
-  password: "block13",
-  database: "tocheon_db",
-  port: 3306,
+const config = {
+  host: process.env.DB_HOST || "127.0.0.1",
+  user: process.env.DB_USER || "tocheon",
+  password: process.env.DB_PASSWORD || "block13",
+  database: process.env.DB_NAME || "tocheon_db",
+  port: Number(process.env.DB_PORT || 3306),
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 };
 
-export async function getConnection() {
-  try {
-    const connection = await mysql.createConnection(dbConfig);
-    console.log("MySQL 연결 성공!");
-    return connection;
-  } catch (err) {
-    console.error("MySQL 연결 실패:", err);
-    throw err;
-  }
+const pool = mysql.createPool(config);
+
+export async function query(sql, params = []) {
+  const [rows] = await pool.execute(sql, params);
+  return rows;
 }
+
+export async function pingDB() {
+  const rows = await query("SELECT NOW() AS now");
+  return rows[0].now;
+}
+
+export default pool;
