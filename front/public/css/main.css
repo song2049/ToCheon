@@ -1,0 +1,24 @@
+
+
+.section-left {}
+
+.section-left-title {}
+
+.section-left-title > .google-marker {}
+.section-left-title > span {}
+
+.section-left > p > {}
+
+#map {
+    width:590px;height: 590px;
+}
+
+.section-right {}
+
+.section-right-title {}
+
+.section-right-title > .food-marker {}
+
+.section-right-title > span {}
+
+
