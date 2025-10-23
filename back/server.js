@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors from "cors";
+import cors from "cors"; //백엔드, 프론트엔드 분리 시 CORS 문제 해결을 위해 필요
 import authRoutes from "./routes/auth.routes.js";
 import oauthRoutes from "./routes/oauth.routes.js";
 import storeRoutes from "./routes/store.routes.js";
