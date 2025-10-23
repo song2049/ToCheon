@@ -1,22 +1,18 @@
+// middleware/authMiddleware.js
 import jwt from "jsonwebtoken";
-
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_key";
 
-export function verifyToken(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(401).json({ error: "인증 토큰이 없습니다." });
+export function requireAuth(req, res, next) {
   try {
+    const token = req.cookies?.access_token;
+    if (!token) return res.status(401).json({ error: "로그인이 필요합니다." });
+
     const decoded = jwt.verify(token, JWT_SECRET);
+    // decoded를 req.user에 붙여서 이후 핸들러에서 사용
     req.user = decoded;
     next();
   } catch (err) {
-    return res.status(403).json({ error: "유효하지 않은 토큰입니다." });
+    if (err.name === "TokenExpiredError") return res.status(401).json({ error: "토큰 만료" });
+    return res.status(401).json({ error: "인증 실패" });
   }
-}
-
-export function requireAdmin(req, res, next) {
-  if (!req.user?.isAdmin) {
-    return res.status(403).json({ error: "관리자 권한이 필요합니다." });
-  }
-  next();
 }
