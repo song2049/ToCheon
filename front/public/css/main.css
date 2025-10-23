@@ -1,24 +1,76 @@
+main {
+    display: flex;                  
+    justify-content: space-between; 
+    align-items: flex-start;
+    gap: 40px;
+    max-width: 1440px;              
+    margin: 50px 250px;
+    box-sizing: border-box;
+}
 
+.section-left {
+    width: 590px;
+    height: 728px;
+}
 
-.section-left {}
+/* 왼쪽구역 상단 제목칸 */
+.section-left-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 201px;
+    height: 38px;
+    border: 1px solid #DFE6EB;
+    border-radius: 30px;
+}
 
-.section-left-title {}
+.section-left-title > .google-marker {
+    display: inline-block;
+    width: 12px;
+    height: 18px;
+    background-image: url("../image/toodayChoen-Marker.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
-.section-left-title > .google-marker {}
-.section-left-title > span {}
+.section-left-title > span {
+    font-size: 14px;
+    font-weight: 400;
+}
 
 .section-left > p > {}
 
 #map {
-    width:590px;height: 590px;
+    width:590px;
+    height: 590px;
 }
 
-.section-right {}
+.section-right {
+    width: 800px;
+    height: 712px;
+}
 
 .section-right-title {}
 
 .section-right-title > .food-marker {}
 
 .section-right-title > span {}
+
+.section-right-search {}
+
+.section-right-search > input {}
+
+.section-right-search > button {}
+
+.section-right-hashtag {}
+
+.section-right-cardlist {}
+
+.section-right-cardlist > .stores-card {}
+
+.section-right-cardlist > .stores-card > div {}
+
+.section-right-cardlist > .stores-card > p {}
 
 
