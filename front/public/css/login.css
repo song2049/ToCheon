@@ -1,0 +1,106 @@
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    width: 400px;
+}
+
+/* 로그인 텍스트 */
+.login > p {
+    padding-bottom: 10px;
+    font-size: 30px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+}
+
+.login > .login-local {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 사용자 입력 폼 */
+.login > .login-local > input {
+    font-size: 15px;
+    padding-left: 13px;
+    border-radius: 8px;
+    border: 1px solid #80808080;
+    width: 400px;
+    height: 48px;
+}
+
+/* 로컬 로그인 버튼 디자인 */
+.login > .login-local > button {
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: #5599FF;
+    color: #FFFFFF;
+    width: 400px;
+    height: 51px;
+    padding: 8px;
+    border: 0px;
+    border-radius: 5px;
+}
+
+/* 구분선 */
+.login > .login-division {
+    font-size: 26px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid black;
+}
+
+/* Oauth 로그인 창 간격 */
+.login > .login-oauth {
+    padding: 15px 0;
+
+}
+
+/* 카카오 로그인 버튼 */
+.login > .login-oauth > button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 500;
+    background-color: #F9E000;
+    width: 400px;
+    height: 51px;
+    border: 0px;
+    border-radius: 5px;
+}
+
+/* 카카오 로그인 아이콘 */
+.login-oauth-kakao {
+    margin-right: 8px;
+    vertical-align: middle;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url("../image/kakaoLogin-logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+/* 회원가입 버튼 디자인 */
+.login > .join > button {
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    background-color: #FFFFFF;
+    width: 400px;
+    height: 51px;
+    border: 1px solid #80808080;
+    border-radius: 5px;
+}
