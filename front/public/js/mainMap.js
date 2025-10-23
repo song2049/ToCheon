@@ -57,6 +57,6 @@ positions.forEach(pos => {
 
   // 클릭 시 페이지 이동
   kakao.maps.event.addListener(marker, 'click', function() {
-    window.location.href = "./food.html";
+    // window.location.href = "./food.html";
   });
 });
