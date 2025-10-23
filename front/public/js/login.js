@@ -10,18 +10,12 @@ loginLocal.addEventListener("submit", async(e) => {
         alert("이메일 또는 비밀번호를 입력해주시길 바랍니다.")
         return
     }
+
     try {
-        // 인풋정보 담아서 body로 보내주기
-        const { data } = await axios.post(`http://192.168.0.191:4000/auth/login`, {
-            email: email,
-            password: password
-        });
-        alert(data.message)
-        // 성공하면 메인페이지
-        // window.location.href = "http://192.168.0.191:4000/"
+        const res = await axios.post("/auth/login", { email: email, password: password });
+
+        console.log("성공" || res.message);
     } catch (error) {
-        console.log(error);
-        
-        alert("이메일 또는 비밀번호가 틀렸습니다."); 
+        console.error("실패");
     }
-})
+});
