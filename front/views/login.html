@@ -6,6 +6,7 @@
     <title>TODAY-CHEON</title>
     <link rel="stylesheet" href="../public/css/font.css">
     <link rel="stylesheet" href="../public/css/common.css">
+    <link rel="stylesheet" href="../public/css/login.css">
 </head>
 <body>
     <header>
@@ -19,18 +20,24 @@
         </div>
     </header>
     <main>
-        <div>
+        <div class="login">
             <p>로그인</p>
-            <form method="post">
+            <form class="login-local" action="/auth/login" method="post">
                 <input type="email" name="userEmail" placeholder="이메일을 입력하세요">
                 <input type="password" name="userPw" placeholder="비밀번호를 입력하세요">
                 <button type="submit">로그인</button>
             </form>
-            <div>
-                <button>카카오 로그인</button>
+            <div class="login-division">
+                <p>or</p>
             </div>
-            <div>
-                <button>회원가입</button>
+            <div class="login-oauth">
+                <button type="button">
+                    <i class="login-oauth-kakao"></i>
+                    카카오 로그인
+                </button>
+            </div>
+            <div class="join">
+                <button type="button">회원가입</button>
             </div>
         </div>
     </main>
