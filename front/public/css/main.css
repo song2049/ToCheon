@@ -22,6 +22,7 @@ main {
     height: 38px;
     border: 1px solid #DFE6EB;
     border-radius: 30px;
+    margin: 0 auto; 
 }
 
 .section-left-title > .google-marker {
@@ -32,6 +33,7 @@ main {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    margin-right: 10px;
 }
 
 .section-left-title > span {
@@ -39,9 +41,19 @@ main {
     font-weight: 400;
 }
 
-.section-left > p > {}
+.section-left > p {
+    width: 476px;
+    height: 50px;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+}
 
 #map {
+    border-radius: 10px;
     width:590px;
     height: 590px;
 }

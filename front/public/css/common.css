@@ -31,11 +31,13 @@ header > .header-left {
 }
 
 /* 헤더의 투데이천호 텍스트 */
-header > .header-left > p {
+header > .header-left > a {
     font-family: 'Pretendard';
     width: 198px;
     height: 28px;
     font-weight: 700;
+    text-decoration: none;
+    color: black;
 }
 
 /* 헤더의 로고 아이콘 */

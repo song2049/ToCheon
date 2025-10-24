@@ -1,12 +1,33 @@
-const postLogin = (req, res) => {
+const getLogin = (req, res) => {
+    res.render("login.html");
+};
+
+const postLogin = async(req, res) => {
     const { email, password } = req.body;
-    console.log(email);
-    console.log(password);
-    res.json({ success: true });
+        try {
+            const { data } = await axios.post(`http://192.168.0.191:4000/auth/login`, {
+                email: email,
+                password: password
+            });
+            
+            const access_token = data.jwt;
+
+            res.setHeader(
+            "Set-Cookie",
+            `access_token=${access_token}; Domain=localhost; Path=/; httpOnly; secure;`
+            );
+
+            res.redirect("/");
+        } catch (error) {
+            console.log(error);
+            res.status(401).send("인증실패")
+        };
+
 };
 
 
 module.exports = {
+    getLogin,
     postLogin
 };
 
