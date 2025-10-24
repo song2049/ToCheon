@@ -1,31 +1,34 @@
 # 디렉토리 구조
 ``` 
-/back/
-├── package.json
+back/
+│
+├── .env (.gitignore)
+├── node_modules (.gitignore)
 ├── server.js
-├── config/
-│   ├── db.js               # MySQL 연결 설정
-│   └── jwt.js              # JWT 토큰 관련 설정
-├── routes/
-│   ├── auth.routes.js
-│   ├── oauth.routes.js
-│   ├── store.routes.js
-│   ├── review.routes.js
-│   └── admin.routes.js
+├── package.json
+├── package-lock.json
+├── .gitignore
+├── README.md
+│
+├── db/
+│   └── connection.js
+│
+├── middleware/
+│   ├── authMiddleware.js
+│   └── errorHandler.js
+│
 ├── controllers/
+│   ├── admin.controller.js
 │   ├── auth.controller.js
 │   ├── oauth.controller.js
-│   ├── store.controller.js
 │   ├── review.controller.js
-│   └── admin.controller.js
-├── middleware/
-│   ├── authMiddleware.js   # JWT 검증 미들웨어
-│   └── errorHandler.js     # 공통 에러 핸들러
-├── models/
-│   ├── User.js
-│   ├── Restaurant.js
-│   ├── Review.js
-│   └── Admin.js
-└── utils/
-    └── response.js         # 표준 API 응답 포맷
+│   └── store.controller.js
+│
+└── routes/
+    ├── admin.routes.js
+    ├── auth.routes.js
+    ├── oauth.routes.js
+    ├── review.routes.js
+    └── store.routes.js
+
 ```
