@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors from "cors";
-import cookieParser from "cookie-parser";
+import cors from "cors"; //백엔드, 프론트엔드 분리 시 CORS 문제 해결을 위해 필요
 import authRoutes from "./routes/auth.routes.js";
 import oauthRoutes from "./routes/oauth.routes.js";
 import storeRoutes from "./routes/store.routes.js";
@@ -10,36 +9,37 @@ import adminRoutes from "./routes/admin.routes.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
 import { pingDB } from "./db/connection.js";
 
+// 환경변수 로드
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const HOST = "0.0.0.0"; // 외부 접근 허용
+const HOST = "0.0.0.0"; // 외부 접속 허용
 
-// 프론트엔드 IP 지정 (CORS)
-const FRONTEND_URL = "http://192.168.0.187:3000";
-
-// CORS 설정 (쿠키 포함)
+// CORS 설정
 app.use(
   cors({
-    origin: FRONTEND_URL,
-    credentials: true,
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// 미들웨어 설정
-app.use(cookieParser());
+// JSON 파싱
 app.use(express.json());
 
-// 헬스체크
+// DB 연결 테스트용 엔드포인트
 app.get("/", async (req, res, next) => {
   try {
     const now = await pingDB();
-    res.json({ status: "OK", db: "connected", now, port: PORT });
-  } catch (e) {
-    next(e);
+    res.json({
+      status: "OK",
+      db: "connected",
+      now,
+      port: PORT,
+    });
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -54,11 +54,11 @@ app.use("/api/admin", adminRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-// 서버 시작
+// 서버 실행
 app.listen(PORT, HOST, () => {
   console.log("========================================");
-  console.log(`Server started successfully!`);
-  console.log(`Local:   http://localhost:${PORT}`);
-  console.log(`Network: http://192.168.0.191:${PORT}`);
+  console.log("✅ Server started successfully!");
+  console.log(`📍 Local:   http://localhost:${PORT}`);
+  console.log(`🌐 Access via your Windows IP: http://192.168.0.191:${PORT}`);
   console.log("========================================");
 });
