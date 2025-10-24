@@ -62,6 +62,8 @@ main {
     height: 590px;
 }
 
+/* 여기서 부터 오른쪽 구간~~~~~~ */
+
 .section-right {
     width: 800px;
     height: 712px;
@@ -78,6 +80,7 @@ main {
     height: 38px;
     border: 1px solid #DFE6EB;
     border-radius: 30px;
+    margin-bottom: 20px;
 }
 
 .marker {
@@ -89,7 +92,7 @@ main {
     overflow: hidden;
     transform: rotate(-45deg);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    display: flex; /* 내부 정렬용 */
+    display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 11.25px;
@@ -99,7 +102,7 @@ main {
 .food-marker {
     width: 90%;
     height: 90%;
-    background-image: url("../image/food-marker.jpg"); /* 확장자 다시 확인! */
+    background-image: url("../image/food-marker.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -112,16 +115,79 @@ main {
     font-weight: 400;
 }
 
-.section-right-search {}
 
-.section-right-search > input {
-    width: 700px;
-    height: 54px;
+.section-right-search {
 }
 
-.section-right-search > button {}
+.section-right-search {
+  position: relative;
+  width: 700px;
+  height: 54px;
 
-.section-right-hashtag {}
+}
+
+.section-right-search input {
+    font-size: 18px;
+    font-weight: 400;
+    width: 700px;
+    height: 54px;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+/* 진짜 버튼 안보이지만 돋보기랑 붙어있음 */
+.section-right-search .search-btn {
+  position: absolute;
+  left: 662px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* 서치 아이콘 돋보기 렌즈부분 */
+.section-right-search .search-btn::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #1D1B20;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+}
+/* 서치 아이콘 돋보기 막대부분 */
+.section-right-search .search-btn::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 14px;
+  background: #1D1B20;
+  top: 13px;
+  left: 11px;
+  transform: rotate(-45deg);
+  transform-origin: top left;
+}
+
+
+.section-right-hashtag {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 462px;
+    height: 16px;
+}
+
+.section-right-hashtag > a {
+    font-size: 22px;
+    font-weight: 400;
+}
 
 .section-right-cardlist {}
 
