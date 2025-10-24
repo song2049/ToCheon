@@ -4,13 +4,13 @@ main {
     align-items: center;
     gap: 40px;
     max-width: 1440px;
-    margin: 0px 250px;
+    margin: 0 auto;
     box-sizing: border-box;
 }
 
 .section-left {
     width: 590px;
-    height: 728px;
+    height: 712px;
 }
 
 /* 왼쪽구역 상단 제목칸 */
@@ -22,7 +22,8 @@ main {
     height: 38px;
     border: 1px solid #DFE6EB;
     border-radius: 30px;
-    margin: 0 auto; 
+    margin: 0 auto;
+    margin-bottom: 10px;
 }
 
 .section-left-title > .google-marker {
@@ -48,7 +49,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px auto;
+    margin: 0 auto;
+    margin-bottom: 30px;
 }
 
 .section-left > p span {
@@ -175,7 +177,7 @@ main {
   transform-origin: top left;
 }
 
-
+/* 인풋창 아래에 있는 해시태그들 */
 .section-right-hashtag {
     margin-top: 10px;
     display: flex;
@@ -191,7 +193,7 @@ main {
 
 /* 카드 리스트의 전체적인 비율과 간격을 잡음 */
 .section-right-cardlist {
-    margin-top: 35px;
+    margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
     gap: 46px;
@@ -203,20 +205,55 @@ main {
     width: calc((100% - 92px) / 3);
     background: #fff;
     border-radius: 10px;
-    border: 1px solid black;
-    padding: 10px;
+    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 234px; 
 }
 
-.section-right-cardlist {}
+.stores-card-image {
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+    background-image: url("../image/cafe.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
 
-.section-right-cardlist > .stores-card {}
+.stores-card-title {
+    font-size: 20px;
+    color: #555555;
+    font-weight: 700;
+}
 
-.section-right-cardlist > .stores-card > div {}
+.stores-card-hashtag {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    height: 22px;
+}
 
-.section-right-cardlist > .stores-card > p {}
+.stores-card-hashtag > p {
+    display: flex;
+    border: 0px solid #000000;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 5px;
+    height: 22px;
+    background-color: #EFF6FB;
+    line-height: 22px;
+}
 
-
+/* 해시태그 3번째 태그는 특수 효과 */
+.stores-card-hashtag > :nth-child(3) {
+    background-color: #6299EB;
+    color: #FFFFFF;
+}
