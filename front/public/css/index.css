@@ -189,6 +189,28 @@ main {
     font-weight: 400;
 }
 
+/* 카드 리스트의 전체적인 비율과 간격을 잡음 */
+.section-right-cardlist {
+    margin-top: 35px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 46px;
+    justify-content: center;
+}
+
+/* 각 카드마다 3줄씩 2열로 만드는데 gap 바꾸면 x2 해줘서 빼줘야 유지됨 ㅇㅇ */
+.section-right-cardlist > .stores-card {
+    width: calc((100% - 92px) / 3);
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 234px; 
+}
+
 .section-right-cardlist {}
 
 .section-right-cardlist > .stores-card {}
