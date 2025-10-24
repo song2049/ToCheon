@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TODAY-CHEON</title>
-    <link rel="stylesheet" href="../public/css/font.css">
-    <link rel="stylesheet" href="../public/css/common.css">
-    <link rel="stylesheet" href="../public/css/login.css">
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
     <header>
         <div class="header-left">
             <i class="logo-icon"></i>
-            <p>TODAY-CHEON</p>
+            <a href="/">TODAY-CHEON</p>
         </div>
         <div class="header-right">
             <a>메뉴</a>
@@ -23,8 +23,8 @@
         <div class="login">
             <p>로그인</p>
             <form class="login-local" action="/auth/login" method="post">
-                <input type="email" name="userEmail" placeholder="이메일을 입력하세요">
-                <input type="password" name="userPw" placeholder="비밀번호를 입력하세요">
+                <input type="email" name="email" placeholder="이메일을 입력하세요">
+                <input type="password" name="password" placeholder="비밀번호를 입력하세요">
                 <button type="submit">로그인</button>
             </form>
             <div class="login-division">
@@ -56,5 +56,7 @@
             <i class="github-icon"></i>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/login.js"></script>
 </body>
 </html>

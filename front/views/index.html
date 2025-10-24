@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODAY-CHEON</title>
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <i class="logo-icon"></i>
+            <a href="/">TODAY-CHEON</a>
+        </div>
+        <div class="header-right">
+            <a>메뉴</a>
+            <button onclick="location.href = `/auth/login`">로그인</button>
+        </div>
+    </header>
+    <main>
+        <div class="section-left">
+            <div class="section-left-title">
+                <i class="google-marker"></i>
+                <span>Today-choen(Ho) Map</span>
+            </div>
+            <p>천호 근처의 <span>맛집을</span> 찾아보세요!</p>
+            <div id="map"></div>
+        </div>
+
+        <div class="section-right">
+            <div class="section-right-title">
+                <div class="marker">
+                    <div class="food-marker"></div>
+                </div>
+                <span>Today-choen(Ho) List</span>
+            </div>
+            <form class="section-right-search">
+                <input type="text" name="stores" placeholder="음식점 리스트를 입력하세요">
+                <button type="submit">돋보기</button>
+            </form>
+            <div class="section-right-hashtag">
+                <a>#디저트</a>
+                <a>#국밥</a>
+                <a>#카페</a>
+                <a>#중식</a>
+                <a>#한식</a>
+            </div>
+            <div class="section-right-cardlist">
+                <div class="stores-card">
+                    <div>이미지</div>
+                    <p>웰 하우스</p>
+                    <p>영업시간</p>
+                    <p>#디저트</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-left">
+            <p>©2025 To choen(Ho)</p>
+        </div>
+        <div class="footer-middle">
+            <a>개인정보처리방침</a>
+            <a>이용약관</a>
+            <a>문의하기</a>
+        </div>
+
+        <div class="footer-right">
+            <i class="linktree-icon"></i>
+            <i class="github-icon"></i>
+        </div>
+    </footer>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
+    <script src="./js/mainMap.js"></script>
+</body>
+</html>
