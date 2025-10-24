@@ -1,23 +1,29 @@
+const axios = require("axios");
+
 const getLogin = (req, res) => {
     res.render("login.html");
 };
 
 const postLogin = async(req, res) => {
     const { email, password } = req.body;
+
+    console.log(email, password);
         try {
             const { data } = await axios.post(`http://192.168.0.191:4000/auth/login`, {
                 email: email,
                 password: password
             });
             
-            const access_token = data.jwt;
+            const access_token = data.access_token;
 
             res.setHeader(
             "Set-Cookie",
             `access_token=${access_token}; Domain=localhost; Path=/; httpOnly; secure;`
             );
 
-            res.redirect("/");
+            res.status(200).json({
+                message: data.message
+            })
         } catch (error) {
             console.log(error);
             res.status(401).send("인증실패")

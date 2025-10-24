@@ -13,8 +13,10 @@ loginLocal.addEventListener("submit", async(e) => {
 
     try {
         const res = await axios.post("/auth/login", { email: email, password: password });
-
-        console.log("성공" || res.message);
+        
+        console.log(res.message);
+        window.location.href = "http://localhost:3000/"
+        
     } catch (error) {
         console.error("실패");
     }

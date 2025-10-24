@@ -16,7 +16,7 @@ app.set("view engine", "html");
 nunjucks.configure("views", { express: app});
 
 app.get("/", (req, res) => {
-    res.render("main.html");
+    res.render("index.html");
 })
 
 app.use(viewRouter);
