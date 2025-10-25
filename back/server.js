@@ -1,64 +1,57 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
-import cors from "cors"; //백엔드, 프론트엔드 분리 시 CORS 문제 해결을 위해 필요
+import cookieParser from "cookie-parser";
+import { sequelize } from "./db/sequelize.js";
+
+// 라우트 임포트
 import authRoutes from "./routes/auth.routes.js";
 import oauthRoutes from "./routes/oauth.routes.js";
 import storeRoutes from "./routes/store.routes.js";
 import reviewRoutes from "./routes/review.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
-import { errorHandler, notFound } from "./middleware/errorHandler.js";
-import { pingDB } from "./db/connection.js";
 
 // 환경변수 로드
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const HOST = "0.0.0.0"; // 외부 접속 허용
 
-// CORS 설정
+// 미들웨어 설정
 app.use(
   cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: true,
+    credentials: true,
   })
 );
-
-// JSON 파싱
 app.use(express.json());
+app.use(cookieParser());
 
-// DB 연결 테스트용 엔드포인트
-app.get("/", async (req, res, next) => {
+// DB 연결 확인 (Sequelize)
+async function connectDB() {
   try {
-    const now = await pingDB();
-    res.json({
-      status: "OK",
-      db: "connected",
-      now,
-      port: PORT,
-    });
+    await sequelize.authenticate();
+    console.log("✅ DB Connected (Sequelize)");
   } catch (err) {
-    next(err);
+    console.error("❌ DB Connection Error:", err);
+    process.exit(1);
   }
-});
+}
 
-// REST API 라우트 등록
+// 라우트 연결
 app.use("/auth", authRoutes);
 app.use("/oauth", oauthRoutes);
 app.use("/api/stores", storeRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/admin", adminRoutes);
 
-// 에러 핸들링
-app.use(notFound);
-app.use(errorHandler);
+// 헬스 체크용 기본 라우트
+app.get("/", (req, res) => {
+  res.send("Backend API Running...");
+});
 
-// 서버 실행
-app.listen(PORT, HOST, () => {
-  console.log("========================================");
-  console.log("✅ Server started successfully!");
-  console.log(`📍 Local:   http://localhost:${PORT}`);
-  console.log(`🌐 Access via your Windows IP: http://192.168.0.191:${PORT}`);
-  console.log("========================================");
+// 서버 시작
+app.listen(PORT, "0.0.0.0", async () => {
+  await connectDB();
+  console.log(`Server running at http://localhost:${PORT}`);
 });

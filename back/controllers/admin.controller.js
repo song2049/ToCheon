@@ -1,58 +1,35 @@
-import { query } from "../db/connection.js";
-import pool from "../db/connection.js";
+import { Store, Review } from "../models/index.js";
 
-export async function listPendingRestaurants(req, res) {
-  const rows = await query("SELECT id, restaurantName, latitude, longitude FROM restaurants WHERE isVerified = 0");
-  res.json({ items: rows });
+// 승인 대기 목록
+export async function getPendingStores(req, res) {
+  const stores = await Store.findAll({ where: { IS_APPROVED: 0 } });
+  res.json({ items: stores });
 }
 
-export async function approveRestaurant(req, res) {
+// 승인 처리
+export async function approveStore(req, res) {
   const { id } = req.params;
-  await query("UPDATE TB_STORE SET IS_APPROVED = 1 WHERE ID = ?", [id]);
-  res.json({ message: "승인되었습니다." });
+  await Store.update({ IS_APPROVED: 1 }, { where: { ID: id } });
+  res.json({ message: "승인 완료" });
 }
 
-export async function rejectRestaurant(req, res) {
+// 거부 처리
+export async function rejectStore(req, res) {
   const { id } = req.params;
-  await query("UPDATE TB_STORE SET IS_APPROVED = 0 WHERE ID = ?", [id]);
-  res.json({ message: "거부 처리되었습니다." });
+  await Store.destroy({ where: { ID: id } });
+  res.json({ message: "삭제(거부) 완료" });
 }
 
-export async function deleteRestaurant(req, res) {
-  const conn = await pool.getConnection();
+// 맛집 삭제
+export async function deleteStore(req, res) {
   const { id } = req.params;
-  try {
-    await conn.beginTransaction();
-    await conn.query(
-      "DELETE p FROM review_photos p JOIN reviews v ON p.reviewId = v.id WHERE v.restaurantId = ?",
-      [id]
-    );
-    await conn.query("DELETE FROM reviews WHERE restaurantId = ?", [id]);
-    await conn.query("DELETE FROM menus WHERE restaurantId = ?", [id]);
-    await conn.query("DELETE FROM restaurants WHERE id = ?", [id]);
-    await conn.commit();
-    res.json({ message: "음식점이 삭제되었습니다." });
-  } catch (e) {
-    await conn.rollback();
-    throw e;
-  } finally {
-    conn.release();
-  }
+  await Store.destroy({ where: { ID: id } });
+  res.json({ message: "맛집 삭제 완료" });
 }
 
+// 리뷰 삭제
 export async function deleteReview(req, res) {
   const { id } = req.params;
-  const conn = await pool.getConnection();
-  try {
-    await conn.beginTransaction();
-    await conn.query("DELETE FROM review_photos WHERE reviewId = ?", [id]);
-    await conn.query("DELETE FROM reviews WHERE id = ?", [id]);
-    await conn.commit();
-    res.json({ message: "리뷰가 삭제되었습니다." });
-  } catch (e) {
-    await conn.rollback();
-    throw e;
-  } finally {
-    conn.release();
-  }
+  await Review.destroy({ where: { ID: id } });
+  res.json({ message: "리뷰 삭제 완료" });
 }
