@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODAY-CHEON - 상세페이지</title>
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/inner.css">
+    <link rel="stylesheet" href="/css/store.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <i class="logo-icon"></i>
+            <a href="/">TODAY-CHEON</p>
+        </div>
+        <div class="header-right">
+            <a>메뉴</a>
+            <button onclick="location.href = `./login.html`">로그인</button>
+        </div>
+    </header>
+    <main>
+        <div id="inner">
+            <div class="store-headline">
+                <div class="store-headline-small">
+                    <p>봉피양 봉점</p>
+                    <div>
+                        <p>방이</p>
+                        <p class="line"></p>
+                        <p>평양 냉면, 돼지 갈비</p>    
+                    </div>
+                </div>
+                <div class="store-headline-star">
+                    <!-- 라이브러리 써서 구현해볼거임 -->
+                    <img src="/svg/start-rating.svg" alt="별점 없음">
+                    <span>4.1</span>
+                    <span>(63명의 평가)</span>
+                </div>
+            </div>
+            <div id="map">
+                
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-left">
+            <p>©2025 To choen(Ho)</p>
+        </div>
+        <div class="footer-middle">
+            <a>개인정보처리방침</a>
+            <a>이용약관</a>
+            <a>문의하기</a>
+        </div>
+
+        <div class="footer-right">
+            <i class="linktree-icon"></i>
+            <i class="github-icon"></i>
+        </div>
+    </footer>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
+    <script src="/js/mainMap.js"></script>
+</body>
+</html>
