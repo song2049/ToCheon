@@ -11,7 +11,6 @@ import storeRoutes from "./routes/store.routes.js";
 import reviewRoutes from "./routes/review.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 
-// 환경변수 로드
 dotenv.config();
 
 const app = express();

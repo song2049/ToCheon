@@ -1,13 +1,11 @@
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/index.js";
 
-const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_key";
+const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
 // 로그인 (POST /auth/login)
 export async function login(req, res) {
-  const { email, password } = req.body;
-  if (!email || !password) return res.status(400).json({ error: "이메일과 비밀번호를 입력하세요." });
-
   try {
     const { email, password } = req.body;
     if (!email || !password)
@@ -47,6 +45,7 @@ export async function login(req, res) {
   }
 }
 
+// 사용자 인증 확인 (GET /auth/me)
 export async function me(req, res) {
   try {
     const token = req.headers.authorization?.replace("Bearer ", "");
@@ -68,6 +67,7 @@ export async function me(req, res) {
   }
 }
 
+// 로그아웃 (POST /auth/logout)
 export async function logout(req, res) {
-  return res.json({ message: "로그아웃 처리(클라이언트 토큰 삭제 권장)" });
+  res.json({ message: "로그아웃 완료 (프론트에서 토큰 제거 필요)" });
 }
