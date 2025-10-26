@@ -1,4 +1,5 @@
 .store-headline {
+  width: 100%;
 }
 
 .store-headline > .store-headline-small {
@@ -32,9 +33,6 @@
   border: 1px solid #7e7e7e;
 }
 
-.store-headline {
-}
-
 .store-headline-star {
   display: flex;
   justify-content: flex-start;
@@ -42,8 +40,16 @@
   gap: 5px;
 }
 
-.store-headline-star > img {
+/* .store-headline-star > img {
   height: 30px;
+} */
+.rating i {
+  color: #006fff;
+  cursor: pointer;
+  font-size: 24px;
+}
+.rating .fa-regular {
+  color: #ddd;
 }
 
 .store-headline-star > span:nth-child(2) {
