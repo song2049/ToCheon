@@ -4,6 +4,10 @@ const path = require("path");
 //     res.render("login.html");
 // };
 
+const getReview = (req, res) => {
+    res.render("detail.html");
+};
+
 module.exports = {
-    
+    getReview
 };
