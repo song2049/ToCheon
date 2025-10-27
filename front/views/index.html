@@ -47,12 +47,12 @@
                 <button type="submit" class="search-btn"></button>
             </form>
             <div class="section-right-hashtag">
-                <a href="/" class="hashtag">#디저트</a>
-                <a href="/" class="hashtag">#국밥</a>
-                <a href="/" class="hashtag">#카페</a>
-                <a href="/" class="hashtag">#중식</a>
-                <a href="/" class="hashtag">#한식</a>
-                <a href="/" class="hashtag">#양식</a>
+                <!-- 아래는 js으로 치면 배열 선언임 -->
+                {% set tags = ["디저트","국밥","카페","중식","한식","양식"] %}
+                <!-- 태그를 순회하며 a태그들을 만드는데 이때 내가 server.js에서 준 stores의 정보와 일치하다면 클래스명에 on을 붙여줌 -->
+                {% for tag in tags %}
+                    <a href="#" class="hashtag {% if stores == tag %}on{% endif %}">#{{ tag }}</a>
+                {% endfor %}
             </div>
             <div class="section-right-cardlist">
                 {% for store in data %}

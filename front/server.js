@@ -32,6 +32,7 @@ app.get("/", async (req, res) => {
         const { data } = await axios.get("http://localhost:4000/api/stores");
 
         const findData = stores
+        // 검색어 없으면 밑에 삼항연산자로 통째 data를 줄거고 있으면 아래의 필터로직을 거침.
             ? data.filter(store =>
                 store.NAME.toLowerCase().includes(stores.toLowerCase()) ||
                 store.CATEGORY.toLowerCase().includes(stores.toLowerCase()) ||
@@ -40,18 +41,24 @@ app.get("/", async (req, res) => {
             : data;
 
         res.render("index.html", {
+            // 검색한 데이터가 있을경우 담아서 제출
             data: findData,
-            userInfo
+            userInfo,
+            // 해시태그 정보 전달용
+            stores
         });
     } catch (error) {
         res.render("index.html", {
+            // 문제가 있다면 빈배열 내뱉기
             data: [],
-            userInfo
+            userInfo,
+            stores
         });
     }
 });
 
-app.use(apiRouter);
+// 기존에는 아래처럼 맵 마커용을 api를 따로 제작했으나 현재 검색기능과 맞추기 위해 주석처리함
+// app.use(apiRouter);
 app.use(viewRouter);
 app.use(authRouter);
 
