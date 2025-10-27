@@ -36,18 +36,17 @@
       </div>
 
       <div class="grid-2x2">
-        <section class="col-left">
-          <div id="map" class="kakao-map"></div>
-          <ul class="store-info">
+        <div class="grid-left">
+          <div id="map" class="kakaomap"></div>
+          <ul class="store">
             <li>📞 02-415-5527</li>
             <li>📍 서울 송파구 올림픽로32길 4</li>
             <li>🕒 매일 11:30~22:00</li>
             <li>📋 예약 가능 · 주차 가능</li>
             <li>🚫 포장/배달 불가</li>
           </ul>
-        </section>
-
-        <section class="col-right photos" aria-label="가게 사진 3x4">
+        </div>
+        <div class="grid-right">
           <img src="../image/cafe.png" alt="">
           <img src="../image/cafe.png" alt="">
           <img src="../image/cafe.png" alt="">
@@ -60,18 +59,17 @@
           <img src="../image/cafe.png" alt="">
           <img src="../image/cafe.png" alt="">
           <img src="../image/cafe.png" alt="">
-        </section>
-
-        <section class="rating-box">
-          <div class="rating-left">
-            <div class="rating-score">4.1</div>
-            <div class="rating-stars">★★★★☆</div>
-            <div class="rating-desc">63건의 리뷰가 작성되었습니다.</div>
+        </div>
+        <div class="grid-score">
+          <div class="score-area">
+            <div class="grid-total">4.1</div>
+            <div class="grid-stars">★★★★☆</div>
+            <div class="grid-desc">63건의 리뷰가 작성되었습니다.</div>
           </div>
-          <div class="rating-bars">
+          <div class="bar-area">
             <div class="bar-item">
-              <div class="bar" style="height:72px;"></div>
-              <div class="bar-label">맛 4.0</div>
+              <div class="bar"></div>
+              <div class="bar-label">맛<span>4.0</span></div>
             </div>
             <div class="bar-item">
               <div class="bar" style="height:72px;"></div>
@@ -82,21 +80,32 @@
               <div class="bar-label">응대 4.0</div>
             </div>
           </div>
-        </section>
-
-        <aside class="menu-box">
-          <h3>메뉴정보</h3>
+        </div>
+        <div class="grid-menu">
+          <div class="menu-name">메뉴정보</div>
+          <input type="checkbox" id="more-toggle" hidden>
           <div class="menu-grid">
             <span>평양냉면(물/비빔)</span><span class="price">16,000원</span>
             <span>돼지갈비</span><span class="price">22,000원</span>
-
             <span>갈비탕</span><span class="price">20,000원</span>
             <span>수육</span><span class="price">20,000원</span>
-
             <span>양념갈비</span><span class="price">34,000원</span>
             <span>쟁반국수</span><span class="price">22,000원</span>
+            <div class="hidden-items">
+              <span>추가 메뉴 1</span><span class="price">30,000원</span>
+              <span>추가 메뉴 2</span><span class="price">10,000원</span>
+              <span>추가 메뉴 3</span><span class="price">45,000원</span>
+              <span>추가 메뉴 4</span><span class="price">25,000원</span>
+            </div>
           </div>
-        </aside>
+          <div class="more-button-area">
+            <label for="more-toggle" class="more-link">
+              <span class="text show-text">더보기</span>
+              <span class="text hide-text">접기</span>
+              <i class="more-icon"></i>
+            </label>
+          </div>
+        </div>
       </div>
 
       <form class="review-form" aria-label="리뷰 작성">
