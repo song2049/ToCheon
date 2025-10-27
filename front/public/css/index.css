@@ -195,15 +195,15 @@ main {
 .section-right-cardlist {
     margin-top: 40px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 얘가 3열로 바꿔주는 애*/
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
     gap: 46px;
-    justify-items: center;
-    align-content: start;
     justify-content: start;
+    align-content: start;
 }
 
 /* 음식점 카드들 요소 */
 .section-right-cardlist > .stores-card {
+    min-width: 200px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -243,7 +243,7 @@ main {
     align-items: center;
 }
 
-/* 해시태그 개별 스타일 */
+/* 앞의 2개 해시태그 */
 .stores-card-hashtag > p {
     padding: 0 10px;
     font-size: 12px;
