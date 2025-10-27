@@ -12,8 +12,6 @@ let activeOverlay = null;
 const mapApi = async () => {
   try {    
     // 받아온거 순회
-    console.log(storesData);
-    
     storesData.forEach(store => {
       // 받아온게 문자열이라 카카오api에서 인식 못할까봐 숫자형태로 바꿔줌
       const lat = Number(store.LATITUDE);
