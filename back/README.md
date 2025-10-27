@@ -63,3 +63,14 @@ curl -X POST http://localhost:4000/auth/login \
 
 {"message":"로그인 성공","user":{"id":1,"email":"email@email.com","name":"관리자","role":"ADMIN"},"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJBRE1JTiIsImVtYWlsIjoiZW1haWxAZW1haWwuY29tIiwiaWF0IjoxNzYxNDA3NTU2LCJleHAiOjE3NjE0MTExNTZ9.BJou40eN6dOVzmrqPdscSk1GglBexLsUpjc1zuniros"}% 
 ```
+
+
+## 카카오 OAuth 테스트
+
+``` url
+http://localhost:4000/oauth/kakao?code=iGyN4CkA7dpBTAYt9dDUtR3-wAIKb9WGD8aGSOzEQ1eeV8E9LzS2IAAAAAQKFxJVAAABmiSQcEK2W8wW6V7rJg
+```
+
+``` bash
+{"message":"Kakao login success","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQ5NzI2Nzc4Niwibmlja25hbWUiOiLsmrEiLCJ0aHVtYm5haWwiOiJodHRwOi8vay5rYWthb2Nkbi5uZXQvZG4vTTJGaXgvYnRzQXlKUEt1bWIvZWVOaHNha0tGRzhza3pIODJ0QmthMS9pbWdfMTEweDExMC5qcGciLCJlbWFpbCI6bnVsbCwiaWF0IjoxNzYxNTUwMDM3LCJleHAiOjE3NjE1NTM2Mzd9.wTdlDRvVfdW7p2eK9Bie16p24wOoERDYXqa2PIjkqWM","user":{"id":4497267786,"nickname":"욱","thumbnail":"http://k.kakaocdn.net/dn/M2Fix/btsAyJPKumb/eeNhsakKFG8skzH82tBka1/img_110x110.jpg","email":null}}
+```

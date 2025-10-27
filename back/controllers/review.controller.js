@@ -1,5 +1,4 @@
 import { Review, Picture } from "../models/index.js";
-import { Sequelize } from "sequelize";
 
 // 리뷰 작성
 export async function createReview(req, res) {
@@ -21,6 +20,7 @@ export async function createReview(req, res) {
       CREATED_AT: new Date(),
     });
 
+    // 사진 등록 (optional)
     if (Array.isArray(photos) && photos.length > 0) {
       const pictureData = photos.map((url) => ({
         REVIEW_ID: review.ID,
@@ -44,13 +44,25 @@ export async function listReviews(req, res) {
   const { page = 1, pageSize = 20 } = req.query;
   const offset = (Number(page) - 1) * Number(pageSize);
 
-  const reviews = await Review.findAll({
-    where: { STORE_ID: store_id },
-    include: [{ model: Picture, attributes: ["URL", "IS_MAIN"] }],
-    limit: Number(pageSize),
-    offset,
-    order: [["CREATED_AT", "DESC"]],
-  });
+  try {
+    const reviews = await Review.findAll({
+      where: { STORE_ID: store_id },
+      include: [
+        {
+          model: Picture,
+          as: "pictures", // 관계 alias 일치
+          attributes: ["URL", "IS_MAIN"],
+          required: false, // 사진이 없어도 리뷰 조회 가능 (LEFT JOIN)
+        },
+      ],
+      limit: Number(pageSize),
+      offset,
+      order: [["CREATED_AT", "DESC"]],
+    });
 
-  res.json({ items: reviews, page, pageSize });
+    res.json({ items: reviews, page: Number(page), pageSize: Number(pageSize) });
+  } catch (err) {
+    console.error("listReviews error:", err);
+    res.status(500).json({ error: "리뷰 목록 조회 중 오류 발생" });
+  }
 }

@@ -19,7 +19,7 @@ export async function getStores(req, res) {
 export async function getStoresMap(req, res) {
   try {
     const stores = await Store.findAll({
-      attributes: ["ID", "NAME", "LAT", "LNG"],
+      attributes: ["ID", "NAME", "LATITUDE", "LONGITUDE"],
     });
     res.json(stores);
   } catch (error) {
@@ -33,7 +33,7 @@ export async function getStoreMap(req, res) {
   try {
     const { store_id } = req.params;
     const store = await Store.findByPk(store_id, {
-      attributes: ["ID", "NAME", "LAT", "LNG", "ADDRESS"],
+      attributes: ["ID", "NAME", "LATITUDE", "LONGITUDE", "ADDRESS"],
     });
     if (!store) return res.status(404).json({ error: "매장을 찾을 수 없습니다." });
     res.json(store);
@@ -47,11 +47,24 @@ export async function getStoreMap(req, res) {
 export async function getStoreLatestPicture(req, res) {
   try {
     const { store_id } = req.params;
-    const picture = await Picture.findOne({
+
+    // TB_PICTURE는 REVIEW_ID 기준으로 연결되므로, 리뷰에서 최신 ID 가져와야 함
+    const latestReview = await Review.findOne({
       where: { STORE_ID: store_id },
       order: [["CREATED_AT", "DESC"]],
     });
+
+    if (!latestReview) {
+      return res.status(404).json({ error: "리뷰가 없습니다." });
+    }
+
+    const picture = await Picture.findOne({
+      where: { REVIEW_ID: latestReview.ID },
+      order: [["CREATED_AT", "DESC"]],
+    });
+
     if (!picture) return res.status(404).json({ error: "등록된 사진이 없습니다." });
+
     res.json(picture);
   } catch (error) {
     console.error("getStoreLatestPicture error:", error);
@@ -63,15 +76,19 @@ export async function getStoreLatestPicture(req, res) {
 export async function getStoreReviewStats(req, res) {
   try {
     const { store_id } = req.params;
+
+    // TB_REVIEW는 RATING 대신 POINT_01~03 사용
     const stats = await Review.findAll({
       where: { STORE_ID: store_id },
       attributes: [
-        "RATING",
-        [Review.sequelize.fn("COUNT", Review.sequelize.col("RATING")), "count"],
+        [Review.sequelize.fn("AVG", Review.sequelize.col("POINT_01")), "avg_taste"],
+        [Review.sequelize.fn("AVG", Review.sequelize.col("POINT_02")), "avg_price"],
+        [Review.sequelize.fn("AVG", Review.sequelize.col("POINT_03")), "avg_service"],
+        [Review.sequelize.fn("COUNT", Review.sequelize.col("ID")), "review_count"],
       ],
-      group: ["RATING"],
     });
-    res.json(stats);
+
+    res.json(stats[0]);
   } catch (error) {
     console.error("getStoreReviewStats error:", error);
     res.status(500).json({ error: "리뷰 통계 조회 실패" });
@@ -82,7 +99,10 @@ export async function getStoreReviewStats(req, res) {
 export async function getStoreMenu(req, res) {
   try {
     const { store_id } = req.params;
-    const menus = await Menu.findAll({ where: { STORE_ID: store_id } });
+    const menus = await Menu.findAll({
+      where: { STORE_ID: store_id },
+      attributes: ["ID", "NAME", "PRICE", "DESCRIPTION", "IS_RECOMMANDED"],
+    });
     res.json(menus);
   } catch (error) {
     console.error("getStoreMenu error:", error);
