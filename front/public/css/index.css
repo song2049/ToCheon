@@ -1,0 +1,259 @@
+main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.section-left {
+    width: 590px;
+    height: 712px;
+}
+
+/* 왼쪽구역 상단 제목칸 */
+.section-left-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 201px;
+    height: 38px;
+    border: 1px solid #DFE6EB;
+    border-radius: 30px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.section-left-title > .google-marker {
+    display: inline-block;
+    width: 12px;
+    height: 18px;
+    background-image: url("../image/toodayChoen-Marker.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
+}
+
+.section-left-title > span {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.section-left > p {
+    height: 50px;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.section-left > p span {
+    margin: 0 10px;
+    color: #5599FF;
+}
+
+#map {
+    border-radius: 10px;
+    width:590px;
+    height: 590px;
+}
+
+/* 여기서 부터 오른쪽 구간~~~~~~ */
+
+.section-right {
+    width: 800px;
+    height: 712px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section-right-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 199px;
+    height: 38px;
+    border: 1px solid #DFE6EB;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.marker {
+    position: relative;
+    width: 13.49px;
+    height: 13.65px;
+    border-radius: 50% 50% 50% 0; 
+    background-color: white;
+    overflow: hidden;
+    transform: rotate(-45deg);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 11.25px;
+
+}
+
+.food-marker {
+    width: 90%;
+    height: 90%;
+    background-image: url("../image/food-marker.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: rotate(45deg);
+    border-radius: 50%;
+}
+
+.section-right-title > span {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+.section-right-search {
+}
+
+.section-right-search {
+  position: relative;
+  width: 700px;
+  height: 54px;
+
+}
+
+.section-right-search input {
+    font-size: 18px;
+    font-weight: 400;
+    width: 700px;
+    height: 54px;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+/* 진짜 버튼 안보이지만 돋보기랑 붙어있음 */
+.section-right-search .search-btn {
+  position: absolute;
+  left: 662px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* 서치 아이콘 돋보기 렌즈부분 */
+.section-right-search .search-btn::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #1D1B20;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+}
+/* 서치 아이콘 돋보기 막대부분 */
+.section-right-search .search-btn::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 14px;
+  background: #1D1B20;
+  top: 13px;
+  left: 11px;
+  transform: rotate(-45deg);
+  transform-origin: top left;
+}
+
+/* 인풋창 아래에 있는 해시태그들 */
+.section-right-hashtag {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 462px;
+    height: 16px;
+}
+
+.section-right-hashtag > a {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+/* 카드 리스트의 전체적인 비율과 간격을 잡음 */
+.section-right-cardlist {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 46px;
+    justify-content: center;
+}
+
+/* 각 카드마다 3줄씩 2열로 만드는데 gap 바꾸면 x2 해줘서 빼줘야 유지됨 ㅇㅇ */
+.section-right-cardlist > .stores-card {
+    width: calc((100% - 92px) / 3);
+    background: #fff;
+    border-radius: 10px;
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 234px; 
+}
+
+.stores-card-image {
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+    background-image: url("../image/cafe.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
+
+.stores-card-title {
+    font-size: 20px;
+    color: #555555;
+    font-weight: 700;
+}
+
+.stores-card-hashtag {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    height: 22px;
+}
+
+.stores-card-hashtag > p {
+    display: flex;
+    border: 0px solid #000000;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 5px;
+    height: 22px;
+    background-color: #EFF6FB;
+    line-height: 22px;
+}
+
+/* 해시태그 3번째 태그는 특수 효과 */
+.stores-card-hashtag > :nth-child(3) {
+    background-color: #6299EB;
+    color: #FFFFFF;
+}

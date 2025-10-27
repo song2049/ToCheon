@@ -1,11 +1,16 @@
+// routes/auth.routes.js
 import express from "express";
 import { login, me, logout } from "../controllers/auth.controller.js";
-import { verifyToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+// 로그인
 router.post("/login", login);
-router.post("/me", verifyToken, me);
-router.post("/logout", verifyToken, logout);
+
+// 로그인 사용자 정보 확인
+router.get("/me", me);
+
+// 로그아웃
+router.post("/logout", logout);
 
 export default router;
