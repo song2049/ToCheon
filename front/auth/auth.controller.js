@@ -26,7 +26,9 @@ const postLogin = async(req, res) => {
             })
         } catch (error) {
             console.log(error);
-            res.status(401).send("인증실패")
+            res.status(401).json({
+                message: "로그인 실패"
+            })
         };
 
 };
