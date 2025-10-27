@@ -191,31 +191,32 @@ main {
     font-weight: 400;
 }
 
-/* 카드 리스트의 전체적인 비율과 간격을 잡음 */
+/* 카드 리스트 ,, 기존 flex-warp 에서 그리드 형태로 바꿈 */
 .section-right-cardlist {
     margin-top: 40px;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 얘가 3열로 바꿔주는 애*/
     gap: 46px;
-    justify-content: center;
+    justify-items: center;
+    align-content: start;
+    justify-content: start;
 }
 
-/* 각 카드마다 3줄씩 2열로 만드는데 gap 바꾸면 x2 해줘서 빼줘야 유지됨 ㅇㅇ */
+/* 음식점 카드들 요소 */
 .section-right-cardlist > .stores-card {
-    width: calc((100% - 92px) / 3);
-    background: #fff;
     border-radius: 10px;
-    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 234px; 
+    padding: 10px;
+    min-height: 234px;
 }
 
+/* 카드 이미지 */
 .stores-card-image {
     width: 150px;
     height: 150px;
-    display: inline-block;
     background-image: url("../image/cafe.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -224,35 +225,38 @@ main {
     margin-bottom: 5px;
 }
 
+/* 카드 제목 */
 .stores-card-title {
     font-size: 20px;
     color: #555555;
     font-weight: 700;
+    text-align: center;
 }
 
+/* 카드들 해시태그 */
 .stores-card-hashtag {
     margin-top: 12px;
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
     align-items: center;
-    height: 22px;
 }
 
+/* 해시태그 개별 스타일 */
 .stores-card-hashtag > p {
-    display: flex;
-    border: 0px solid #000000;
     padding: 0 10px;
     font-size: 12px;
     font-weight: 500;
     border-radius: 5px;
     height: 22px;
-    background-color: #EFF6FB;
     line-height: 22px;
+    background-color: #EFF6FB;
+    color: #000;
+    margin: 0;
 }
 
-/* 해시태그 3번째 태그는 특수 효과 */
+/* 3번째 해시태그는 다르게 */
 .stores-card-hashtag > :nth-child(3) {
     background-color: #6299EB;
     color: #FFFFFF;

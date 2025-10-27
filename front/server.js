@@ -19,26 +19,33 @@ app.use(express.json());
 app.set("view engine", "html");
 nunjucks.configure("views", { express: app});
 
-app.get("/", async(req, res) => {
+app.get("/", async (req, res) => {
+    const stores = req.query.stores || "";
     const { access_token } = req.cookies;
     let userInfo = {};
-    if(access_token) {
-        const payload = jwt.decode(access_token);
-        userInfo = payload
-    };
+    if (access_token) userInfo = jwt.decode(access_token);
+
     try {
-        console.log(userInfo);
-        const { data } = await axios.get(`http://localhost:4000/api/stores`);
+        const { data } = await axios.get("http://localhost:4000/api/stores");
+
+        const findData = stores
+            ? data.filter(store =>
+                store.NAME.toLowerCase().includes(stores.toLowerCase()) ||
+                store.CATEGORY.toLowerCase().includes(stores.toLowerCase()) ||
+                store.HASH_TAG.toLowerCase().includes(stores.toLowerCase())
+              )
+            : data;
+
         res.render("index.html", {
-            data,
+            data: findData,
             userInfo
         });
     } catch (error) {
-        res.render("index.html",{
+        res.render("index.html", {
             data: [],
             userInfo
         });
-    };
+    }
 });
 
 app.use(viewRouter);

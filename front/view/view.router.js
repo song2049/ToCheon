@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const viewController = require("./view.controller.js")
 
-router.post("/search", viewController.postSearch);
+router.post("/", viewController.postSearch);
 router.get("/review", viewController.getReview);
 
 module.exports = router;

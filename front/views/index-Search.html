@@ -41,7 +41,7 @@
                 </div>
                 <span>Today-choen(Ho) List</span>
             </div>
-            <form action="/" class="section-right-search" method="post">
+            <form class="section-right-search">
                 <input type="text" name="stores" placeholder="음식점 리스트를 입력하세요">
                 <button type="submit" class="search-btn"></button>
             </form>
@@ -64,10 +64,6 @@
                             <p>#{{ store.CATEGORY }}</p>
                         </div>
                     </div>
-                {% endfor %}
-                {% set remainder = (3 - (data|length % 3)) % 3 %}
-                {% for _ in range(remainder) %}
-                    <div class="stores-card" style="visibility:hidden;"></div>
                 {% endfor %}
             </div>
         </div>
