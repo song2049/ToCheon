@@ -231,6 +231,7 @@ main {
     color: #555555;
     font-weight: 700;
     text-align: center;
+    text-decoration: none;
 }
 
 /* 카드들 해시태그 */
