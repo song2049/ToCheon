@@ -9,7 +9,7 @@ const postLogin = async(req, res) => {
 
     console.log(email, password);
         try {
-            const { data } = await axios.post(`http://192.168.0.191:4000/auth/login`, {
+            const { data } = await axios.post(`http://localhost:4000/auth/login`, {
                 email: email,
                 password: password
             });
