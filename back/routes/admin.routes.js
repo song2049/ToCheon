@@ -1,17 +1,28 @@
 import express from "express";
 import {
-  listPendingRestaurants, approveRestaurant, rejectRestaurant, deleteRestaurant, deleteReview
+  getPendingStores,
+  approveStore,
+  rejectStore,
+  deleteStore,
+  deleteReview,
 } from "../controllers/admin.controller.js";
 import { verifyToken, requireAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.use(verifyToken, requireAdmin);
+// 승인 대기 목록
+router.get("/stores/pending", verifyToken, requireAdmin, getPendingStores);
 
-router.get("/restaurants/pending", listPendingRestaurants);
-router.post("/restaurants/:id/approve", approveRestaurant);
-router.post("/restaurants/:id/reject", rejectRestaurant);
-router.delete("/restaurants/:id", deleteRestaurant);
-router.delete("/reviews/:id", deleteReview);
+// 승인
+router.post("/stores/:id/approve", verifyToken, requireAdmin, approveStore);
+
+// 거부
+router.post("/stores/:id/reject", verifyToken, requireAdmin, rejectStore);
+
+// 맛집 삭제
+router.delete("/stores/:id", verifyToken, requireAdmin, deleteStore);
+
+// 리뷰 삭제
+router.delete("/reviews/:id", verifyToken, requireAdmin, deleteReview);
 
 export default router;
