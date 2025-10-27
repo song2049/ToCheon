@@ -1,61 +1,12 @@
 /* 공통 컨테이너 */
-.detail-container,
-.summary,
-.reviewWrite,
-.reviewList {
-    max-width: 1180px;
-    margin: 0 auto;
-}
-
+main .detail-container {margin: 0 7%;}
 /* 제목 */
-.title {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding-top: 28px;
-}
-
-.title-text {
-    margin: 0 0 6px;
-    font-size: 24px;
-    font-weight: 800;
-}
-
-.title-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.breadcrumb {
-    font-size: 13px;
-    color: #6b7280;
-    text-decoration: none;
-}
-
-.meta-right {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.best-tag {
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.stars {
-    color: #2a6ff2;
-}
-
-.score {
-    font-weight: 800;
-    color: #2a6ff2;
-}
-
-.meta-gray {
-    font-size: 13px;
-    color: #767e89;
-}
+.info .title {margin-top: 50px; font-weight: 500; font-size: 35px; height: 50px;}
+.info .content {margin-top: 7px; color: #9E9E9E; font-weight: 350; font-size: 16px; height: 19px;}
+.info .score {margin-top: 7px; height: 32px;}
+.info .score .score-stars {color: #006FFF;}
+.info .score .score-average {font-weight: 500; font-size: 22px;}
+.info .score .score-total {color: #9E9E9E; font-weight: 350; font-size: 15px;}
 
 /* 음식점_간략_정보: 2×2 */
 .grid-2x2 {
