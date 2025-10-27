@@ -108,28 +108,27 @@
         </div>
       </div>
 
-      <form class="review-form" aria-label="리뷰 작성">
-        <h3>리뷰 작성</h3>
-
+      <form class="review-form">
+        <h2>리뷰 작성</h2>
         <div class="review-top-section">
           <div class="review-scores-wrapper">
-            <h4 class="field-title">별점 *</h4>
+            <h4 class="field-title">별점 <span id="require-dot">*</span></h4>
             <div class="review-scores">
-              <fieldset class="radio-group">맛
+              <fieldset class="radio-group"><span>맛</span>
                 <label class="radio-label"><input type="radio" name="taste" value="1">1점</label>
                 <label class="radio-label"><input type="radio" name="taste" value="2">2점</label>
                 <label class="radio-label"><input type="radio" name="taste" value="3">3점</label>
                 <label class="radio-label"><input type="radio" name="taste" value="4" checked>4점</label>
                 <label class="radio-label"><input type="radio" name="taste" value="5">5점</label>
               </fieldset>
-              <fieldset class="radio-group">가격
+              <fieldset class="radio-group"><span>가격</span>
                 <label class="radio-label"><input type="radio" name="price" value="1">1점</label>
                 <label class="radio-label"><input type="radio" name="price" value="2">2점</label>
                 <label class="radio-label"><input type="radio" name="price" value="3">3점</label>
                 <label class="radio-label"><input type="radio" name="price" value="4" checked>4점</label>
                 <label class="radio-label"><input type="radio" name="price" value="5">5점</label>
               </fieldset>
-              <fieldset class="radio-group">응대
+              <fieldset class="radio-group"><span>응대</span>
                 <label class="radio-label"><input type="radio" name="service" value="1">1점</label>
                 <label class="radio-label"><input type="radio" name="service" value="2">2점</label>
                 <label class="radio-label"><input type="radio" name="service" value="3">3점</label>
@@ -138,31 +137,18 @@
               </fieldset>
             </div>
           </div>
-
           <div class="review-menu-wrapper">
-            <h4 class="field-title">어떤 메뉴를 먹었나요? *</h4>
-            <div class="review-menu-input-box">
-              <input id="orderedMenu" type="text" placeholder="메뉴를 입력해주세요.">
-            </div>
+            <h4 class="field-title">어떤 메뉴를 먹었나요? <span id="require-dot">*</span></h4>
+            <textarea rows="5" placeholder="메뉴를 입력해주세요."></textarea>
           </div>
         </div>
-
-        <h4 class="field-title">리뷰 내용 *</h4>
+        <h4 class="field-title">리뷰 내용 <span id="require-dot">*</span></h4>
         <textarea rows="5" placeholder="비속어, 비방하는 리뷰는 삭제될 수 있습니다."></textarea>
-
-        <h4 class="field-title">메뉴 사진 *</h4>
+        <h4 class="field-title">메뉴 사진 <span id="require-dot">*</span></h4>
         <div class="photo-drop">
-          <div class="drop-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21.2 15V4l-2.4 2.4" />
-              <path
-                d="M22 17.7a4 4 0 0 1-3.7-4 5.3 5.3 0 0 0-4.6-4.9 5 5 0 0 0-4.1-2.2 4.5 4.5 0 0 0-4.4 4.5 5 5 0 0 0 1 3 4 4 0 0 0-1.8 3.9v.3a4.7 4.7 0 0 0 4.7 4.7H19a5.2 5.2 0 0 0 3-1.6 4.6 4.6 0 0 0 .1-5v-.2M12 18v-6" />
-            </svg>
-          </div>
+          <img src="./image/upload_icon.png" alt="" width="50px" height="50px">
           <div class="drop-hint">맛있게 드셨나요?</div>
         </div>
-
         <button type="submit" class="btn-submit">리뷰 남기기</button>
       </form>
 
