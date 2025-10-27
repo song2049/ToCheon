@@ -43,16 +43,16 @@
                 <span>Today-choen(Ho) List</span>
             </div>
             <form action="/" class="section-right-search" method="post">
-                <input type="text" name="stores" placeholder="음식점 리스트를 입력하세요">
+                <input type="text" id="searchInput" name="stores" placeholder="음식점 리스트를 입력하세요">
                 <button type="submit" class="search-btn"></button>
             </form>
             <div class="section-right-hashtag">
-                <a>#디저트</a>
-                <a>#국밥</a>
-                <a>#카페</a>
-                <a>#중식</a>
-                <a>#한식</a>
-                <a>#양식</a>
+                <a href="/" class="hashtag">#디저트</a>
+                <a href="/" class="hashtag">#국밥</a>
+                <a href="/" class="hashtag">#카페</a>
+                <a href="/" class="hashtag">#중식</a>
+                <a href="/" class="hashtag">#한식</a>
+                <a href="/" class="hashtag">#양식</a>
             </div>
             <div class="section-right-cardlist">
                 {% for store in data %}
@@ -86,6 +86,7 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
+    <script src="./js/hashTag.js"></script>
     <!-- 아래는 서버에서 받아온 데이터를 mainmap 에서 받아올 수 있게 처리하는 구문-->
     <script> const storesData = JSON.parse('{{ data | dump | safe }}'); </script>
     <script src="./js/mainMap.js"></script>

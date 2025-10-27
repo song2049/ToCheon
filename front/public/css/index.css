@@ -117,10 +117,6 @@ main {
     font-weight: 400;
 }
 
-
-.section-right-search {
-}
-
 .section-right-search {
   position: relative;
   width: 700px;
@@ -189,6 +185,7 @@ main {
 .section-right-hashtag > a {
     font-size: 22px;
     font-weight: 400;
+    text-decoration: none;
 }
 
 /* 카드 리스트 ,, 기존 flex-warp 에서 그리드 형태로 바꿈 */
