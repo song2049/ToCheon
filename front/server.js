@@ -10,6 +10,7 @@ const viewRouter = require("./view/view.router");
 const authRouter = require("./auth/auth.router");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
+const apiRouter = require("./api/api.router.js");
 
 app.use(cookieParser());
 app.use(express.static('public'));
@@ -20,8 +21,10 @@ app.set("view engine", "html");
 nunjucks.configure("views", { express: app});
 
 app.get("/", async (req, res) => {
+    // 검색하면 쿼리스트링으로 받아옴
     const stores = req.query.stores || "";
     const { access_token } = req.cookies;
+    // 로그인한 유저 정보를 담을 빈 객체
     let userInfo = {};
     if (access_token) userInfo = jwt.decode(access_token);
 
@@ -48,6 +51,7 @@ app.get("/", async (req, res) => {
     }
 });
 
+app.use(apiRouter);
 app.use(viewRouter);
 app.use(authRouter);
 
