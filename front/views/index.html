@@ -16,7 +16,12 @@
         </div>
         <div class="header-right">
             <a>메뉴</a>
+            {% if userInfo and userInfo.role %}
+            <button type="button">로그아웃</button>
+            {% else %}
             <button onclick="location.href = `/auth/login`">로그인</button>
+            {% endif %}
+            
         </div>
     </header>
     <main>
@@ -49,66 +54,17 @@
                 <a>#양식</a>
             </div>
             <div class="section-right-cardlist">
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
+                {% for store in data %}
+                    <div class="stores-card">
+                        <div class="stores-card-image"></div>
+                        <p class="stores-card-title">{{ store.NAME }}</p>
+                        <div class="stores-card-hashtag">
+                            <p>{{ store.HASH_TAG }}</p>
+                            <p># 핫</p>
+                            <p>#{{ store.CATEGORY }}</p>
+                        </div>
                     </div>
-                </div>
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
-                    </div>
-                </div>
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
-                    </div>
-                </div>
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
-                    </div>
-                </div>
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
-                    </div>
-                </div>
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </main>
@@ -127,7 +83,9 @@
             <i class="github-icon"></i>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
+    <script src="./js/search.js"></script>
     <script src="./js/mainMap.js"></script>
 </body>
 </html>

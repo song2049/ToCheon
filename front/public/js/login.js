@@ -17,6 +17,6 @@ loginLocal.addEventListener("submit", async(e) => {
         window.location.href = "http://localhost:3000/"
         
     } catch (error) {
-        alert("로그인에 실패하였습니다!");
+        alert("로그인에 실패 하였습니다!");
     }
 });
