@@ -6,6 +6,7 @@
     <title>TODAY-CHEON</title>
     <link rel="stylesheet" href="./css/font.css">
     <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/map.css">
     <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
@@ -16,7 +17,12 @@
         </div>
         <div class="header-right">
             <a>메뉴</a>
+            {% if userInfo and userInfo.role %}
+            <button type="button">로그아웃</button>
+            {% else %}
             <button onclick="location.href = `/auth/login`">로그인</button>
+            {% endif %}
+            
         </div>
     </header>
     <main>
@@ -36,79 +42,30 @@
                 </div>
                 <span>Today-choen(Ho) List</span>
             </div>
-            <form class="section-right-search">
-                <input type="text" name="stores" placeholder="음식점 리스트를 입력하세요">
+            <form action="/" class="section-right-search" method="post">
+                <input type="text" id="searchInput" name="stores" placeholder="음식점 리스트를 입력하세요">
                 <button type="submit" class="search-btn"></button>
             </form>
             <div class="section-right-hashtag">
-                <a>#디저트</a>
-                <a>#국밥</a>
-                <a>#카페</a>
-                <a>#중식</a>
-                <a>#한식</a>
-                <a>#양식</a>
+                <!-- 아래는 js으로 치면 배열 선언임 -->
+                {% set tags = ["디저트","국밥","카페","중식","한식","양식"] %}
+                <!-- 태그를 순회하며 a태그들을 만드는데 이때 내가 server.js에서 준 stores의 정보와 일치하다면 클래스명에 on을 붙여줌 -->
+                {% for tag in tags %}
+                    <a href="#" class="hashtag {% if stores == tag %}on{% endif %}">#{{ tag }}</a>
+                {% endfor %}
             </div>
             <div class="section-right-cardlist">
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
+                {% for store in data %}
+                    <div class="stores-card">
+                        <div class="stores-card-image"></div>
+                        <a href="/detail/{{ store.ID }}" class="stores-card-title">{{ store.NAME }}</a>
+                        <div class="stores-card-hashtag">
+                            <p>{{ store.HASH_TAG }}</p>
+                            <p># 핫</p>
+                            <p>#{{ store.CATEGORY }}</p>
+                        </div>
                     </div>
-                </div>
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
-                    </div>
-                </div>
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
-                    </div>
-                </div>
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
-                    </div>
-                </div>
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
-                    </div>
-                </div>
-
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <p class="stores-card-title">웰 하우스</p>
-                    <div class="stores-card-hashtag">
-                        <p># 20대</p>
-                        <p># 핫</p>
-                        <p># 디저트</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </main>
@@ -127,7 +84,11 @@
             <i class="github-icon"></i>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
+    <script src="./js/hashTag.js"></script>
+    <!-- 아래는 서버에서 받아온 데이터를 mainmap 에서 받아올 수 있게 처리하는 구문-->
+    <script> const storesData = JSON.parse('{{ data | dump | safe }}'); </script>
     <script src="./js/mainMap.js"></script>
 </body>
 </html>

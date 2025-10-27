@@ -6,8 +6,6 @@ const getLogin = (req, res) => {
 
 const postLogin = async(req, res) => {
     const { email, password } = req.body;
-
-    console.log(email, password);
         try {
             const { data } = await axios.post(`http://localhost:4000/auth/login`, {
                 email: email,

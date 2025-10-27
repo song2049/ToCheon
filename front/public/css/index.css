@@ -117,10 +117,6 @@ main {
     font-weight: 400;
 }
 
-
-.section-right-search {
-}
-
 .section-right-search {
   position: relative;
   width: 700px;
@@ -186,36 +182,55 @@ main {
     height: 16px;
 }
 
+/* 안 눌렀을 때의 해시태그 */
 .section-right-hashtag > a {
     font-size: 22px;
     font-weight: 400;
+    text-decoration: none;
+    color: #000000;
 }
 
-/* 카드 리스트의 전체적인 비율과 간격을 잡음 */
+/* 눌렀으면 이렇게 */
+.section-right-hashtag .hashtag.on {
+    background-color: #6299EB;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    width: 70px;
+    height: 32px;
+    display: flex; 
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 카드 리스트 ,, 기존 flex-warp 에서 그리드 형태로 바꿈 */
 .section-right-cardlist {
     margin-top: 40px;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
     gap: 46px;
-    justify-content: center;
+    justify-content: start;
+    align-content: start;
 }
 
-/* 각 카드마다 3줄씩 2열로 만드는데 gap 바꾸면 x2 해줘서 빼줘야 유지됨 ㅇㅇ */
+/* 음식점 카드들 요소 */
 .section-right-cardlist > .stores-card {
-    width: calc((100% - 92px) / 3);
-    background: #fff;
+    min-width: 200px;
     border-radius: 10px;
-    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 234px; 
+    padding: 10px;
+    min-height: 234px;
 }
 
+/* 카드 이미지 */
 .stores-card-image {
     width: 150px;
     height: 150px;
-    display: inline-block;
     background-image: url("../image/cafe.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -224,35 +239,39 @@ main {
     margin-bottom: 5px;
 }
 
+/* 카드 제목 */
 .stores-card-title {
     font-size: 20px;
     color: #555555;
     font-weight: 700;
+    text-align: center;
+    text-decoration: none;
 }
 
+/* 카드들 해시태그 */
 .stores-card-hashtag {
     margin-top: 12px;
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
     align-items: center;
-    height: 22px;
 }
 
+/* 앞의 2개 해시태그 */
 .stores-card-hashtag > p {
-    display: flex;
-    border: 0px solid #000000;
     padding: 0 10px;
     font-size: 12px;
     font-weight: 500;
     border-radius: 5px;
     height: 22px;
-    background-color: #EFF6FB;
     line-height: 22px;
+    background-color: #EFF6FB;
+    color: #000;
+    margin: 0;
 }
 
-/* 해시태그 3번째 태그는 특수 효과 */
+/* 3번째 해시태그는 다르게 */
 .stores-card-hashtag > :nth-child(3) {
     background-color: #6299EB;
     color: #FFFFFF;

@@ -3,12 +3,16 @@ const PORT = process.env.PORT
 
 const express = require("express");
 const app = express();
-const nunjucks = require("nunjucks")
+const nunjucks = require("nunjucks");
+const cookieParser = require("cookie-parser");
 const path = require("path");
 const viewRouter = require("./view/view.router");
 const authRouter = require("./auth/auth.router");
-const { default: axios } = require("axios");
+const axios = require("axios");
+const jwt = require("jsonwebtoken");
+const apiRouter = require("./api/api.router.js");
 
+app.use(cookieParser());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
@@ -16,20 +20,45 @@ app.use(express.json());
 app.set("view engine", "html");
 nunjucks.configure("views", { express: app});
 
-app.get("/", async(req, res) => {
+app.get("/", async (req, res) => {
+    // 검색하면 쿼리스트링으로 받아옴
+    const stores = req.query.stores || "";
+    const { access_token } = req.cookies;
+    // 로그인한 유저 정보를 담을 빈 객체
+    let userInfo = {};
+    if (access_token) userInfo = jwt.decode(access_token);
+
     try {
-        const { data } = await axios.get(`http://localhost:4000/api/stores`);
-        const { items, page, pageSize } = data;
+        const { data } = await axios.get("http://localhost:4000/api/stores");
+
+        const findData = stores
+        // 검색어 없으면 밑에 삼항연산자로 통째 data를 줄거고 있으면 아래의 필터로직을 거침.
+            ? data.filter(store =>
+                store.NAME.toLowerCase().includes(stores.toLowerCase()) ||
+                store.CATEGORY.toLowerCase().includes(stores.toLowerCase()) ||
+                store.HASH_TAG.toLowerCase().includes(stores.toLowerCase())
+              )
+            : data;
+
         res.render("index.html", {
-            items,
-            page,
-            pageSize
+            // 검색한 데이터가 있을경우 담아서 제출
+            data: findData,
+            userInfo,
+            // 해시태그 정보 전달용
+            stores
         });
     } catch (error) {
-        res.render("index.html",{});
+        res.render("index.html", {
+            // 문제가 있다면 빈배열 내뱉기
+            data: [],
+            userInfo,
+            stores
+        });
     }
-})
+});
 
+// 기존에는 아래처럼 맵 마커용을 api를 따로 제작했으나 현재 검색기능과 맞추기 위해 주석처리함
+// app.use(apiRouter);
 app.use(viewRouter);
 app.use(authRouter);
 
