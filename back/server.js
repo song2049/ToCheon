@@ -40,8 +40,10 @@ async function connectDB() {
 }
 
 // --------------------- Kakao OAuth ---------------------
-app.get("/oauth/kakao", async (req, res) => {
-  const { code } = req.query;
+app.post("/oauth/kakao", async (req, res) => {
+  // const { code } = req.query;
+  const { client_id, redirect_uri, code } = req.body;
+
   if (!code) return res.status(400).send("Authorization code not provided.");
 
   try {
@@ -49,8 +51,10 @@ app.get("/oauth/kakao", async (req, res) => {
     const tokenResponse = await axios.post("https://kauth.kakao.com/oauth/token", null, {
       params: {
         grant_type: "authorization_code",
-        client_id: process.env.KAKAO_REST_API_KEY,
-        redirect_uri: process.env.REDIRECT_URI,
+        // client_id: process.env.KAKAO_REST_API_KEY,
+        // redirect_uri: process.env.REDIRECT_URI,
+        client_id: client_id,
+        redirect_uri: redirect_uri,
         code,
       },
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -71,6 +75,7 @@ app.get("/oauth/kakao", async (req, res) => {
       nickname: kakaoData.properties?.nickname || "unknown",
       thumbnail: kakaoData.properties?.thumbnail_image || null,
       email: kakaoData.kakao_account?.email || null,
+      provider: "kakao"
     };
 
     // 3) JWT 발급
