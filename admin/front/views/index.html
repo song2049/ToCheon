@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODAY-CHEON-ADMIN</title>
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <a href="/admin">투천 관리자</p>
+        </div>
+        <div class="header-right">
+            <a>메뉴</a>
+            <button>로그인</button>
+        </div>
+    </header>
+    <main>
+        <div class="dashboard">
+            <div class="dashboard-title">
+                <p>대시 보드</p>
+            </div>
+            <div class="dashboard-card">
+                <ul>
+                    <li>
+                        <p>승인 대기</p>
+                        <span>12</span>
+                    </li>
+                    
+                    <li>
+                        <p>등록된 맛집</p>
+                        <span>87</span>
+                    </li>
+                    
+                    <li>
+                        <P>신규 리뷰</P>
+                        <span>31</span>
+                    </li>
+                    
+                    <li>
+                        <P>신규 리뷰</P>
+                        <span>31</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="awaiting">
+            <div class="awaiting-title">
+                <p>승인 대기 목록</p>
+            </div>
+            <div class="awaiting-column">
+                <ul>
+                    <li>번호</li>
+                    <li>유저 아이디</li>
+                    <li>맛집 이름</li>
+                    <li>주소</li>
+                    <li>카테고리</li>
+                    <li>설명</li>
+                    <li>사진 등록</li>
+                    <li>영업시간</li>
+                    <li>승인관리</li>
+                </ul>
+                <form action="/approve" method="post" enctype="multipart/form-data" class="awaiting-row">
+                    <ul>
+                        <li>1</li>
+                        <li>user01</li>
+                        <li>보승회관</li>
+                        <li>서울특별시 강동구...</li>
+                        <li>한식</li>
+                        <li>보쌈집</li>
+                        <li><input type="file" name="photo"></li>
+                        <li>
+                            <input type="time" name="open" value="09:00">
+                            <input type="time" name="close" value="21:00">
+                        </li>
+                        <li class="approval-btns">
+                            <button class="approve-btn">승인</button>
+                            <button class="reject-btn">거절</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+    </main>
+</body>
+</html>
