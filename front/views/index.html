@@ -22,7 +22,6 @@
             {% else %}
             <button onclick="location.href = `/auth/login`">로그인</button>
             {% endif %}
-            
         </div>
     </header>
     <main>
@@ -60,11 +59,17 @@
                         <div class="stores-card-image"></div>
                         <a href="/detail/{{ store.ID }}" class="stores-card-title">{{ store.NAME }}</a>
                         <div class="stores-card-hashtag">
-                            <p>{{ store.HASH_TAG }}</p>
-                            <p># 핫</p>
-                            <p>#{{ store.CATEGORY }}</p>
+                            {% for hashtag in store.hashtags %}
+                                <p>{{ hashtag }}</p>
+                            {% endfor %}
                         </div>
                     </div>
+                {% endfor %}
+            </div>
+            <div class="pagination">
+                {% for p in pages %}
+                <a href="/?page={{ p }}{% if stores %}&stores={{ stores }}{% endif %}"
+                    class="page-btn {% if p == page %}on{% endif %}">{{ p }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -89,7 +94,7 @@
     <script src="./js/hashTag.js"></script>
     <script src="./js/logout.js"></script>
     <!-- 아래는 서버에서 받아온 데이터를 mainmap 에서 받아올 수 있게 처리하는 구문-->
-    <script> const storesData = JSON.parse('{{ data | dump | safe }}'); </script>
+    <script> const storesData = JSON.parse('{{ mapData | dump | safe }}'); </script>
     <script src="./js/mainMap.js"></script>
 </body>
 </html>
