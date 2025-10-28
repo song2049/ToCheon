@@ -43,20 +43,26 @@ const getOauthLogin = (req, res) => {
 
 const getKakaoLogin = async(req, res) => {
     // 사용자가 로그인을 하면 코드를 날림
-    const { code } = req.query;
+    try {
+        const { code } = req.query;
 
-    const { data } = await axios.post("http://localhost:4000/oauth/kakao", {
+        const { data } = await axios.post("http://localhost:4000/oauth/kakao", {
         client_id: process.env.KAKAO_REST_API_KEY,
         redirect_uri: process.env.REDIRECT_URI,
         code: code
-    });
-    
-    res.setHeader(
+        });
+
+        res.setHeader(
         "Set-Cookie",
         `access_token=${data.token}; Domain=localhost; Path=/; httpOnly; secure;`
         );
 
-    res.redirect("http://localhost:3000/");
+        res.redirect("http://localhost:3000/");
+        
+    } catch (error) {
+        res.status(200).json()
+    }
+
 };
 
 // 로그아웃을 요청할 때
@@ -70,8 +76,6 @@ const deleteLogout = (req, res) => {
         });
 }
         const userInfo = jwt.decode(access_token);
-        console.log(userInfo);
-        
 
         if (userInfo.provider === "local") {
             return res.clearCookie('access_token').json({
