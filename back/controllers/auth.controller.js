@@ -38,6 +38,7 @@ export async function login(req, res) {
         role: user.ROLE,
       },
       access_token: token,
+      provider: "local",
     });
   } catch (err) {
     console.error("login error:", err);
