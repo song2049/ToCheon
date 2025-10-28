@@ -17,8 +17,8 @@
         </div>
         <div class="header-right">
             <a>메뉴</a>
-            {% if userInfo and userInfo.role %}
-            <button type="button">로그아웃</button>
+            {% if userInfo and userInfo | length > 0 %}
+            <button class="logout-btn" type="button">로그아웃</button>
             {% else %}
             <button onclick="location.href = `/auth/login`">로그인</button>
             {% endif %}
@@ -87,6 +87,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
     <script src="./js/hashTag.js"></script>
+    <script src="./js/logout.js"></script>
     <!-- 아래는 서버에서 받아온 데이터를 mainmap 에서 받아올 수 있게 처리하는 구문-->
     <script> const storesData = JSON.parse('{{ data | dump | safe }}'); </script>
     <script src="./js/mainMap.js"></script>
