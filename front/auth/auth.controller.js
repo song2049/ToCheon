@@ -44,15 +44,16 @@ const getOauthLogin = (req, res) => {
 const getKakaoLogin = async(req, res) => {
     // 사용자가 로그인을 하면 코드를 날림
     const { code } = req.query;
-    console.log(code);
     
-    const { access_token } = await axios.get("http://localhost:4000/oauth/login", {
+    const { data } = await axios.post("http://localhost:4000/oauth/kakao", {
+        client_id: process.env.KAKAO_REST_API_KEY,
+        redirect_uri: process.env.REDIRECT_URI,
         code: code
     });
-
+    
     res.setHeader(
         "Set-Cookie",
-        `access_token=${access_token}; Domain=localhost; Path=/; httpOnly; secure;`
+        `access_token=${data.token}; Domain=localhost; Path=/; httpOnly; secure;`
         );
 
     res.redirect("http://localhost:3000/");
