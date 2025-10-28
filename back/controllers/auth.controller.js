@@ -23,7 +23,7 @@ export async function login(req, res) {
 
     // JWT 생성
     const token = jwt.sign(
-      { userId: user.ID, role: user.ROLE, email: user.EMAIL },
+      { userId: user.ID, role: user.ROLE, email: user.EMAIL, provider: "local" },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
@@ -38,7 +38,7 @@ export async function login(req, res) {
         role: user.ROLE,
       },
       access_token: token,
-      provider: "local",
+      
     });
   } catch (err) {
     console.error("login error:", err);
