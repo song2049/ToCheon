@@ -10,5 +10,5 @@ const axios = require("axios");
 
 
 module.exports = {
-    getMarker
+    // getMarker
 };

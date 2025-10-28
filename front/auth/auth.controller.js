@@ -1,9 +1,13 @@
+require("dotenv").config();
 const axios = require("axios");
+const jwt = require("jsonwebtoken");
 
+// 로그인 페이지 접근
 const getLogin = (req, res) => {
     res.render("login.html");
 };
 
+// 사용자의 로컬 로그인
 const postLogin = async(req, res) => {
     const { email, password } = req.body;
         try {
@@ -31,37 +35,71 @@ const postLogin = async(req, res) => {
 
 };
 
+// 맨처음 카카오페이지 html을 주는 곳
+const getOauthLogin = (req, res) => {
+    const redirectURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_REST_API_KEY}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code`
+    res.redirect(redirectURL);
+};
 
-module.exports = {
-    getLogin,
-    postLogin
+const getKakaoLogin = async(req, res) => {
+    // 사용자가 로그인을 하면 코드를 날림
+    const { code } = req.query;
+    console.log(code);
+    
+    const { access_token } = await axios.get("http://localhost:4000/oauth/login", {
+        code: code
+    });
+
+    res.setHeader(
+        "Set-Cookie",
+        `access_token=${access_token}; Domain=localhost; Path=/; httpOnly; secure;`
+        );
+
+    res.redirect("http://localhost:3000/");
+};
+
+// 로그아웃을 요청할 때
+const deleteLogout = (req, res) => {
+    try {
+        const { access_token } = req.cookies;
+
+        if (!access_token) {
+            return res.status(400).json({
+            message: "로그인 상태가 아닙니다."
+        });
+}
+        let userInfo = {};
+        if (access_token) userInfo = jwt.decode(access_token);
+
+        if (userInfo.provider === "local") {
+            return res.clearCookie('access_token').json({
+                message: "http://localhost:3000"
+            })
+        };
+
+        if (userInfo.provider === "kakao") {
+            res.clearCookie('access_token')
+            const REST_API_KEY = process.env.KAKAO_REST_API_KEY;
+            const LOGOUT_REDIRECT_URI = process.env.LOGOUT_REDIRECT_URI;
+            const kakaoLogoutUrl = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
+            return res.json({
+                message: kakaoLogoutUrl
+            })
+        };
+        
+    } catch (error) {
+        res.status(401).json({
+            message: "로그아웃에 실패하였습니다."
+        });
+    };
+
 };
 
 
-// const loginLocal = document.querySelector(".login-local");
-
-// loginLocal.addEventListener("submit", async(e) => {
-//     e.preventDefault();
-
-//     const email = e.target.email.value
-//     const password = e.target.password.value
-
-//     if(email.length === 0 || password.length === 0) {
-//         alert("이메일 또는 비밀번호를 입력해주시길 바랍니다.")
-//         return
-//     }
-//     try {
-//         // 인풋정보 담아서 body로 보내주기
-//         const { data } = await axios.post(`http://192.168.0.191:4000/auth/login`, {
-//             email: email,
-//             password: password
-//         });
-//         alert(data.message)
-//         // 성공하면 메인페이지
-//         // window.location.href = "http://192.168.0.191:4000/"
-//     } catch (error) {
-//         console.log(error);
-        
-//         alert("이메일 또는 비밀번호가 틀렸습니다."); 
-//     }
-// })
+module.exports = {
+    getLogin,
+    postLogin,
+    getOauthLogin,
+    getKakaoLogin,
+    deleteLogout
+};

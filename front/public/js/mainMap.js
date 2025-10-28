@@ -24,14 +24,28 @@ const mapApi = async () => {
       });
 
       // 오버레이 창에 넣는 정보들
-      const content = `
+      let content = ``
+
+      if(store.DESCRIPTION && store.DESCRIPTION.includes("맛집")) {
+        content = `
+        <div class="custom-overlay-good">
+          <a href="/detail/${store.ID}" class="title">🔥${store.NAME}🔥</a>
+          <div class="category">${store.CATEGORY}</div>
+          <div class="address">${store.ADDRESS}</div>
+          <div class="DESCRIPTION">${store.DESCRIPTION}</div>
+        </div>
+        `;
+      } else {
+        content = `
         <div class="custom-overlay">
           <a href="/detail/${store.ID}" class="title">${store.NAME}</a>
           <div class="category">${store.CATEGORY}</div>
           <div class="address">${store.ADDRESS}</div>
           <div class="DESCRIPTION">${store.DESCRIPTION}</div>
         </div>
-      `;
+        `;
+      };
+
 
       // 오버레이 만듬
       const overlay = new kakao.maps.CustomOverlay({
