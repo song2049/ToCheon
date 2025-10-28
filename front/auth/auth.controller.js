@@ -44,7 +44,7 @@ const getOauthLogin = (req, res) => {
 const getKakaoLogin = async(req, res) => {
     // 사용자가 로그인을 하면 코드를 날림
     const { code } = req.query;
-    
+
     const { data } = await axios.post("http://localhost:4000/oauth/kakao", {
         client_id: process.env.KAKAO_REST_API_KEY,
         redirect_uri: process.env.REDIRECT_URI,
@@ -69,8 +69,9 @@ const deleteLogout = (req, res) => {
             message: "로그인 상태가 아닙니다."
         });
 }
-        let userInfo = {};
-        if (access_token) userInfo = jwt.decode(access_token);
+        const userInfo = jwt.decode(access_token);
+        console.log(userInfo);
+        
 
         if (userInfo.provider === "local") {
             return res.clearCookie('access_token').json({
