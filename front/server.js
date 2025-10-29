@@ -11,6 +11,7 @@ const storeRouter = require("./store/store.route.js");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const apiRouter = require("./api/api.router.js");
+const multer = require('multer');
 
 app.use(cookieParser());
 app.use(express.static('public'));
@@ -19,6 +20,42 @@ app.use(express.json());
 
 app.set("view engine", "html");
 nunjucks.configure("views", { express: app });
+
+const storage = multer.diskStorage({
+  destination: (req, file, done) => {
+    done(null, 'uploads/');
+  },
+  filename: (req, file, done) => {
+    const ext = path.extname(file.originalname);
+    const filename = path.basename(file.originalname, ext) + '_' + Date.now() + ext;
+    done(null, filename);
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }
+});
+
+app.use('/uploads', express.static('uploads'));
+app.post('/upload', upload.single('image'), (req, res) => {
+  console.log('=== 전체 req.body ===');
+  console.log(req.body);
+  console.log('=== 전체 req.file ===');
+  console.log(req.file);
+  
+  const { taste, price, service, menu, content } = req.body;
+  const imageFile = req.file;
+  
+  console.log('별점:', { taste, price, service });
+  console.log('메뉴:', menu);
+  console.log('리뷰 내용:', content);
+  console.log('이미지:', imageFile ? imageFile.path : '없음');
+  
+  res.send('리뷰가 등록되었습니다');
+});
+
+
 
 app.get("/", async (req, res) => {
 

@@ -104,7 +104,7 @@
         </div>
       </div>
 
-      <form class="review-form">
+      <form class="review-form" action="/upload" method="post" enctype="multipart/form-data">
         <h2>리뷰 작성</h2>
         <div class="review-top-section">
           <div class="review-scores-wrapper">
@@ -135,18 +135,20 @@
           </div>
           <div class="review-menu-wrapper">
             <h4 class="field-title">어떤 메뉴를 먹었나요? <span id="require-dot">*</span></h4>
-            <textarea rows="5" placeholder="메뉴를 입력해주세요."></textarea>
+            <textarea name="menu" rows="5" placeholder="메뉴를 입력해주세요."></textarea>
           </div>
         </div>
         <h4 class="field-title">리뷰 내용 <span id="require-dot">*</span></h4>
-        <textarea rows="5" placeholder="비속어, 비방하는 리뷰는 삭제될 수 있습니다."></textarea>
+        <textarea name="content" rows="5" placeholder="비속어, 비방하는 리뷰는 삭제될 수 있습니다."></textarea>
         <h4 class="field-title">메뉴 사진 <span id="require-dot">*</span></h4>
         <div class="photo-drop">
           <img src="/image/upload_icon.png" alt="" width="50px" height="50px">
+          <input type="file" name="image" accept="image/*">
           <div class="drop-hint">맛있게 드셨나요?</div>
         </div>
         <button type="submit" class="btn-submit">리뷰 남기기</button>
       </form>
+
 
       <div class="review-list">
         <h3>리뷰 목록</h3>
