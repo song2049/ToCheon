@@ -7,16 +7,11 @@ const postSearch = async (req, res) => {
     res.redirect(`/?stores=${encodeURIComponent(stores)}`);
 };
 
-const getDetail = (req, res) => {
+const getDetail = (req, res) => {res.render("detail.html");
 //쿼리스트링 받을 때
 }
-const postDetail = (req, res) => {
-//리뷰 전송할 때
-    res.render("detail.html");
-};
 
 module.exports = {
     getDetail,
-    postDetail,
     postSearch
 };

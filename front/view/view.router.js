@@ -4,7 +4,6 @@ const viewController = require("./view.controller.js")
 
 router.post("/", viewController.postSearch);
 
-router.get('/detail', viewController.getDetail);
-router.post('/detail', viewController.postDetail);
+router.get('/detail/:id', viewController.getDetail);
 
 module.exports = router;
