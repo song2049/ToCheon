@@ -35,11 +35,29 @@ awaitingRows.forEach((form) => {
 awaitingRows.forEach((form) => {
     const rejectBtn = form.querySelector(".reject-btn");
 
-    rejectBtn.addEventListener("click", async (e) => {
-        e.preventDefault();
-        const storeId = form.querySelector("input[name='storeId']").value;
+    rejectBtn.addEventListener("click", async () => {
 
-        console.log("거절 처리:", storeId);
+        const ID = form.querySelector("input[name='storeId']").value;
+        const rejectConfirm = confirm(`해당 ${ID} 번 대기 목록을 거절 하시겠습니까?`);
+        if(!rejectConfirm) {return};
+
+        if (!rejectConfirm) { return };
+        try {
+            if (!ID) {
+                throw new Error("ID 값이 없습니다.")
+            }
+            const { data } = await axios.post("/admin/reject", {
+                ID: ID
+            });
+
+            alert(data);
+            window.location.href = "http://localhost:3001/admin"
+
+        } catch (error) {
+            console.log(error)
+            alert("거절 처리에 실패하였습니다.");
+        }
+
 
     });
 });
