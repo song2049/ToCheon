@@ -1,0 +1,176 @@
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #222;
+  width: 100%;
+}
+
+/* 개별 카드 */
+.review-item {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* --------------------------- */
+/* 상단: 프로필 + 닉네임 */
+.review-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-title .profile img {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-title .nickname {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+}
+
+/* --------------------------- */
+/* 별점 + 점수 + 날짜 */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.rating .stars {
+  color: #2f6bff;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.rating .score {
+  font-weight: 500;
+  color: #333;
+}
+
+.rating .date {
+  color: #888;
+  font-size: 13px;
+  margin-left: 6px;
+}
+
+/* --------------------------- */
+/* 본문: 왼쪽 내용 + 오른쪽 이미지 */
+.review-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+/* 왼쪽 텍스트 영역 */
+.review-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.review-content .text {
+  line-height: 1.6;
+  font-size: 17px;
+  color: #333;
+}
+
+/* 맛/가격/응대 */
+.review-content .tags {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  padding-top: 8px;
+}
+
+.review-content .tags strong {
+  font-weight: 600;
+  color: #000;
+}
+
+/* 메뉴 정보 */
+.review-content .menu {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.review-content .menu p:first-child {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.review-content .menu p:last-child {
+  color: #444;
+  font-size: 14px;
+}
+
+/* --------------------------- */
+/* 오른쪽 이미지 영역 */
+.review-images {
+  display: flex;
+  flex-wrap: wrap;
+  width: 660px;
+  gap: 8px;
+}
+
+.review-images img {
+  width: 214px;
+  height: 214px;
+  border-radius: 10px;
+  object-fit: cover;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-images img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* --------------------------- */
+/* 반응형 (모바일 시 1열) */
+@media (max-width: 768px) {
+  .review-item {
+    padding: 18px;
+  }
+
+  .review-body {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .review-images {
+    flex-wrap: wrap;
+  }
+
+  .review-images img {
+    width: calc(50% - 6px);
+    height: 140px;
+  }
+
+  .review-title .profile img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .rating .stars {
+    font-size: 14px;
+  }
+}
