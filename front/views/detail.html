@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TODAY-CHEON</title>
-  <link rel="stylesheet" href="./css/font.css">
-  <link rel="stylesheet" href="./css/common.css">
-  <link rel="stylesheet" href="./css/detail.css">
+  <link rel="stylesheet" href="/css/font.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/detail.css">
   <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
 </head>
 
@@ -26,12 +26,12 @@
   <main>
     <section class="detail-container">
       <div class="info">
-        <div class="title">봉피양 본점</div>
+        <div class="title">{{ name }}</div>
         <div class="content">돼지갈비</div>
         <div class="score">
           <span class="score-stars">★★★★☆</span>
-          <span class="score-average">4.1</span>
-          <span class="score-total">리뷰 63건</span>
+          <span class="score-average">{{avgTotal}}</span>
+          <span class="score-total">{{reviewCount}}명의 평가</span>
         </div>
       </div>
 
@@ -39,7 +39,7 @@
         <div class="grid-left">
           <div id="map" class="kakaomap"></div>
           <ul class="store">
-            <li>📞 02-415-5527</li>
+            <li>📞 {{telNumber}}</li>
             <li>📍 서울 송파구 올림픽로32길 4</li>
             <li>🕒 매일 11:30~22:00</li>
             <li>📋 예약 가능 · 주차 가능</li>
@@ -146,7 +146,7 @@
         <textarea rows="5" placeholder="비속어, 비방하는 리뷰는 삭제될 수 있습니다."></textarea>
         <h4 class="field-title">메뉴 사진 <span id="require-dot">*</span></h4>
         <div class="photo-drop">
-          <img src="./image/upload_icon.png" alt="" width="50px" height="50px">
+          <img src="/image/upload_icon.png" alt="" width="50px" height="50px">
           <div class="drop-hint">맛있게 드셨나요?</div>
         </div>
         <button type="submit" class="btn-submit">리뷰 남기기</button>
