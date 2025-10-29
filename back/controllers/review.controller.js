@@ -1,72 +1,80 @@
-import { query } from "../db/connection.js";
+import { Review, Picture } from "../models/index.js";
 
+/**
+ * 리뷰 작성
+ */
 export async function createReview(req, res) {
   const { store_id } = req.params;
   const { point1, point2, point3, content, orderedItem, photos = [] } = req.body;
-  const userId = req.user.userId;
+  const userId = req.user?.userId;
 
-  if (!point1 || !point2 || !point3)
-    return res.status(400).json({ error: "평점(POINT_01~03)은 모두 필수입니다." });
-
-  const pool = (await import("../db/connection.js")).default;
-  const conn = await pool.getConnection();
+  if (!userId) return res.status(401).json({ error: "인증이 필요합니다." });
 
   try {
-    await conn.beginTransaction();
+    // 1. 리뷰 생성
+    const review = await Review.create({
+      USER_ID: userId,
+      STORE_ID: store_id,
+      POINT_01: point1,
+      POINT_02: point2,
+      POINT_03: point3,
+      CONTENT: content,
+      ORDERED_ITEM: orderedItem,
+      CREATED_AT: new Date(),
+    });
 
-    const [result] = await conn.query(
-      `INSERT INTO TB_REVIEW
-       (USER_ID, STORE_ID, POINT_01, POINT_02, POINT_03, CONTENT, ORDERED_ITEM, CREATED_AT)
-       VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
-      [userId, store_id, point1, point2, point3, content, orderedItem]
-    );
-    const reviewId = result.insertId;
-
-    if (Array.isArray(photos) && photos.length) {
-      const photoValues = photos.map((url, idx) => [reviewId, url, idx === 0 ? 1 : 0]);
-      await conn.query(
-        `INSERT INTO TB_PICTURE (REVIEW_ID, URL, IS_MAIN, CREATED_AT)
-         VALUES ?`,
-        [photoValues.map((v) => [...v, new Date()])]
-      );
+    // 2. 사진 등록 (선택사항)
+    if (Array.isArray(photos) && photos.length > 0) {
+      const pictureData = photos.map((url) => ({
+        REVIEW_ID: review.ID,
+        URL: url,
+        IS_MAIN: false,
+        CREATED_AT: new Date(),
+      }));
+      await Picture.bulkCreate(pictureData);
     }
 
-    await conn.commit();
-    res.status(201).json({ message: "리뷰가 등록되었습니다.", reviewId });
-  } catch (e) {
-    await conn.rollback();
-    console.error("리뷰 등록 오류:", e);
-    res.status(500).json({ error: "리뷰 등록 실패" });
-  } finally {
-    conn.release();
+    res.status(201).json({
+      message: "리뷰가 등록되었습니다.",
+      reviewId: review.ID,
+    });
+  } catch (err) {
+    console.error("createReview error:", err);
+    res.status(500).json({ error: "리뷰 등록 중 오류 발생" });
   }
 }
 
+/**
+ * 리뷰 목록 조회
+ */
 export async function listReviews(req, res) {
   const { store_id } = req.params;
   const { page = 1, pageSize = 20 } = req.query;
   const offset = (Number(page) - 1) * Number(pageSize);
 
-  const rows = await query(
-    `SELECT R.ID,
-            R.USER_ID,
-            U.NAME AS userName,
-            R.POINT_01, R.POINT_02, R.POINT_03,
-            R.CONTENT,
-            R.ORDERED_ITEM,
-            R.CREATED_AT,
-            (
-              SELECT JSON_ARRAYAGG(P.URL)
-              FROM TB_PICTURE P
-              WHERE P.REVIEW_ID = R.ID
-            ) AS PHOTOS
-     FROM TB_REVIEW R
-     JOIN TB_USER U ON R.USER_ID = U.ID
-     WHERE R.STORE_ID = ?
-     ORDER BY R.CREATED_AT DESC
-     LIMIT ? OFFSET ?`,
-    [store_id, Number(pageSize), offset]
-  );
+  try {
+    const reviews = await Review.findAll({
+      where: { STORE_ID: store_id },
+      include: [
+        {
+          model: Picture,
+          as: "Pictures", //  alias 대소문자 일치 (models/index.js와 동일해야 함)
+          attributes: ["URL", "IS_MAIN"],
+          required: false, // 사진이 없어도 리뷰 조회 가능 (LEFT JOIN)
+        },
+      ],
+      limit: Number(pageSize),
+      offset,
+      order: [["CREATED_AT", "DESC"]],
+    });
 
-  res.json({ items: rows, page: Number(page), pageSize: Number(pageSize) });
+    res.json({
+      items: reviews,
+      page: Number(page),
+      pageSize: Number(pageSize),
+    });
+  } catch (err) {
+    console.error("listReviews error:", err);
+    res.status(500).json({ error: "리뷰 목록 조회 중 오류 발생" });
+  }
 }

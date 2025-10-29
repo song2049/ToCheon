@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const viewController = require("./view.controller.js")
 
-// router.get("/auth/login", viewController.getLogin);
+router.post("/", viewController.postSearch);
+
+router.get('/detail', viewController.getDetail);
+router.post('/detail', viewController.postDetail);
 
 module.exports = router;

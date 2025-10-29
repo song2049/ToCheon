@@ -1,0 +1,73 @@
+.custom-overlay {
+    font-family: 'Pretendard';
+    font-size: 14px;
+    position: relative;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #333;
+    text-align: center;
+    border: 1px solid #e4e4e4;
+}
+
+.custom-overlay-good {
+    font-family: 'Pretendard';
+    font-size: 14px;
+    position: relative;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #333;
+    text-align: center;
+    border: 1px solid #ff0095;
+}
+
+/* 가게 이름 */
+.custom-overlay .title {
+    display: block;
+    font-weight: 700;
+    font-size: 15px;
+    color: #2c3e50;
+    margin-bottom: 6px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.custom-overlay-good .title {
+    display: block;
+    font-weight: 700;
+    font-size: 15px;
+    color: #2c3e50;
+    margin-bottom: 6px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+/* 필요할지 모르겠다만 우선 가게 주소도 띄움 */
+.custom-overlay .address {
+    font-size: 13px;
+    color: #3A3A3A;
+    margin-bottom: 4px;
+}
+
+.custom-overlay-good .address {
+    font-size: 13px;
+    color: #3A3A3A;
+    margin-bottom: 4px;
+}
+
+/* 카테고리는 무엇인지 */
+.custom-overlay .category {
+    font-size: 16px;
+    font-weight: 700;
+    color: #6299EB;
+    margin-bottom: 4px;
+}
+
+
+.custom-overlay-good .category {
+    font-size: 16px;
+    font-weight: 700;
+    color: #6299EB;
+    margin-bottom: 4px;
+}

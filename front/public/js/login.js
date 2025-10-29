@@ -12,12 +12,11 @@ loginLocal.addEventListener("submit", async(e) => {
     }
 
     try {
-        const res = await axios.post("/auth/login", { email: email, password: password });
-        
-        console.log(res.message);
+        const { data } = await axios.post("/auth/login", { email: email, password: password });
+        alert(data.message);
         window.location.href = "http://localhost:3000/"
         
     } catch (error) {
-        console.error("실패");
+        alert("로그인에 실패 하였습니다!");
     }
 });
