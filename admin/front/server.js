@@ -17,7 +17,11 @@ app.use(express.json());
 app.set("view engine", "html");
 nunjucks.configure("views", { express: app});
 
-app.get("/admin", (req, res) => {
+app.get("/admin", async(req, res) => {
+    const { data } = await axios.get("http://localhost:4000/api/admin/stores/pending");
+
+    console.log(data.items);
+    
     res.render("index.html")
 })
 
