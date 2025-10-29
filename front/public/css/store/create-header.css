@@ -87,7 +87,7 @@
 
 .create-header > .create-header-search .search-btn {
   position: absolute;
-  right: 130px;
+  right: 110px;
   top: 16px;
 }
 
@@ -96,6 +96,7 @@
   border: none;
   border-radius: 6px;
   height: 45px;
+  margin: 0 0 0 10px;
   padding: 0px 25px;
   background: #006FFF;
   font-size: 20px;

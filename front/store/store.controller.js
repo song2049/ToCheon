@@ -8,54 +8,38 @@ const getStoreById = (req, res) => {
 
 const getCreate = async (req, res) => {
   try {
-    const { lat, lng } = req.query;
+    const { lat, lng, name } = req.query;
 
-    // 1) 위경도 값이 없으면 step1 페이지로
     if (!lat || !lng) {
-      return res.sendFile(
-        path.join(__dirname, "../views/store/create/step1.html")
-      );
+      return res.sendFile(path.join(__dirname, "../views/store/create/step1.html"));
     }
 
-    // 2) 카카오맵 장소 검색 (좌표 기반)
-    const response = await axios.get("https://dapi.kakao.com/v2/local/search/category.json", {
-      headers: { Authorization: `KakaoAK ${process.env.REST_API_KEY}` },
-      params: {
-        category_group_code: "FD6", // 음식점 카테고리
-        x: lng,
-        y: lat,
-        radius: 50, // 반경 50m 내 검색 (정확한 매칭)
-        sort: "distance"
-      },
+    // place_name 기반으로 검색 (이름 매칭)
+    const response = await axios.get("https://dapi.kakao.com/v2/local/search/keyword.json", {
+      headers: { Authorization: `KakaoAK ${process.env.KAKAO_REST_API_KEY}` },
+      params: { query: name, x: lng, y: lat, radius: 100, sort: "accuracy" },
     });
 
-    const storeData = response.data.documents[0]; // 가장 가까운 가게 하나
-
-    if (!storeData) {
-      return res.render("store/create/step2.html", {
-        store: {
-          place_name: "가게 정보를 불러올 수 없습니다",
-          address_name: "",
-          road_address_name: "",
-          phone: "",
-        },
-      });
-    }
-
-    // 3) step2.html로 렌더링
-    res.render("store/create/step2.html", { store: storeData });
+    const storeData = response.data.documents[0];
+    res.render("store/create/step2.html", { store: storeData || {} });
 
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ success: false, message: "값을 불러오지 못했습니다." });
+    res.status(500).json({ success: false, message: "값을 불러오지 못했습니다." });
   }
 };
 
+
 const postCreate = (req, res) => {
-  const {...rest} = req.body;
-  res.json(rest)
+  try {
+    const {...rest} = req.body;
+    console.log(rest);
+    res.json(rest);
+    console.log(rest);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "서버에 문제가 생겼습니다."})
+  }
 }
 
 module.exports = {

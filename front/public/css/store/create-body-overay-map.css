@@ -1,37 +1,74 @@
+/* ------------------------------------------
+   공통 오버레이 스타일
+------------------------------------------- */
 .custom-overlay {
-    font-family: 'Pretendard';
-    font-size: 14px;
-    position: relative;
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 10px 14px;
-    color: #333;
-    text-align: center;
-    border: 1px solid #e4e4e4;
+  position: relative;
+  background: #ffffff;
+  padding: 12px 16px;
+  color: #2c3e50;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
 }
 
-/* 가게 이름 */
+/* ------------------------------------------
+   등록하기 버튼
+------------------------------------------- */
+.custom-overlay a.title {
+  display: inline-block;
+  background: #007aff;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.custom-overlay a.title:hover {
+  background: #005fcc;
+}
+
+/* ------------------------------------------
+   가게 이름
+------------------------------------------- */
 .custom-overlay .title {
-    display: block;
-    font-weight: 700;
-    font-size: 15px;
-    color: #2c3e50;
-    margin-bottom: 6px;
-    text-decoration: none;
-    transition: color 0.2s ease;
+  display: block;
+  font-weight: 700;
+  font-size: 15px;
+  color: #2c3e50;
+  margin-bottom: 6px;
 }
 
-/* 필요할지 모르겠다만 우선 가게 주소도 띄움 */
-.custom-overlay .address {
-    font-size: 13px;
-    color: #3A3A3A;
-    margin-bottom: 4px;
-}
-
-/* 카테고리는 무엇인지 */
+/* ------------------------------------------
+   카테고리 (파란 강조)
+------------------------------------------- */
 .custom-overlay .category {
-    font-size: 16px;
-    font-weight: 700;
-    color: #6299EB;
-    margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #007aff;
+  margin-bottom: 4px;
+}
+
+/* ------------------------------------------
+   주소
+------------------------------------------- */
+.custom-overlay .address {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+  word-break: break-all;
+  white-space: nowrap;
+}
+
+.custom-overlay .address a {
+  color: #888;
+  text-decoration: none;
+}
+
+.custom-overlay .address a:hover {
+  text-decoration: underline;
 }
