@@ -136,3 +136,8 @@ export async function getStoreDetail(req, res) {
   }
 }
 
+// 승인 처리
+export async function postStore(req, res) {
+  //
+  
+}
