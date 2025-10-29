@@ -8,7 +8,7 @@ awaitingRows.forEach((form) => {
         const imgurl = e.target.imgurl.value;
         const open = e.target.open.value;
         const close = e.target.close.value;
-        const eattime = open + close;
+        const eatTime = `${open} ~ ${close}`;
 
         if (imgurl.length === 0 || open.length === 0 || close.length === 0) {
             alert("이미지 주소 또는 영업시간이 올바르게 입력되지 않았습니다.")
@@ -19,9 +19,10 @@ awaitingRows.forEach((form) => {
             const { data } = await axios.post("/admin/approve", {
                 ID: storeId,
                 IMAGE_URL: imgurl,
-                EATING_TIME: eattime
+                EATING_TIME: eatTime
             });
-            alert(data.message);
+            
+            alert(data);
             window.location.href = "http://localhost:3001/admin"
         } catch (error) {
             console.log(error)
@@ -29,3 +30,12 @@ awaitingRows.forEach((form) => {
         }
     });
 });
+
+// 거절 눌렀을 때
+awaitingRows.forEach((form) => {
+    form.addEventListener("button", async (e) => {
+        e.preventDefault();
+        console.log("테스트");
+        
+    })
+})
