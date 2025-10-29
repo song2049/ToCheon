@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const viewRouter = require("./view/view.router");
 const authRouter = require("./auth/auth.router");
+const storeRouter = require("./store/store.route.js");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const apiRouter = require("./api/api.router.js");
@@ -89,6 +90,7 @@ app.get("/", async (req, res) => {
 // app.use(apiRouter);
 app.use(viewRouter);
 app.use(authRouter);
+app.use(storeRouter);
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);

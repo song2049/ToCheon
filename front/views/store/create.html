@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODAY-CHEON - 등록 페이지</title>
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/store/create-common.css">
+    <link rel="stylesheet" href="/css/store/create-body.css">
+    <link rel="stylesheet" href="/css/store/create-header.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <i class="logo-icon"></i>
+            <a href="/">TODAY-CHEON</p>
+        </div>
+        <div class="header-right">
+            <a>메뉴</a>
+            <button onclick="location.href = `./login.html`">로그인</button>
+        </div>
+    </header>
+    <main>
+        <div id="inner">
+            <div class="create-header">
+                <div class="create-header-nav">
+                    <div>
+                        <i class="google-marker"></i>
+                        <span>맛집 등록</span>
+                    </div>
+                    <span>Step 1</span>
+                </div>
+                <div class="create-header-headline">
+                    <span>맛집을</span> <span>검색해보세요!</span>
+                </div>
+                <div class="create-header-search">
+                    <form action="/" method="post">
+                        <input type="text" id="searchInput" name="stores" placeholder="음식점 리스트를 입력하세요">
+                        <img src="/image/search-icon.png" class="search-btn" alt="">
+                    </form>
+                    <button type="submit">검색</button>
+                </div>
+            </div>
+            <div class="create-body" id="map"></div>
+        </div>
+    </main>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
+    <script src="/js/mainMap.js"></script>
+</body>
+</html>

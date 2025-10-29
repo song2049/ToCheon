@@ -1,0 +1,16 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+main {
+    padding: 60px 0px;
+}
+
+main > #inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1440px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
