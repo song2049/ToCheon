@@ -120,19 +120,21 @@ export async function getStoreMenu(req, res) {
 export async function getStoreDetail(req, res) {
   try {
     const { store_id } = req.params;
-
-    const store = await Store.findByPk(store_id, {
-      attributes: ["TEL_NUMBER", "HASH_TAG", "ADDRESS", "EATING_TIME"],
+    
+    const store = await Store.findOne({
+      where: { 
+        ID: store_id,
+        IS_APPROVED: "1" 
+      }
     });
-
+    
     if (!store) {
-      return res.status(404).json({ error: "해당 매장을 찾을 수 없습니다." });
+      return res.status(404).json({ error: "맛집을 찾을 수 없습니다." });
     }
-
+    
     res.json(store);
   } catch (error) {
-    console.error("getStoreDetail error:", error);
-    res.status(500).json({ error: "매장 상세 정보 조회 실패" });
+    console.error("getStoreById error:", error);
+    res.status(500).json({ error: "맛집 조회 중 오류 발생" });
   }
 }
-
