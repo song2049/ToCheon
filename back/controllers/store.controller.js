@@ -115,3 +115,24 @@ export async function getStoreMenu(req, res) {
     res.status(500).json({ error: "메뉴 조회 실패" });
   }
 }
+
+// 7. 단일 매장 기본 정보 (상세페이지용)
+export async function getStoreDetail(req, res) {
+  try {
+    const { store_id } = req.params;
+
+    const store = await Store.findByPk(store_id, {
+      attributes: ["TEL_NUMBER", "HASH_TAG", "ADDRESS", "EATING_TIME"],
+    });
+
+    if (!store) {
+      return res.status(404).json({ error: "해당 매장을 찾을 수 없습니다." });
+    }
+
+    res.json(store);
+  } catch (error) {
+    console.error("getStoreDetail error:", error);
+    res.status(500).json({ error: "매장 상세 정보 조회 실패" });
+  }
+}
+

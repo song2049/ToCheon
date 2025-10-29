@@ -98,6 +98,7 @@ async function seedDummyData() {
       NAME: `천호맛집_${i}`,
       CATEGORY: category,
       ADDRESS: `서울특별시 강동구 천호동 ${100 + i}번지`,
+      EATING_TIME: `09:00~20:00`,
       PHONE: phone,
       DESCRIPTION: desc,
       HASH_TAG: tag,
