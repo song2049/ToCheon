@@ -1,9 +1,24 @@
-import { Store, Review } from "../models/index.js";
+import { Store, Review, User } from "../models/index.js";
 
-// 승인 대기 목록
+// 승인 대기 목록 (TB_STORE 전체 컬럼 + 등록자 이름 포함)
 export async function getPendingStores(req, res) {
-  const stores = await Store.findAll({ where: { IS_APPROVED: 0 } });
-  res.json({ items: stores });
+  try {
+    const stores = await Store.findAll({
+      where: { IS_APPROVED: 0 },
+      include: [
+        {
+          model: User,
+          attributes: ["NAME"], // TB_USER에서 NAME만
+        },
+      ],
+      order: [["CREATED_AT", "DESC"]],
+    });
+
+    res.json({ items: stores });
+  } catch (error) {
+    console.error("getPendingStores error:", error);
+    res.status(500).json({ error: "승인 대기 목록 조회 중 오류 발생" });
+  }
 }
 
 // 승인 처리
