@@ -1,8 +1,7 @@
-// /back/models/user.js
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../db/sequelize.js";
 
-class User extends Model {}
+export class User extends Model {}
 
 User.init(
   {
@@ -21,5 +20,3 @@ User.init(
     timestamps: false,
   }
 );
-
-export { User };
