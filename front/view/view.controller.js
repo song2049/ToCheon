@@ -33,6 +33,8 @@ const getDetail = async (req, res) => {
         const avgTotal = ((avgTaste + avgPrice + avgService) / 3).toFixed(1);
 
         res.render('detail.html', {
+            storeId: storeId,
+            
             title: map.NAME,
             content: menu[0].NAME,
             avgTotal: avgTotal,

@@ -15,44 +15,60 @@ const multer = require('multer');
 
 app.use(cookieParser());
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.set("view engine", "html");
 nunjucks.configure("views", { express: app });
 
 const storage = multer.diskStorage({
-  destination: (req, file, done) => {
-    done(null, 'uploads/');
-  },
-  filename: (req, file, done) => {
-    const ext = path.extname(file.originalname);
-    const filename = path.basename(file.originalname, ext) + '_' + Date.now() + ext;
-    done(null, filename);
-  }
+    destination: (req, file, done) => {
+        done(null, 'uploads/');
+    },
+    filename: (req, file, done) => {
+        const ext = path.extname(file.originalname);
+        const filename = path.basename(file.originalname, ext) + '_' + Date.now() + ext;
+        done(null, filename);
+    }
 });
 
 const upload = multer({
-  storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 }
+    storage: storage,
+    limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 app.use('/uploads', express.static('uploads'));
-app.post('/upload', upload.single('image'), (req, res) => {
-  console.log('=== 전체 req.body ===');
-  console.log(req.body);
-  console.log('=== 전체 req.file ===');
-  console.log(req.file);
-  
-  const { taste, price, service, menu, content } = req.body;
-  const imageFile = req.file;
-  
-  console.log('별점:', { taste, price, service });
-  console.log('메뉴:', menu);
-  console.log('리뷰 내용:', content);
-  console.log('이미지:', imageFile ? imageFile.path : '없음');
-  
-  res.send('리뷰가 등록되었습니다');
+app.post('/upload', upload.single('image'), async (req, res) => {
+    const { taste, price, service, menu, content, store_id } = req.body;
+    const imageFile = req.file;
+    const { access_token } = req.cookies;
+    console.log('access_token:', access_token ? '있음' : '없음');
+    console.log('store_id:', store_id);
+    console.log('리뷰 데이터:', { taste, price, service, menu, content });
+    try {
+        const response = await axios.post(
+            `http://localhost:4000/api/reviews/${store_id}`,
+            {
+                point1: parseInt(taste),      // POINT_01 (맛)
+                point2: parseInt(price),       // POINT_02 (가격)
+                point3: parseInt(service),     // POINT_03 (친절도)
+                content: content,              // CONTENT
+                orderedItem: menu,             // ORDERED_ITEM
+                photos: imageFile ? [imageFile.path] : []  // Picture 테이블용
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${access_token}`,  // Bearer 토큰 형식으로 전달
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+        return res.redirect(`/detail/${store_id}`);
+
+    }
+    catch (error) {
+        console.error('리뷰 등록 오류:', error.response?.data || error.message);
+    }
 });
 
 
@@ -77,35 +93,35 @@ app.get("/", async (req, res) => {
         const { data } = await axios.get("http://localhost:4000/api/stores");
 
         const findData = stores
-        // 검색어 없으면 밑에 삼항연산자로 통째 data를 줄거고 있으면 아래의 필터로직을 거침.
+            // 검색어 없으면 밑에 삼항연산자로 통째 data를 줄거고 있으면 아래의 필터로직을 거침.
             ? data.filter(store =>
                 store.NAME.toLowerCase().includes(stores.toLowerCase()) ||
                 store.CATEGORY.toLowerCase().includes(stores.toLowerCase()) ||
                 store.HASH_TAG.toLowerCase().includes(stores.toLowerCase())
-              )
+            )
             : data;
 
-            // 해시태그 문자열이 있으면 배열로 변환, 없으면 빈 배열
-            const processedData = findData.map(store => {
-                const hashtags = store.HASH_TAG
-                    ? store.HASH_TAG.split(' ').map(tag => tag.trim()).filter(Boolean) 
-                    : [];
+        // 해시태그 문자열이 있으면 배열로 변환, 없으면 빈 배열
+        const processedData = findData.map(store => {
+            const hashtags = store.HASH_TAG
+                ? store.HASH_TAG.split(' ').map(tag => tag.trim()).filter(Boolean)
+                : [];
 
-                return {
-                    ...store,
-                    hashtags
-                };
-            });
+            return {
+                ...store,
+                hashtags
+            };
+        });
 
         //  페이지 네이션을 위해 아래와 같은 로직을 거침
         const totalItems = processedData.length;
         const totalPages = Math.ceil(totalItems / limit);
         const pageData = processedData.slice(offset, offset + limit);
         const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-            
+
         res.render("index.html", {
             data: pageData,
-            mapData:findData,
+            mapData: findData,
             userInfo,
             stores,
             pages,
@@ -116,7 +132,7 @@ app.get("/", async (req, res) => {
         res.render("index.html", {
             // 문제가 있다면 빈배열 내뱉기
             data: [],
-            mapData:[],
+            mapData: [],
             userInfo,
             stores
         });
@@ -130,5 +146,5 @@ app.use(authRouter);
 app.use(storeRouter);
 
 app.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}`);
+    console.log(`http://localhost:${PORT}`);
 });
