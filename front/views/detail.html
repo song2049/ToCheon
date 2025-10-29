@@ -26,10 +26,10 @@
   <main>
     <section class="detail-container">
       <div class="info">
-        <div class="title">{{ name }}</div>
-        <div class="content">돼지갈비</div>
+        <div class="title">{{title}}</div>
+        <div class="content">{{content}}</div>
         <div class="score">
-          <span class="score-stars">★★★★☆</span>
+          <span class="score-stars" data-rating="{{avgTotal}}"></span>
           <span class="score-average">{{avgTotal}}</span>
           <span class="score-total">{{reviewCount}}명의 평가</span>
         </div>
@@ -40,8 +40,9 @@
           <div id="map" class="kakaomap"></div>
           <ul class="store">
             <li>📞 {{telNumber}}</li>
-            <li>📍 서울 송파구 올림픽로32길 4</li>
-            <li>🕒 매일 11:30~22:00</li>
+            <li>💡 {{hashTag}}</li>
+            <li>📍 {{address}}</li>
+            <li>🕒 {{eatingTime}}</li>
             <li>📋 예약 가능 · 주차 가능</li>
             <li>🚫 포장/배달 불가</li>
           </ul>
@@ -62,40 +63,35 @@
         </div>
         <div class="grid-score">
           <div class="score-area">
-            <div class="grid-total">4.1</div>
-            <div class="grid-stars">★★★★☆</div>
-            <div class="grid-desc">63건의 리뷰가 작성되었습니다.</div>
+            <div class="grid-total">{{avgTotal}}</div>
+            <div class="grid-stars" data-rating="{{avgTotal}}"></div>
+            <div class="grid-desc">{{reviewCount}}건의 리뷰가 작성되었습니다.</div>
           </div>
           <div class="bar-area">
             <div class="bar-item">
-              <div class="bar"></div>
-              <div class="bar-label">맛<span>4.0</span></div>
+              <div class="bar" data-score="{{avgTaste}}"></div>
+              <div>맛<span class="bar-label">{{avgTaste}}</span></div>
             </div>
             <div class="bar-item">
-              <div class="bar" style="height:72px;"></div>
-              <div class="bar-label">가격 4.0</div>
+              <div class="bar" data-score="{{avgPrice}}"></div>
+              <div>가격<span class="bar-label">{{avgPrice}}</span></div>
             </div>
             <div class="bar-item">
-              <div class="bar" style="height:72px;"></div>
-              <div class="bar-label">응대 4.0</div>
+              <div class="bar" data-score="{{avgService}}"></div>
+              <div>응대<span class="bar-label">{{avgService}}</span></div>
             </div>
           </div>
         </div>
+        <script src="/js/detail.js"></script>
         <div class="grid-menu">
           <div class="menu-name">메뉴정보</div>
           <input type="checkbox" id="more-toggle" hidden>
           <div class="menu-grid">
-            <span>평양냉면(물/비빔)</span><span class="price">16,000원</span>
-            <span>돼지갈비</span><span class="price">22,000원</span>
-            <span>갈비탕</span><span class="price">20,000원</span>
-            <span>수육</span><span class="price">20,000원</span>
-            <span>양념갈비</span><span class="price">34,000원</span>
-            <span>쟁반국수</span><span class="price">22,000원</span>
+            {% for item in storeMenu %}
+            <span>{{ item.NAME }}</span>
+            <span class="price">{{ item.PRICE }}원</span>
+            {% endfor %}
             <div class="hidden-items">
-              <span>추가 메뉴 1</span><span class="price">30,000원</span>
-              <span>추가 메뉴 2</span><span class="price">10,000원</span>
-              <span>추가 메뉴 3</span><span class="price">45,000원</span>
-              <span>추가 메뉴 4</span><span class="price">25,000원</span>
             </div>
           </div>
           <div class="more-button-area">
