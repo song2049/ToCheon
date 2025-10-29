@@ -117,11 +117,19 @@ main {
 
 }
 
+/* 호버되면 데이터행들 색이 바뀜 */
 .awaiting-item:hover {
   background-color: #F8F8FF;
   transition-property: background-color;
   transition-duration: 0.2s;
 }
+
+/* 호버될때 얘도 같이 호버배경색 바꿔서 모르게 하기 */
+.awaiting-item:hover input[name="storeId"] {
+  background-color: #F8F8FF; 
+  transition-duration: 0.2s;
+}
+
 
 /* 대기목록 정렬 */
 .awaiting-item > form {
@@ -138,9 +146,13 @@ main {
   text-align: center;
 }
 
+
 /* 번호 */
-.awaiting-item li:nth-child(1) {
+.awaiting-item input:nth-child(1) {
+  border-style: none;
+  text-align: center;
   width: 50px;
+  outline: none;
 }
 
 /* 유저 아이디 */

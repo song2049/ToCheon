@@ -29,15 +29,20 @@ app.get("/admin", async(req, res) => {
         const { data: waiting } = await axios.get("http://localhost:4000/api/admin/stores/pending");
         // 승인된 상점
         const { data: approval } = await axios.get("http://localhost:4000/api/stores");
+
+        // 받아온 데이터 상점 ID 작은 -> 큰 순서로 정렬
+        const waitingData = waiting.items.sort((a, b) => a.ID - b.ID);
+        
         // 어드민 상단 갯수들
-        const waitingData = waiting.items
-        const waitingNum = waiting.items.length
-        const approvalNum = approval.length
+        const waitingNum = waiting.items.length;
+        const approvalNum = approval.length;
+
         // 페이지 네이션 작업
         const totalItems = waitingData.length;
         const totalPages = Math.ceil(totalItems / limit);
         const pageData = waitingData.slice(offset, offset + limit);
         const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
         res.render("index.html",{
             stores,
             waitingData,
@@ -49,7 +54,7 @@ app.get("/admin", async(req, res) => {
         })
     } catch (error) {
         res.render("index.html",{
-            stores: []
+            pageData: []
         })
     }
 })
