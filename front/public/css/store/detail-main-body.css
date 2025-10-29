@@ -1,0 +1,215 @@
+#inner > #store-map-info {
+  display: flex;
+  gap: 20px;
+}
+
+#store-map-info > .left > #map {
+  width: 710px;
+  height: 710px;
+  border-radius: 10px;
+}
+
+#store-map-info > .left {
+  height: 100%;
+  border-radius: 10px;
+}
+
+#store-map-info > .left > .store-info {
+  padding: 20px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #222228;
+  font-weight: 350;
+  letter-spacing: -0.93px;
+  font-size: 16px;
+  line-height: 21px;
+}
+
+#store-map-info > .right > .inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.store-star-menu {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0 0 0;
+}
+
+/* 좌측 영역 */
+.store-star-menu > .menu-left {
+  width: 700px;
+  height: 282px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rating-summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+/* 왼쪽 평균 영역 */
+.rating-average {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rating-average > .score {
+  font-size: 52px;
+  font-weight: 500;
+  color: #222;
+}
+
+.rating-average > .rating {
+  display: flex;
+  gap: 4px;
+}
+
+.rating-average > .rating > i {
+  display: flex;
+  gap: 4px;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+/* 리뷰 수 */
+.rating-average .review-count {
+  font-size: 20px;
+  color: #222;
+  letter-spacing: -0.4px;
+}
+
+.rating-average .review-count .count {
+  color: #2f6bff;
+  font-weight: 500;
+}
+
+.rating-bars {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 30px;
+  height: 200px; /* 전체 높이 */
+}
+
+.bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+}
+
+.bar-container {
+  position: relative;
+  width: 20px;
+  height: 180px;
+  background-color: #eaeaea;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80%;
+  background-color: #2f6bff;
+  border-radius: 6px 6px 0 0;
+  transition: height 0.4s ease;
+}
+
+.bar-item p {
+  font-size: 20px;
+  padding: 10px 0 0 0;
+  font-weight: 450;
+  color: #202020;
+}
+
+.bar-item .score {
+  color: #2f6bff;
+  font-weight: 600;
+}
+
+/* 우측 영역 - 메뉴 정보 */
+.store-star-menu > .menu-right > .more {
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: -0.93px;
+  font-weight: 350;
+  color: #222228;
+  padding-top: 10px;
+  display: flex;
+  gap: 2px;
+}
+
+.store-star-menu > .menu-right > .more > img {
+  width: 12px;
+  height: 12px;
+}
+
+/* 우측 영역 - 메뉴 정보 */
+.store-star-menu > .menu-right > .menu-title {
+  font-size: 26px;
+  line-height: 28px;
+  letter-spacing: -0.93px;
+  font-weight: 450;
+  color: #222228;
+  padding-bottom: 10px;
+}
+
+.store-star-menu > .menu-right > .menu-container {
+  display: flex;
+  gap: 20px;
+}
+
+/* 메뉴 리스트 */
+.menu-container > .menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 330px;
+}
+
+/* 개별 메뉴 아이템 */
+.menu-list > .menu-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-weight: 350;
+}
+
+/* 메뉴 이름 + 추천 태그 묶음 */
+.menu-item > :nth-child(1) {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* 추천 태그 */
+.menu-item > :nth-child(1) > .menu-tag {
+  border: 1px solid #222228;
+  border-radius: 2px;
+  font-size: 12px;
+  color: #222228;
+  padding: 0px 11px;
+  text-align: center;
+  align-content: center;
+}
+
+/* 가격 */
+.menu-item > p {
+  font-size: 15px;
+  font-weight: 350;
+  line-height: 21px;
+  color: #222228;
+  letter-spacing: -0.93px;
+}

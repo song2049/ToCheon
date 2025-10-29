@@ -1,6 +1,5 @@
 require("dotenv").config();
-const PORT = process.env.PORT
-
+const PORT = process.env.PORT;
 const express = require("express");
 const app = express();
 const nunjucks = require("nunjucks");
@@ -18,7 +17,7 @@ app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 
 app.set("view engine", "html");
-nunjucks.configure("views", { express: app});
+nunjucks.configure("views", { express: app });
 
 app.get("/", async (req, res) => {
 
@@ -92,5 +91,5 @@ app.use(viewRouter);
 app.use(authRouter);
 
 app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`);
+  console.log(`http://localhost:${PORT}`);
 });
