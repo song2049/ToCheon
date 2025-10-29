@@ -7,8 +7,8 @@ loginLocal.addEventListener("submit", async(e) => {
     const password = e.target.password.value
 
     if(email.length === 0 || password.length === 0) {
-        alert("이메일 또는 비밀번호를 입력해주시길 바랍니다.")
-        return
+
+        
     }
 
     try {

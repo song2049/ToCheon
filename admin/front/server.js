@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
+const dashboardRouter = require("./dashboard/datshboard.router.js");
 
 app.use(cookieParser());
 app.use(express.static('public'));
@@ -57,7 +58,9 @@ app.get("/admin", async(req, res) => {
             pageData: []
         })
     }
-})
+});
+
+app.use(dashboardRouter);
 
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
