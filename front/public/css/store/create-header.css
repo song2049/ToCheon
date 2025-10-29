@@ -1,0 +1,105 @@
+/* Step 헤더 */
+.create-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.create-header .create-header-headline,
+.create-header span
+{
+  color: #3A3A3A;
+}
+
+.create-header .create-header-headline > span:nth-child(1) {
+  color: #5599FF;
+}
+
+.create-header > .create-header-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #777;
+  font-size: 14px;
+}
+
+/* 왼쪽구역 상단 제목칸 */
+.create-header > .create-header-nav > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #DFE6EB;
+    border-radius: 30px;
+    padding: 8px 20px;
+    gap: 10px;
+    margin: 0 auto;
+}
+
+.create-header > .create-header-nav .google-marker {
+    display: inline-block;
+    width: 12px;
+    height: 18px;
+    background-image: url("../../image/toodayChoen-Marker.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.create-header > .create-header-nav > span {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.create-header > .create-header-headline {
+    font-size: 38px;
+    line-height: 60px;
+    font-weight: 700;
+}
+
+.create-header > .create-header-search input,
+.create-header > .create-header-search button {
+  font-family: "Noto Sans KR";
+}
+
+
+.create-header > .create-header-search {
+  position: relative;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.create-header > .create-header-search input {
+    font-size: 18px;
+    font-weight: 400;
+    width: 700px;
+    height: 54px;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.create-header > .create-header-search .search-btn {
+  position: absolute;
+  right: 130px;
+  top: 16px;
+}
+
+.create-header > .create-header-search button {
+  color: white;
+  border: none;
+  border-radius: 6px;
+  height: 45px;
+  padding: 0px 25px;
+  background: #006FFF;
+  font-size: 20px;
+  letter-spacing: -1px;
+  font-weight: 500;
+  cursor: pointer;
+}
