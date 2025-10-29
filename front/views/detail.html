@@ -150,7 +150,6 @@
         <button type="submit" class="btn-submit">리뷰 남기기</button>
       </form>
 
-
       <div class="review-list">
         <h3>리뷰 목록</h3>
         <div class="review-card">
@@ -182,6 +181,39 @@
             </div>
           </div>
         </div>
+        {% for review in reviews %}
+        <div class="review-card">
+          <div class="card-title">
+            <div class="avatar"><img src="../image/cafe.png" alt="프로필 이미지"></div>
+            <div class="user-info">사용자 {{ review.USER_ID }}</div>
+          </div>
+          <div class="card-contents">
+            <div class="card-left">
+              <span class="card-stars">★★★★☆</span>
+              <span class="card-score">{{ ((review.POINT_01 + review.POINT_02 + review.POINT_03) / 3).toFixed(1)
+                }}점</span>
+              &nbsp;<span class="card-created">{{ review.CREATED_AT }}</span>
+              <p class="card-text">{{ review.CONTENT }}</p>
+              <div class="tags">
+                <span class="tag-item">맛:</span><span>{{ review.POINT_01 }}점</span><span> | </span>
+                <span class="tag-item">가격:</span><span>{{ review.POINT_02 }}점</span><span> | </span>
+                <span class="tag-item">응대:</span><span>{{ review.POINT_03 }}점</span><span> | </span>
+              </div>
+              <div class="ordered-menu">주문한 메뉴:</div>
+              <div>{{ review.ORDERED_ITEM }}</div>
+            </div>
+            <div class="card-right">
+              {% if review.Pictures and review.Pictures.length > 0 %}
+              {% for picture in review.Pictures %}
+              <img src="/{{ picture.URL }}" alt="리뷰 사진">
+              {% endfor %}
+              {% else %}
+              <img src="../image/cafe.png">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
       </div>
     </section>
   </main>

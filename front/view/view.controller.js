@@ -15,17 +15,19 @@ const getDetail = async (req, res) => {
     }
 
     try {
-        const [storeMapRes, storeInfo, storeStat, storeMenuRes] = await Promise.all([
+        const [storeMapRes, storeInfo, storeStat, storeMenuRes, reviewsRes] = await Promise.all([
             axios.get(`http://localhost:4000/api/stores/${storeId}/map`),
             axios.get(`http://localhost:4000/api/stores/${storeId}`),
             axios.get(`http://localhost:4000/api/stores/${storeId}/review-stats`),
-            axios.get(`http://localhost:4000/api/stores/${storeId}/menu`)
+            axios.get(`http://localhost:4000/api/stores/${storeId}/menu`),
+            axios.get(`http://localhost:4000/api/reviews/${storeId}`)
         ]);
 
         const map = storeMapRes.data;
         const store = storeInfo.data;
         const stats = storeStat.data;
         const menu = storeMenuRes.data;
+        const reviews = reviewsRes.data.items || [];
 
         const avgTaste = parseFloat(stats.avg_taste) || 0;
         const avgPrice = parseFloat(stats.avg_price) || 0;
@@ -34,7 +36,7 @@ const getDetail = async (req, res) => {
 
         res.render('detail.html', {
             storeId: storeId,
-            
+
             title: map.NAME,
             content: menu[0].NAME,
             avgTotal: avgTotal,
@@ -50,6 +52,7 @@ const getDetail = async (req, res) => {
             avgService: avgService.toFixed(1),
 
             storeMenu: menu,
+            reviews: reviews
         });
 
     } catch (error) {
