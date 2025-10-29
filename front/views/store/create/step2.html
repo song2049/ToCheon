@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TODAY-CHEON - 등록 Step2</title>
+  <link rel="stylesheet" href="/css/font.css" />
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/store/create-common.css">
+  <link rel="stylesheet" href="/css/store/create-header.css" />
+  <link rel="stylesheet" href="/css/store/create-step2-form.css" />
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <i class="logo-icon"></i>
+      <a href="/">TODAY-CHEON</a>
+    </div>
+    <div class="header-right">
+      <a>메뉴</a>
+      <button onclick="location.href = './login.html'">로그인</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="inner">
+      <div class="create-header">
+        <div class="create-header-nav">
+          <div>
+              <i class="google-marker"></i>
+              <span>맛집 등록</span>
+          </div>
+          <span>Step 2</span>
+        </div>
+        <div class="create-header-headline">
+            <span>맛집</span> <span>정보를</span> <span>확인해보세요!</span>
+        </div>
+      </div>
+      <form class="create-form" method="POST" action="/store/create">
+        <label>상호명 <span class="required">*</span></label>
+        <input type="text" name="store_name" value="{{ store.place_name }}" required />
+
+        <label>주소 <span class="required">*</span></label>
+        <input type="text" name="address" value="{{ store.road_address_name or store.address_name }}" required />
+
+        <label>전화번호</label>
+        <input type="text" name="phone" value="{{ store.phone }}" />
+
+        <label>맛집 설명</label>
+        <textarea name="description" placeholder="가게 설명을 작성해주세요."></textarea>
+
+        <input type="hidden" name="lat" value="{{ store.y }}" />
+        <input type="hidden" name="lng" value="{{ store.x }}" />
+
+        <div class="button-wrap">
+          <button type="submit" class="submit-btn">등록요청</button>
+          <button type="button" class="cancel-btn">취소</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
