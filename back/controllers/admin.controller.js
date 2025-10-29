@@ -1,16 +1,48 @@
-import { Store, Review } from "../models/index.js";
+import { Store, Review, User } from "../models/index.js";
 
-// 승인 대기 목록
+// 승인 대기 목록 (TB_STORE 전체 컬럼 + 등록자 이름 포함)
 export async function getPendingStores(req, res) {
-  const stores = await Store.findAll({ where: { IS_APPROVED: 0 } });
-  res.json({ items: stores });
+  try {
+    const stores = await Store.findAll({
+      where: { IS_APPROVED: 0 },
+      include: [
+        {
+          model: User,
+          attributes: ["NAME"], // TB_USER에서 NAME만
+        },
+      ],
+      order: [["CREATED_AT", "DESC"]],
+    });
+
+    res.json({ items: stores });
+  } catch (error) {
+    console.error("getPendingStores error:", error);
+    res.status(500).json({ error: "승인 대기 목록 조회 중 오류 발생" });
+  }
 }
 
 // 승인 처리
 export async function approveStore(req, res) {
-  const { id } = req.params;
-  await Store.update({ IS_APPROVED: 1 }, { where: { ID: id } });
-  res.json({ message: "승인 완료" });
+  try {
+    const { id } = req.params;
+    const { IMAGE_URL, EATING_TIME } = req.body;
+
+    // 유효성 검사
+    if (!IMAGE_URL || !EATING_TIME) {
+      return res.status(400).json({ message: "필수 값 누락: IMAGE_URL 또는 EATING_TIME" });
+    }
+
+    // 승인 및 데이터 업데이트
+    await Store.update(
+      { IS_APPROVED: 1, IMAGE_URL, EATING_TIME },
+      { where: { ID: id } }
+    );
+
+    res.json({ message: "승인 및 정보 저장 완료" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "승인 처리 중 오류 발생" });
+  }
 }
 
 // 거부 처리
