@@ -1,4 +1,5 @@
 const awaitingRows = document.querySelectorAll(".awaiting-row");
+const rejectBtn = document.q
 
 awaitingRows.forEach((form) => {
     form.addEventListener("submit", async (e) => {
@@ -21,7 +22,7 @@ awaitingRows.forEach((form) => {
                 IMAGE_URL: imgurl,
                 EATING_TIME: eatTime
             });
-            
+
             alert(data);
             window.location.href = "http://localhost:3001/admin"
         } catch (error) {
@@ -31,11 +32,14 @@ awaitingRows.forEach((form) => {
     });
 });
 
-// 거절 눌렀을 때
 awaitingRows.forEach((form) => {
-    form.addEventListener("button", async (e) => {
+    const rejectBtn = form.querySelector(".reject-btn");
+
+    rejectBtn.addEventListener("click", async (e) => {
         e.preventDefault();
-        console.log("테스트");
-        
-    })
-})
+        const storeId = form.querySelector("input[name='storeId']").value;
+
+        console.log("거절 처리:", storeId);
+
+    });
+});
