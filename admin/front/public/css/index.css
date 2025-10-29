@@ -1,3 +1,7 @@
+main {
+  font-family: 'Noto Sans KR';
+}
+
 .dashboard-title {
   padding: 20px 40px;
   font-size: 26px;
@@ -171,6 +175,7 @@
   border: 1px solid #808080;
   border-radius: 8px;
   padding: 0 10px;
+  font-family: 'Noto Sans KR';
 }
 
 /* 영업시간 */
@@ -179,15 +184,17 @@
   display: flex;
   justify-content: center;
   gap: 10px;
-  /* padding: 0 10px; */
 }
 
 .awaiting-item li:nth-child(8) input[type="time"] {
   width: 145px;
-  /* padding: 3px 5px; */
   border: 1px solid #808080;
   border-radius: 8px;
   height: 40px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Noto Sans KR';
 }
 
 /* 승인 or 거절 버튼 */
@@ -226,6 +233,9 @@
   gap: 10px;
   padding: 0 40px;
 }
+.pagination > span {
+  color: #373940;
+}
 
 .pagination > a {
   font-size: 14px;
@@ -238,6 +248,7 @@
   height: 22px;
   border-radius: 50%;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .pagination > .on {

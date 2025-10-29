@@ -29,12 +29,12 @@
                 <ul>
                     <li>
                         <p>승인 대기</p>
-                        <span>12</span>
+                        <span>{{ waitingNum }}</span>
                     </li>
 
                     <li>
                         <p>등록된 맛집</p>
-                        <span>87</span>
+                        <span>{{ approvalNum }}</span>
                     </li>
 
                     <li>
@@ -65,14 +65,15 @@
                     <li>영업시간</li>
                     <li>승인관리</li>
                 </ul>
+                {% for store in pageData %}
                 <form action="/approve" method="post" class="awaiting-row">
                     <ul class="awaiting-item">
-                        <li>1</li>
-                        <li>fanathing</li>
-                        <li>스타벅스</li>
-                        <li>서울특별시 강동구 천호대로 1021</li>
-                        <li>한식</li>
-                        <li>누구누가 좋아하는 집</li>
+                        <li>{{ store.ID }}</li>
+                        <li>{{ store.USER_ID }}</li>
+                        <li>{{ store.NAME }}</li>
+                        <li>{{ store.ADDRESS }}</li>
+                        <li>{{ store.CATEGORY }}</li>
+                        <li>{{ store.DESCRIPTION }}</li>
                         <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
                         <li>
                             <input type="time" name="open" value="09:00">
@@ -84,187 +85,14 @@
                         </li>
                     </ul>
                 </form>
-                <form action="/approve" method="post" class="awaiting-row">
-                    <ul class="awaiting-item">
-                        <li>1</li>
-                        <li>fanathing</li>
-                        <li>스타벅스</li>
-                        <li>서울특별시 강동구 천호대로 1021</li>
-                        <li>한식</li>
-                        <li>누구누가 좋아하는 집</li>
-                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
-                        <li>
-                            <input type="time" name="open" value="09:00">
-                            <input type="time" name="close" value="21:00">
-                        </li>
-                        <li class="approval-btns">
-                            <button class="approve-btn">승인</button>
-                            <button class="reject-btn">거절</button>
-                        </li>
-                    </ul>
-                </form>
-                <form action="/approve" method="post" class="awaiting-row">
-                    <ul class="awaiting-item">
-                        <li>1</li>
-                        <li>fanathing</li>
-                        <li>스타벅스</li>
-                        <li>서울특별시 강동구 천호대로 1021</li>
-                        <li>한식</li>
-                        <li>누구누가 좋아하는 집</li>
-                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
-                        <li>
-                            <input type="time" name="open" value="09:00">
-                            <input type="time" name="close" value="21:00">
-                        </li>
-                        <li class="approval-btns">
-                            <button class="approve-btn">승인</button>
-                            <button class="reject-btn">거절</button>
-                        </li>
-                    </ul>
-                </form>
-                <form action="/approve" method="post" class="awaiting-row">
-                    <ul class="awaiting-item">
-                        <li>1</li>
-                        <li>fanathing</li>
-                        <li>스타벅스</li>
-                        <li>서울특별시 강동구 천호대로 1021</li>
-                        <li>한식</li>
-                        <li>누구누가 좋아하는 집</li>
-                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
-                        <li>
-                            <input type="time" name="open" value="09:00">
-                            <input type="time" name="close" value="21:00">
-                        </li>
-                        <li class="approval-btns">
-                            <button class="approve-btn">승인</button>
-                            <button class="reject-btn">거절</button>
-                        </li>
-                    </ul>
-                </form>
-                <form action="/approve" method="post" class="awaiting-row">
-                    <ul class="awaiting-item">
-                        <li>1</li>
-                        <li>fanathing</li>
-                        <li>스타벅스</li>
-                        <li>서울특별시 강동구 천호대로 1021</li>
-                        <li>한식</li>
-                        <li>누구누가 좋아하는 집</li>
-                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
-                        <li>
-                            <input type="time" name="open" value="09:00">
-                            <input type="time" name="close" value="21:00">
-                        </li>
-                        <li class="approval-btns">
-                            <button class="approve-btn">승인</button>
-                            <button class="reject-btn">거절</button>
-                        </li>
-                    </ul>
-                </form>
-                <form action="/approve" method="post" class="awaiting-row">
-                    <ul class="awaiting-item">
-                        <li>1</li>
-                        <li>fanathing</li>
-                        <li>스타벅스</li>
-                        <li>서울특별시 강동구 천호대로 1021</li>
-                        <li>한식</li>
-                        <li>누구누가 좋아하는 집</li>
-                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
-                        <li>
-                            <input type="time" name="open" value="09:00">
-                            <input type="time" name="close" value="21:00">
-                        </li>
-                        <li class="approval-btns">
-                            <button class="approve-btn">승인</button>
-                            <button class="reject-btn">거절</button>
-                        </li>
-                    </ul>
-                </form>
-                <form action="/approve" method="post" class="awaiting-row">
-                    <ul class="awaiting-item">
-                        <li>1</li>
-                        <li>fanathing</li>
-                        <li>스타벅스</li>
-                        <li>서울특별시 강동구 천호대로 1021</li>
-                        <li>한식</li>
-                        <li>누구누가 좋아하는 집</li>
-                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
-                        <li>
-                            <input type="time" name="open" value="09:00">
-                            <input type="time" name="close" value="21:00">
-                        </li>
-                        <li class="approval-btns">
-                            <button class="approve-btn">승인</button>
-                            <button class="reject-btn">거절</button>
-                        </li>
-                    </ul>
-                </form>
-                <form action="/approve" method="post" class="awaiting-row">
-                    <ul class="awaiting-item">
-                        <li>1</li>
-                        <li>fanathing</li>
-                        <li>스타벅스</li>
-                        <li>서울특별시 강동구 천호대로 1021</li>
-                        <li>한식</li>
-                        <li>누구누가 좋아하는 집</li>
-                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
-                        <li>
-                            <input type="time" name="open" value="09:00">
-                            <input type="time" name="close" value="21:00">
-                        </li>
-                        <li class="approval-btns">
-                            <button class="approve-btn">승인</button>
-                            <button class="reject-btn">거절</button>
-                        </li>
-                    </ul>
-                </form>
-                <form action="/approve" method="post" class="awaiting-row">
-                    <ul class="awaiting-item">
-                        <li>1</li>
-                        <li>fanathing</li>
-                        <li>스타벅스</li>
-                        <li>서울특별시 강동구 천호대로 1021</li>
-                        <li>한식</li>
-                        <li>누구누가 좋아하는 집</li>
-                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
-                        <li>
-                            <input type="time" name="open" value="09:00">
-                            <input type="time" name="close" value="21:00">
-                        </li>
-                        <li class="approval-btns">
-                            <button class="approve-btn">승인</button>
-                            <button class="reject-btn">거절</button>
-                        </li>
-                    </ul>
-                </form>
-                <form action="/approve" method="post" class="awaiting-row">
-                    <ul class="awaiting-item">
-                        <li>1</li>
-                        <li>fanathing</li>
-                        <li>스타벅스</li>
-                        <li>서울특별시 강동구 천호대로 1021</li>
-                        <li>한식</li>
-                        <li>누구누가 좋아하는 집</li>
-                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
-                        <li>
-                            <input type="time" name="open" value="09:00">
-                            <input type="time" name="close" value="21:00">
-                        </li>
-                        <li class="approval-btns">
-                            <button class="approve-btn">승인</button>
-                            <button class="reject-btn">거절</button>
-                        </li>
-                    </ul>
-                </form>
-            </div>
-
-            <div class="pagination">
-                    <
-                    <a class="on">1</a>
-                    <a>2</a>
-                    <a>3</a>
-                    <a>4</a>
-                    <a>5</a>
-                    >
+                {% endfor %}
+                <div class="pagination">
+                    <span>&lt;</span>
+                    {% for p in pages %}
+                    <a href="/admin/?page={{ p }}{% if stores %}&stores={{ stores }}{% endif %}"
+                    class="{% if p == page %}on{% endif %}">{{ p }}</a>
+                    {% endfor %}
+                    <span>&gt;</span>
             </div>
     </main>
 </body>
