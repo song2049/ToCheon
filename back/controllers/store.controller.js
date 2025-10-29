@@ -4,16 +4,22 @@ import { Review } from "../models/review.js";
 import { Picture } from "../models/picture.js";
 import { Menu } from "../models/menu.js";
 
-// 1. 전체 맛집 목록 조회
+// 1. 전체 맛집 목록 조회 (승인된 데이터만)
 export async function getStores(req, res) {
   try {
-    const stores = await Store.findAll();
+    // IS_APPROVED = '1' 인 데이터만 조회
+    const stores = await Store.findAll({
+      where: { IS_APPROVED: "1" },
+      order: [["ID", "DESC"]], // 선택: 최신순 정렬
+    });
+
     res.json(stores);
   } catch (error) {
     console.error("getStores error:", error);
     res.status(500).json({ error: "맛집 목록 조회 중 오류 발생" });
   }
 }
+
 
 // 2. 지도 표시용 좌표 목록
 export async function getStoresMap(req, res) {

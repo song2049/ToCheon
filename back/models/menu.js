@@ -12,6 +12,7 @@ Menu.init(
     DESCRIPTION: { type: DataTypes.TEXT, allowNull: true },
     CREATED_AT: { type: DataTypes.DATE, allowNull: true },
     UPDATED_AT: { type: DataTypes.DATE, allowNull: true },
+    IS_RECOMMANDED: { type: DataTypes.TINYINT, allowNull: true, defaultValue: 0 },
   },
   {
     sequelize,

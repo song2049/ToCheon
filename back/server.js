@@ -6,6 +6,8 @@ import { sequelize } from "./db/sequelize.js";
 import axios from "axios"; //kakao Oauth2.0 사용위해 import 
 import jwt from "jsonwebtoken"; // JWT 발급을 위해 추가
 
+import "./models/index.js"; // 관계(CASCADE) 및 모델 초기화
+
 // 라우트 임포트
 import authRoutes from "./routes/auth.routes.js";
 import oauthRoutes from "./routes/oauth.routes.js";
@@ -21,18 +23,25 @@ const SERVER_PORT = process.env.SERVER_PORT || 4000;
 // 미들웨어 설정
 app.use(
   cors({
-    origin: true, 
+    origin: true,
     credentials: true,
   })
 );
 app.use(express.json());
 app.use(cookieParser());
 
-// DB 연결 확인 (Sequelize)
+// DB 연결 및 테이블 자동 생성
 async function connectDB() {
   try {
     await sequelize.authenticate();
     console.log("DB Connected (Sequelize)");
+
+    // ORM 테이블 자동 생성
+    // alter: true → 기존 데이터 유지하면서 구조 동기화
+    // force: true → 기존 테이블 삭제 후 재생성 (개발 초기용)
+    await sequelize.sync({ alter: true });
+    console.log("All tables synchronized (Sequelize)");
+
   } catch (err) {
     console.error("DB Connection Error:", err);
     process.exit(1);
@@ -41,30 +50,25 @@ async function connectDB() {
 
 // --------------------- Kakao OAuth ---------------------
 app.post("/oauth/kakao", async (req, res) => {
-  // const { code } = req.query;
   const { client_id, redirect_uri, code } = req.body;
-
   if (!code) return res.status(400).send("Authorization code not provided.");
 
   try {
-    // 1) 카카오 토큰 요청
+    // 1. 카카오 토큰 요청
     const tokenResponse = await axios.post("https://kauth.kakao.com/oauth/token", null, {
       params: {
         grant_type: "authorization_code",
-        // client_id: process.env.KAKAO_REST_API_KEY,
-        // redirect_uri: process.env.REDIRECT_URI,
-        client_id: client_id,
-        redirect_uri: redirect_uri,
+        client_id,
+        redirect_uri,
         code,
       },
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 
     const { access_token: kakao_token } = tokenResponse.data;
-    if (!kakao_token)
-      return res.status(401).json({ message: "token is not defined!" });
+    if (!kakao_token) return res.status(401).json({ message: "token is not defined!" });
 
-    // 2) 카카오 사용자 정보 요청
+    // 2. 카카오 사용자 정보 요청
     const userResponse = await axios.get("https://kapi.kakao.com/v2/user/me", {
       headers: { Authorization: `Bearer ${kakao_token}` },
     });
@@ -75,15 +79,15 @@ app.post("/oauth/kakao", async (req, res) => {
       nickname: kakaoData.properties?.nickname || "unknown",
       thumbnail: kakaoData.properties?.thumbnail_image || null,
       email: kakaoData.kakao_account?.email || null,
-      provider: "kakao"
+      provider: "kakao",
     };
 
-    // 3) JWT 발급
+    // 3. JWT 발급
     const jwt_token = jwt.sign(userInfo, process.env.JWT_SECRET || "wnqudgus1234", {
-      expiresIn: "1h", // 토큰 유효기간 1시간
+      expiresIn: "1h",
     });
 
-    // 쿠키 대신 JSON으로 응답
+    // 쿠키 대신 JSON 응답
     return res.json({
       message: "Kakao login success",
       token: jwt_token,
