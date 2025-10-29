@@ -19,7 +19,7 @@ const getCreate = async (req, res) => {
 
     // 2) 카카오맵 장소 검색 (좌표 기반)
     const response = await axios.get("https://dapi.kakao.com/v2/local/search/category.json", {
-      headers: { Authorization: `KakaoAK ${process.env.REST_API_KEY}` },
+      headers: { Authorization: `KakaoAK ${process.env.KAKAO_REST_API_KEY}` },
       params: {
         category_group_code: "FD6", // 음식점 카테고리
         x: lng,

@@ -104,7 +104,7 @@ async function seedDummyData() {
       HASH_TAG: tag,
       LATITUDE: baseLat + (Math.random() - 0.5) * 0.005,   // 천호동 근처
       LONGITUDE: baseLng + (Math.random() - 0.5) * 0.005, // 천호동 근처
-      IS_APPROVED: 0,
+      IS_APPROVED: 1,
     });
   }
   const createdStores = await Store.bulkCreate(stores);
