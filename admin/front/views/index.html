@@ -63,15 +63,34 @@
                     <li>영업시간</li>
                     <li>승인관리</li>
                 </ul>
-                <form action="/approve" method="post" enctype="multipart/form-data" class="awaiting-row">
-                    <ul>
+                <form action="/approve" method="post" class="awaiting-row">
+                    <ul class="awaiting-item">
                         <li>1</li>
-                        <li>user01</li>
-                        <li>보승회관</li>
-                        <li>서울특별시 강동구...</li>
+                        <li>fanathing</li>
+                        <li>스타벅스</li>
+                        <li>서울특별시 강동구 천호대로 1021</li>
                         <li>한식</li>
-                        <li>보쌈집</li>
-                        <li><input type="file" name="photo"></li>
+                        <li>누구누가 좋아하는 집</li>
+                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
+                        <li>
+                            <input type="time" name="open" value="09:00">
+                            <input type="time" name="close" value="21:00">
+                        </li>
+                        <li class="approval-btns">
+                            <button class="approve-btn">승인</button>
+                            <button class="reject-btn">거절</button>
+                        </li>
+                    </ul>
+                </form>
+                <form action="/approve" method="post" class="awaiting-row">
+                    <ul class="awaiting-item">
+                        <li>1</li>
+                        <li>fanathing</li>
+                        <li>스타벅스</li>
+                        <li>서울특별시 강동구 천호대로 1021</li>
+                        <li>한식</li>
+                        <li>누구누가 좋아하는 집</li>
+                        <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
                         <li>
                             <input type="time" name="open" value="09:00">
                             <input type="time" name="close" value="21:00">
