@@ -45,11 +45,9 @@ router.post("/kakao", async (req, res) => {
     };
 
     // 3. Access Token (1분)
-    const accessToken = jwt.sign(
-      userInfo,
-      process.env.JWT_SECRET || "wnqudgus1234",
-      { expiresIn: "1m" }
-    );
+    const jwt_token = jwt.sign(userInfo, process.env.JWT_SECRET || "wnqudgus1234", {
+      expiresIn: "1m",
+    });
 
     // 4. Refresh Token (1분)
     const refreshToken = jwt.sign(
@@ -62,8 +60,8 @@ router.post("/kakao", async (req, res) => {
     return res.json({
       message: "Kakao login success",
       user: userInfo,
-      access_token: accessToken,
-      refresh_token: refreshToken,
+      token: jwt_token, //기존 
+      refresh_token: refreshToken, //refresh token 추가
     });
   } catch (error) {
     console.error("Kakao login failed:", error.message);
@@ -86,12 +84,12 @@ router.post("/refresh", async (req, res) => {
 
     const decoded = jwt.verify(
       refresh_token,
-      process.env.JWT_SECRET || "wnqudgus1234"
+      process.env.JWT_SECRET || "dev-secret"
     );
 
     const newAccessToken = jwt.sign(
       { id: decoded.id, provider: decoded.provider },
-      process.env.JWT_SECRET || "wnqudgus1234",
+      process.env.JWT_SECRET || "dev-secret",
       { expiresIn: "1m" }
     );
 
