@@ -22,6 +22,8 @@ nunjucks.configure("views", { express: app });
 
 app.get("/", refresh, async (req, res) => {
 
+    const userInfo = req.userInfo;
+    
     // 검색하면 쿼리스트링으로 받아옴
     const stores = req.query.stores || "";
 
@@ -64,7 +66,7 @@ app.get("/", refresh, async (req, res) => {
         res.render("index.html", {
             data: pageData,
             mapData: findData,
-            // userInfo,
+            userInfo,
             stores,
             pages,
             page

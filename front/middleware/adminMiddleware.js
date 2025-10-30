@@ -12,10 +12,8 @@ const refresh = async (req, res, next) => {
 
     try {
         // 액세스 토큰을 검증했는데 상태 괜찮다 그럼 통과
-        
-        
         const payload = jwt.verify(token, JWT_SECRET);
-        const userInfo = payload;
+        req.userInfo = payload;
 
         return next();
     } catch (error) {
