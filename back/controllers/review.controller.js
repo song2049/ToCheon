@@ -6,7 +6,7 @@ import { Review, Picture } from "../models/index.js";
 export async function createReview(req, res) {
   const { store_id } = req.params;
   const { point1, point2, point3, content, orderedItem, photos = [] } = req.body;
-  const userId = req.user?.userId;
+  const userId = req.user?.userId || req.nickname; //카카오 로긴의 경우 req.user가 없음 - nickname 사용으로 대체
 
   if (!userId) return res.status(401).json({ error: "인증이 필요합니다." });
 
