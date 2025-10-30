@@ -31,7 +31,7 @@ export async function login(req, res) {
 
     // Refresh Token (10분 유효)
     const refreshToken = jwt.sign(
-      { userId: user.ID, email: user.EMAIL },
+      { userId: user.ID, role: user.ROLE, email: user.EMAIL, provider: "local" },
       REFRESH_SECRET,
       { expiresIn: "10m" }
     );
