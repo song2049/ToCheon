@@ -8,18 +8,25 @@
   <link rel="stylesheet" href="/css/font.css">
   <link rel="stylesheet" href="/css/common.css">
   <link rel="stylesheet" href="/css/detail.css">
-  <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
+  <link rel="stylesheet" href="/css/map.css">
 </head>
 
 <body>
   <header>
     <div class="header-left">
       <i class="logo-icon"></i>
-      <a href="./index.html">TODAY-CHEON</a>
+      <a href="/">TODAY-CHEON</a>
     </div>
     <div class="header-right">
       <a>메뉴</a>
-      <button onclick="location.href='./login.html'">로그인</button>
+      {% if userInfo and userInfo | length > 0 %}
+      {% if userInfo.role == "ADMIN" %}
+      <button class="admin-btn">관리자</button>
+      {% endif %}
+      <button class="logout-btn" type="button">로그아웃</button>
+      {% else %}
+      <button onclick="location.href = `/auth/login`">로그인</button>
+      {% endif %}
     </div>
   </header>
 
@@ -48,18 +55,13 @@
           </ul>
         </div>
         <div class="grid-right">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
-          <img src="../image/cafe.png" alt="">
+          {% if photoUrls.length == 0 %}
+          <p>아직 리뷰 이미지가 없어요 ㅜㅜ</p>
+          {% else %}
+          {% for photo in photoUrls %}
+          <img src="../{{ photo }}" alt="">
+          {% endfor %}
+          {% endif %}
         </div>
         <div class="grid-score">
           <div class="score-area">
@@ -142,9 +144,9 @@
         <h4 class="field-title">리뷰 내용 <span id="require-dot">*</span></h4>
         <textarea name="content" rows="5" placeholder="비속어, 비방하는 리뷰는 삭제될 수 있습니다."></textarea>
         <h4 class="field-title">메뉴 사진 <span id="require-dot">*</span></h4>
-        <div class="photo-drop">
+        <div class="photo-drop" id="upload-div">
           <img src="/image/upload_icon.png" alt="" width="50px" height="50px">
-          <input type="file" name="image" accept="image/*">
+          <input type="file" id="file-input" name="image" accept="image/*">
           <div class="drop-hint">맛있게 드셨나요?</div>
         </div>
         <button type="submit" class="btn-submit">리뷰 남기기</button>
@@ -152,35 +154,6 @@
 
       <div class="review-list">
         <h3>리뷰 목록</h3>
-        <div class="review-card">
-          <div class="card-title">
-            <div class="avatar"><img src="../image/cafe.png" alt="프로필 이미지"></div>
-            <div class="user-info">블록체인3기_고급A_주병현</div>
-          </div>
-          <div class="card-contents">
-            <div class="card-left">
-              <span class="card-stars">★★★★☆</span><span class="card-score">4.0점</span>
-              &nbsp;<span class="card-created">6월 12일</span>
-              <p class="card-text">
-                초심자도 좋아할 만한 무난한 맛의 명품 평냉집입니다.<br>
-                일행은 곱창 떡볶이 먹었는데 이것도 괜찮았대요.<br>
-                워낙 인기가 많아 보일 북적북적 신선까지 있어요.
-              </p>
-              <div class="tags">
-                <span class="tag-item">맛:</span><span>만족</span><span> | </span>
-                <span class="tag-item">가격:</span><span>만족</span><span> | </span>
-                <span class="tag-item">응대:</span><span>만족</span><span> | </span>
-              </div>
-              <div class="ordered-menu">주문한 메뉴:</div>
-              <div>평양냉면</div>
-            </div>
-            <div class="card-right">
-              <img src="../image/cafe.png">
-              <img src="../image/cafe.png">
-              <img src="../image/cafe.png">
-            </div>
-          </div>
-        </div>
         {% for review in reviews %}
         <div class="review-card">
           <div class="card-title">
@@ -232,16 +205,10 @@
       <i class="github-icon"></i>
     </div>
   </footer>
-
-  <script>
-    (function () {
-      const el = document.getElementById('map');
-      if (!el || !(window.kakao && kakao.maps)) return;
-      const center = new kakao.maps.LatLng(37.5206, 127.1031);
-      const map = new kakao.maps.Map(el, { center, level: 3 });
-      new kakao.maps.Marker({ position: center }).setMap(map);
-    })();
-  </script>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript"
+  src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
+<script src="../js/detailMap.js"></script>
 
 </html>

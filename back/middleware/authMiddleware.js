@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
+
 export function verifyToken(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader) return res.status(401).json({ error: "인증 토큰이 없습니다." });
