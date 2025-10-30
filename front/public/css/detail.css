@@ -18,14 +18,15 @@ main .detail-container {margin: 0 7%;}
 .grid-2x2 .grid-right {grid-area: right; display: grid; grid-template-columns: repeat(3, 32%); grid-auto-rows: 24%; gap: 10px;}
 .grid-2x2 .grid-right img {width: 100%; height: 100%; border-radius: 8px; object-fit: cover;}
 /* grid(2,1) */
-.grid-2x2 .grid-score {grid-area: score; display: flex; justify-content: center; align-items: flex-end; gap: 40px;}
-.grid-2x2 .grid-score .score-area {text-align: center;}
-.grid-2x2 .grid-score .score-area .grid-total {font-weight: 500; font-size: 52px;}
-.grid-2x2 .grid-score .score-area .grid-stars {margin: 6px 0; color: #2a6ff2;}
-.grid-2x2 .grid-score .score-area .grid-desc {font-weight: 350; font-size: 20px;}
-.grid-2x2 .grid-score .bar-area {display: flex; gap: 40px; align-items: flex-end;}
-.grid-2x2 .grid-score .bar-area .bar-item .bar {width: 22px; height: 88px; margin: 0 auto 6px; border-radius: 4px; background: linear-gradient(to top, #2a6ff2, #bddcff);}
-.grid-2x2 .grid-score .bar-area .bar-item .bar-label {margin-top: 4px; font-size: 13px; font-weight: 600; text-align: center; color: #2a6ff2;}
+.grid-2x2 .grid-score { grid-area: score; display: flex; justify-content: center; align-items: flex-end; gap: 40px; }
+.grid-2x2 .grid-score .score-area { text-align: center; }
+.grid-2x2 .grid-score .score-area .grid-total { font-weight: 500; font-size: 52px; }
+.grid-stars { margin: 6px 0; color: #2a6ff2; font-size: 24px; }
+.grid-2x2 .grid-score .score-area .grid-desc { font-weight: 350; font-size: 20px; }
+.grid-2x2 .grid-score .bar-area { display: flex; gap: 40px; align-items: flex-end; }
+.grid-2x2 .grid-score .bar-area .bar-item .bar { width: 22px; height: 0; margin: 0 auto 6px; border-radius: 4px; background: linear-gradient(to top, #2a6ff2, #bddcff); transition: height 0.8s ease-out; }
+.grid-2x2 .grid-score .bar-area .bar-item > div:last-child { text-align: center; font-size: 14px; }
+.grid-2x2 .grid-score .bar-area .bar-item .bar-label { display: block; margin-top: 4px; font-size: 13px; font-weight: 600; color: #2a6ff2; }
 /* grid(2,2) */
 .grid-2x2 .grid-menu {grid-area: menu;}
 .grid-2x2 .grid-menu .menu-name {margin-bottom: 8px; padding-bottom: 6px; font-size: 26px; font-weight: 500;}

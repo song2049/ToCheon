@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TODAY-CHEON</title>
-  <link rel="stylesheet" href="./css/font.css">
-  <link rel="stylesheet" href="./css/common.css">
-  <link rel="stylesheet" href="./css/detail.css">
+  <link rel="stylesheet" href="/css/font.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/detail.css">
   <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
 </head>
 
@@ -26,12 +26,12 @@
   <main>
     <section class="detail-container">
       <div class="info">
-        <div class="title">봉피양 본점</div>
-        <div class="content">돼지갈비</div>
+        <div class="title">{{title}}</div>
+        <div class="content">{{content}}</div>
         <div class="score">
-          <span class="score-stars">★★★★☆</span>
-          <span class="score-average">4.1</span>
-          <span class="score-total">리뷰 63건</span>
+          <span class="score-stars" data-rating="{{avgTotal}}"></span>
+          <span class="score-average">{{avgTotal}}</span>
+          <span class="score-total">{{reviewCount}}명의 평가</span>
         </div>
       </div>
 
@@ -39,9 +39,10 @@
         <div class="grid-left">
           <div id="map" class="kakaomap"></div>
           <ul class="store">
-            <li>📞 02-415-5527</li>
-            <li>📍 서울 송파구 올림픽로32길 4</li>
-            <li>🕒 매일 11:30~22:00</li>
+            <li>📞 {{telNumber}}</li>
+            <li>💡 {{hashTag}}</li>
+            <li>📍 {{address}}</li>
+            <li>🕒 {{eatingTime}}</li>
             <li>📋 예약 가능 · 주차 가능</li>
             <li>🚫 포장/배달 불가</li>
           </ul>
@@ -62,40 +63,35 @@
         </div>
         <div class="grid-score">
           <div class="score-area">
-            <div class="grid-total">4.1</div>
-            <div class="grid-stars">★★★★☆</div>
-            <div class="grid-desc">63건의 리뷰가 작성되었습니다.</div>
+            <div class="grid-total">{{avgTotal}}</div>
+            <div class="grid-stars" data-rating="{{avgTotal}}"></div>
+            <div class="grid-desc">{{reviewCount}}건의 리뷰가 작성되었습니다.</div>
           </div>
           <div class="bar-area">
             <div class="bar-item">
-              <div class="bar"></div>
-              <div class="bar-label">맛<span>4.0</span></div>
+              <div class="bar" data-score="{{avgTaste}}"></div>
+              <div>맛<span class="bar-label">{{avgTaste}}</span></div>
             </div>
             <div class="bar-item">
-              <div class="bar" style="height:72px;"></div>
-              <div class="bar-label">가격 4.0</div>
+              <div class="bar" data-score="{{avgPrice}}"></div>
+              <div>가격<span class="bar-label">{{avgPrice}}</span></div>
             </div>
             <div class="bar-item">
-              <div class="bar" style="height:72px;"></div>
-              <div class="bar-label">응대 4.0</div>
+              <div class="bar" data-score="{{avgService}}"></div>
+              <div>응대<span class="bar-label">{{avgService}}</span></div>
             </div>
           </div>
         </div>
+        <script src="/js/detail.js"></script>
         <div class="grid-menu">
           <div class="menu-name">메뉴정보</div>
           <input type="checkbox" id="more-toggle" hidden>
           <div class="menu-grid">
-            <span>평양냉면(물/비빔)</span><span class="price">16,000원</span>
-            <span>돼지갈비</span><span class="price">22,000원</span>
-            <span>갈비탕</span><span class="price">20,000원</span>
-            <span>수육</span><span class="price">20,000원</span>
-            <span>양념갈비</span><span class="price">34,000원</span>
-            <span>쟁반국수</span><span class="price">22,000원</span>
+            {% for item in storeMenu %}
+            <span>{{ item.NAME }}</span>
+            <span class="price">{{ item.PRICE }}원</span>
+            {% endfor %}
             <div class="hidden-items">
-              <span>추가 메뉴 1</span><span class="price">30,000원</span>
-              <span>추가 메뉴 2</span><span class="price">10,000원</span>
-              <span>추가 메뉴 3</span><span class="price">45,000원</span>
-              <span>추가 메뉴 4</span><span class="price">25,000원</span>
             </div>
           </div>
           <div class="more-button-area">
@@ -108,7 +104,8 @@
         </div>
       </div>
 
-      <form class="review-form">
+      <form class="review-form" action="/upload" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="store_id" value="{{storeId}}">
         <h2>리뷰 작성</h2>
         <div class="review-top-section">
           <div class="review-scores-wrapper">
@@ -139,14 +136,15 @@
           </div>
           <div class="review-menu-wrapper">
             <h4 class="field-title">어떤 메뉴를 먹었나요? <span id="require-dot">*</span></h4>
-            <textarea rows="5" placeholder="메뉴를 입력해주세요."></textarea>
+            <textarea name="menu" rows="5" placeholder="메뉴를 입력해주세요."></textarea>
           </div>
         </div>
         <h4 class="field-title">리뷰 내용 <span id="require-dot">*</span></h4>
-        <textarea rows="5" placeholder="비속어, 비방하는 리뷰는 삭제될 수 있습니다."></textarea>
+        <textarea name="content" rows="5" placeholder="비속어, 비방하는 리뷰는 삭제될 수 있습니다."></textarea>
         <h4 class="field-title">메뉴 사진 <span id="require-dot">*</span></h4>
         <div class="photo-drop">
-          <img src="./image/upload_icon.png" alt="" width="50px" height="50px">
+          <img src="/image/upload_icon.png" alt="" width="50px" height="50px">
+          <input type="file" name="image" accept="image/*">
           <div class="drop-hint">맛있게 드셨나요?</div>
         </div>
         <button type="submit" class="btn-submit">리뷰 남기기</button>
@@ -183,6 +181,39 @@
             </div>
           </div>
         </div>
+        {% for review in reviews %}
+        <div class="review-card">
+          <div class="card-title">
+            <div class="avatar"><img src="../image/cafe.png" alt="프로필 이미지"></div>
+            <div class="user-info">사용자 {{ review.USER_ID }}</div>
+          </div>
+          <div class="card-contents">
+            <div class="card-left">
+              <span class="card-stars">★★★★☆</span>
+              <span class="card-score">{{ ((review.POINT_01 + review.POINT_02 + review.POINT_03) / 3).toFixed(1)
+                }}점</span>
+              &nbsp;<span class="card-created">{{ review.CREATED_AT }}</span>
+              <p class="card-text">{{ review.CONTENT }}</p>
+              <div class="tags">
+                <span class="tag-item">맛:</span><span>{{ review.POINT_01 }}점</span><span> | </span>
+                <span class="tag-item">가격:</span><span>{{ review.POINT_02 }}점</span><span> | </span>
+                <span class="tag-item">응대:</span><span>{{ review.POINT_03 }}점</span><span> | </span>
+              </div>
+              <div class="ordered-menu">주문한 메뉴:</div>
+              <div>{{ review.ORDERED_ITEM }}</div>
+            </div>
+            <div class="card-right">
+              {% if review.Pictures and review.Pictures.length > 0 %}
+              {% for picture in review.Pictures %}
+              <img src="/{{ picture.URL }}" alt="리뷰 사진">
+              {% endfor %}
+              {% else %}
+              <img src="../image/cafe.png">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
       </div>
     </section>
   </main>
