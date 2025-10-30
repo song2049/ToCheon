@@ -3,6 +3,7 @@ main {
 }
 
 .dashboard-title {
+  
   padding: 20px 40px;
   font-size: 26px;
   font-weight: 700;
@@ -14,6 +15,7 @@ main {
 
 .dashboard-card > ul {
   display: flex;
+  justify-content: center;
   flex-direction: row;
   gap: 20px;
 }
