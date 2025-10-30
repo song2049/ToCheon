@@ -9,7 +9,7 @@ const path = require("path");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const dashboardRouter = require("./dashboard/datshboard.router.js");
-const { verifyToken } = require("./middleware/adminMiddleware.js");
+const { verifyToken, refresh } = require("./middleware/adminMiddleware.js");
 
 app.use(cookieParser());
 app.use(express.static('public'));
@@ -19,7 +19,7 @@ app.use(express.json());
 app.set("view engine", "html");
 nunjucks.configure("views", { express: app});
 
-app.get("/admin", verifyToken, async(req, res) => {
+app.get("/admin", refresh, verifyToken, async(req, res) => {
     try {
 
         // 페이지 네이션 정의

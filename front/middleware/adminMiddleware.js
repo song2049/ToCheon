@@ -5,7 +5,6 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 const refresh = async (req, res, next) => {
     const { access_token: token, refresh_token } = req.cookies;
-
     if (!token) {
         console.log("액세스 토큰이 없다.");
         return res.redirect("http://localhost:3000/auth/login");
@@ -13,7 +12,11 @@ const refresh = async (req, res, next) => {
 
     try {
         // 액세스 토큰을 검증했는데 상태 괜찮다 그럼 통과
-        jwt.verify(token, JWT_SECRET);
+        
+        
+        const payload = jwt.verify(token, JWT_SECRET);
+        const userInfo = payload;
+
         return next();
     } catch (error) {
         // 만료가 되었다면 리프레시 시도
