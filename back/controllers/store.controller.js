@@ -147,11 +147,12 @@ export async function postStore(req, res) {
       longitude,   // 경도
       description, // 맛집 설명
       hash_tag,    // 해시태그 (선택)
-      eating_time  // 영업시간 (선택)
+      eating_time,  // 영업시간 (선택)
+      map_address //지도주소(MAP_URL)
     } = req.body;
 
     // 필수값 확인
-    if (!name || !address || !latitude || !longitude) {
+    if (!name || !address || !latitude || !longitude || !map_address) {
       return res.status(400).json({ error: "필수 정보가 누락되었습니다." });
     }
          
@@ -167,7 +168,8 @@ export async function postStore(req, res) {
       DESCRIPTION: description || "",
       HASH_TAG: hash_tag || "",
       EATING_TIME: eating_time || "",
-      IS_APPROVED: "0"  // 승인 대기 상태
+      IS_APPROVED: "0",  // 승인 대기 상태
+      MAP_URL: map_address
     });
 
     res.status(201).json({
