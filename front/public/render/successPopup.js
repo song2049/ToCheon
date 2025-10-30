@@ -2,7 +2,7 @@
 const renderStoreCreateSuccessPopup = () => {
     return (
         `
-            <div id="successPopup" class="popup hidden">
+            <div id="popup" class="popup hidden">
                 <div class="popup-content">
                 <p class="popup-title">
                     등록이 <span class="highlight">완료</span> 되었습니다.

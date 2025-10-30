@@ -75,7 +75,7 @@
         document.body.insertAdjacentHTML("beforeend", popupHTML);
 
         // 팝업 표시
-        const popup = document.getElementById("successPopup");
+        const popup = document.getElementById("popup");
         popup.classList.remove("hidden");
 
         // 버튼 이벤트
@@ -102,15 +102,15 @@
 
       try {
         // 실제 요청 (주석 해제 시 활성화)
-        // const { data } = await axios.post("http://localhost:3000/store/create", {
-        //   name: store_name.value.trim(),
-        //   address: address.value.trim(),
-        //   map_address: map_address.value.trim(),
-        //   tel_number: phone.value.trim(),
-        //   latitude: lat.value,
-        //   longitude: lng.value,
-        //   description: description.value.trim()
-        // });
+        const { data } = await axios.post("http://localhost:3000/store/create", {
+          name: store_name.value.trim(),
+          address: address.value.trim(),
+          map_address: map_address.value.trim(),
+          tel_number: phone.value.trim(),
+          latitude: lat.value,
+          longitude: lng.value,
+          description: description.value.trim()
+        });
 
         // 성공 팝업 표시
         const popupHTML = renderStoreCreateSuccessPopup();

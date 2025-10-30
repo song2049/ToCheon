@@ -1,7 +1,7 @@
 const renderStoreCreateErrorPopup = (message) => {
     return (
         `
-            <div id="successPopup" class="popup hidden">
+            <div id="popup" class="popup hidden">
                 <div class="popup-content">
                     <p class="popup-title">
                         <span class="highlight">${message}</span> 없습니다.
