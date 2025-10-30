@@ -4,12 +4,7 @@ const jwt = require("jsonwebtoken");
 
 // 로그인 페이지 접근
 const getLogin = (req, res) => {
-    // const { access_token } = req.cookies;
-    // if (access_token) {
-    //     res.redirect("http://localhost:3000/")
-    // } else {
-    //     res.render("login.html");
-    // }
+
     res.render("login.html");
 };
 

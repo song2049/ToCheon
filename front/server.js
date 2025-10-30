@@ -9,7 +9,7 @@ const authRouter = require("./auth/auth.router");
 const storeRouter = require("./store/store.route.js");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
-const { verifyToken, refresh } = require("./middleware/adminMiddleware.js");
+const { refresh } = require("./middleware/adminMiddleware.js");
 
 app.use('/uploads', express.static('uploads'));
 app.use(cookieParser());
