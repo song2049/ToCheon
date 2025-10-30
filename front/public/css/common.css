@@ -5,6 +5,10 @@
 }
 
 body {
+  overflow-y: scroll;
+}
+
+body {
     display: flex;
     flex-direction: column;
     height: 100%;

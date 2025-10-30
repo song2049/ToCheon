@@ -58,6 +58,9 @@ main .detail-container {margin: 0 7%;}
 .review-form textarea { width: 100%; height: 80%; padding: 12px; border: 1px solid #9E9E9E; border-radius: 8px; font-size: 14px; font-weight: 400; resize: vertical;}
 .photo-drop { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 180px; border: 1px dashed #9E9E9E; border-radius: 10px; color: #9E9E9E; cursor: pointer; }
 .btn-submit { width: 100%; height: 48px; margin-top: 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; background: #5b8def; color: #fff; cursor: pointer;}
+.photo-drop input[type="file"] {
+    display: none;
+}
 
 /* 리뷰 목록 */
 .review-list h3 { margin: 10px 0; font-weight: 500; font-size: 24px;}
