@@ -1,4 +1,4 @@
-import { Review, Picture } from "../models/index.js";
+import { Review, Picture, User } from "../models/index.js";
 
 /**
  * 리뷰 작성
@@ -6,14 +6,40 @@ import { Review, Picture } from "../models/index.js";
 export async function createReview(req, res) {
   const { store_id } = req.params;
   const { point1, point2, point3, content, orderedItem, photos = [] } = req.body;
-  const userId = req.user?.userId || req.nickname; //카카오 로긴의 경우 req.user가 없음 - nickname 사용으로 대체
 
-  if (!userId) return res.status(401).json({ error: "인증이 필요합니다." });
+  const localUserId = req.user?.userId; // 로컬 로그인
+  const kakaoId = req.user?.id;         // 카카오 로그인
+  const nickname = req.user?.nickname || "카카오유저";
+
+  if (!localUserId && !kakaoId) {
+    return res.status(401).json({ error: "인증이 필요합니다." });
+  }
 
   try {
-    // 1. 리뷰 생성
+    let user;
+
+    if (localUserId) {
+      // 로컬 로그인
+      user = await User.findOne({ where: { id: localUserId } });
+      if (!user) return res.status(401).json({ error: "유저가 존재하지 않습니다." });
+    } else if (kakaoId) {
+      // 카카오 로그인
+      user = await User.findOne({ where: { KAKAO_ID: kakaoId } });
+
+      if (!user) {
+        // 신규 생성
+        user = await User.create({
+          KAKAO_ID: kakaoId,
+          EMAIL: `${kakaoId}@kakao.local`,
+          NAME: nickname,
+          ROLE: "USER",
+        });
+      }
+    }
+
+    // ------------------- 리뷰 생성 -------------------
     const review = await Review.create({
-      USER_ID: userId,
+      USER_ID: user.ID,  // TB_USER PK 사용
       STORE_ID: store_id,
       POINT_01: point1,
       POINT_02: point2,
@@ -23,7 +49,7 @@ export async function createReview(req, res) {
       CREATED_AT: new Date(),
     });
 
-    // 2. 사진 등록 (선택사항)
+    // ------------------- 사진 등록 -------------------
     if (Array.isArray(photos) && photos.length > 0) {
       const pictureData = photos.map((url) => ({
         REVIEW_ID: review.ID,
@@ -38,6 +64,7 @@ export async function createReview(req, res) {
       message: "리뷰가 등록되었습니다.",
       reviewId: review.ID,
     });
+
   } catch (err) {
     console.error("createReview error:", err);
     res.status(500).json({ error: "리뷰 등록 중 오류 발생" });
@@ -58,9 +85,9 @@ export async function listReviews(req, res) {
       include: [
         {
           model: Picture,
-          as: "Pictures", //  alias 대소문자 일치 (models/index.js와 동일해야 함)
+          as: "Pictures",
           attributes: ["URL", "IS_MAIN"],
-          required: false, // 사진이 없어도 리뷰 조회 가능 (LEFT JOIN)
+          required: false,
         },
       ],
       limit: Number(pageSize),
