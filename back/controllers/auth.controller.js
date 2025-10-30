@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/index.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
-const REFRESH_SECRET = process.env.REFRESH_SECRET || "refresh-secret";
+const REFRESH_SECRET = process.env.REFRESH_SECRET || "dev-secret";
 
 // 로그인 (POST /auth/login)
 export async function login(req, res) {
@@ -22,29 +22,21 @@ export async function login(req, res) {
     if (!isMatch)
       return res.status(401).json({ error: "비밀번호가 일치하지 않습니다." });
 
-    // 1. Access Token (1분 유효)
+    // Access Token (1분 유효)
     const accessToken = jwt.sign(
       { userId: user.ID, role: user.ROLE, email: user.EMAIL, provider: "local" },
       JWT_SECRET,
       { expiresIn: "1m" }
     );
 
-    // 2. Refresh Token (1분 유효)
+    // Refresh Token (10분 유효)
     const refreshToken = jwt.sign(
       { userId: user.ID, email: user.EMAIL },
       REFRESH_SECRET,
-      { expiresIn: "1m" } 
+      { expiresIn: "10m" }
     );
 
-    // 3. HttpOnly 쿠키로 Refresh Token 저장
-    res.cookie("refresh_token", refreshToken, {
-      httpOnly: true,
-      secure: false, // HTTPS 환경이면 true
-      sameSite: "lax",
-      maxAge: 1 * 60 * 1000, // 1분
-    });
-
-    // 응답 반환
+    // 응답 (프론트에서 쿠키 관리)
     res.json({
       message: "로그인 성공",
       user: {
@@ -54,6 +46,7 @@ export async function login(req, res) {
         role: user.ROLE,
       },
       access_token: accessToken,
+      refresh_token: refreshToken,
     });
   } catch (err) {
     console.error("login error:", err);
@@ -86,26 +79,26 @@ export async function me(req, res) {
 // Refresh Token으로 Access Token 재발급 (POST /auth/refresh)
 export async function refresh(req, res) {
   try {
-    const refreshToken = req.cookies.refresh_token;
+    const refreshToken = req.body.refresh_token; // 프론트에서 전달받음
     if (!refreshToken)
       return res.status(401).json({ error: "리프레시 토큰이 없습니다." });
 
     // Refresh Token 검증
     const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
 
-    // 새 Access Token 발급 (1분 유효)
+    // 새 Access Token 발급 (10분 유효)
     const newAccessToken = jwt.sign(
       { userId: decoded.userId, email: decoded.email },
       JWT_SECRET,
-      { expiresIn: "1m" }
+      { expiresIn: "10m" }
     );
 
     res.json({
       message: "Access Token 재발급 성공",
       access_token: newAccessToken,
     });
-    console.log("새 Access Token:", newAccessToken);
 
+    console.log("새 Access Token:", newAccessToken);
   } catch (err) {
     console.error("refresh error:", err);
     res.status(401).json({ error: "리프레시 토큰이 만료되었거나 유효하지 않습니다." });
@@ -115,8 +108,7 @@ export async function refresh(req, res) {
 // 로그아웃 (POST /auth/logout)
 export async function logout(req, res) {
   try {
-    res.clearCookie("refresh_token");
-    res.json({ message: "로그아웃 완료 (쿠키 삭제됨)" });
+    res.json({ message: "로그아웃 완료 (프론트에서 쿠키 삭제 필요)" });
   } catch (err) {
     console.error("logout error:", err);
     res.status(500).json({ error: "로그아웃 처리 중 오류 발생" });

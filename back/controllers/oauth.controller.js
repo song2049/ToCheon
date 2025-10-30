@@ -62,7 +62,7 @@ export const kakaoLogin = async (req, res) => {
         role: user.ROLE,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "2h" }
+      { expiresIn: "1m" }
     );
 
     // 5. 클라이언트에 전달
