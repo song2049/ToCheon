@@ -19,7 +19,8 @@ Store.init(
     UPDATED_AT: { type: DataTypes.DATE, allowNull: true },
     HASH_TAG: { type: DataTypes.STRING(255), allowNull: true },
     EATING_TIME: { type: DataTypes.STRING(20), allowNull: true },
-    IMAGE_URL: { type: DataTypes.STRING(255), allowNull: true },
+    IMAGE_URL: { type: DataTypes.TEXT, allowNull: true }, //251030. varchar(255)에서 TEXT로 변경
+    MAP_URL: { type: DataTypes.TEXT, allowNull: true }, //251030. 추가
   },
   {
     sequelize,
