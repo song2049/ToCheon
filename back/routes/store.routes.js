@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get("/map", getStoresMap);
 router.get("/", getStores);
-router.get("/create", postStore);
+router.post("/create", postStore);
 router.get("/:store_id", getStoreDetail);
 router.get("/:store_id/map", getStoreMap);
 router.get("/:store_id/picture", getStoreLatestPicture);

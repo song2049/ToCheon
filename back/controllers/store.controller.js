@@ -136,8 +136,45 @@ export async function getStoreDetail(req, res) {
   }
 }
 
-// 승인 처리
+// 8. 맛집 등록 요청 처리 (관리자 승인 전)
 export async function postStore(req, res) {
-  //
-  
+  try {
+    const {
+      name,        // 가게 이름
+      address,     // 주소
+      tel_number,  // 전화번호
+      latitude,    // 위도
+      longitude,   // 경도
+      description, // 맛집 설명
+      hash_tag,    // 해시태그 (선택)
+      eating_time  // 영업시간 (선택)
+    } = req.body;
+
+    // 필수값 확인
+    if (!name || !address || !tel_number || !latitude || !longitude) {
+      return res.status(400).json({ error: "필수 정보가 누락되었습니다." });
+    }
+
+    // DB에 등록 (승인 전 상태)
+    const newStore = await Store.create({
+      USER_ID: 1,
+      NAME: name,
+      ADDRESS: address,
+      TEL_NUMBER: tel_number,
+      LATITUDE: latitude,
+      LONGITUDE: longitude,
+      DESCRIPTION: description || "",
+      HASH_TAG: hash_tag || "",
+      EATING_TIME: eating_time || "",
+      IS_APPROVED: "0"  // 승인 대기 상태
+    });
+
+    res.status(201).json({
+      message: "등록 요청이 완료되었습니다. 관리자의 승인을 기다려주세요.",
+      store: newStore
+    });
+  } catch (error) {
+    console.error("postStore error:", error);
+    res.status(500).json({ error: "맛집 등록 요청 처리 실패" });
+  }
 }
