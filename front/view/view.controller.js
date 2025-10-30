@@ -100,9 +100,6 @@ const postReview = [upload.single('image'), async (req, res) => {
 
     const imageFile = req.file;
     const { access_token } = req.cookies;
-    console.log('access_token:', access_token ? '있음' : '없음');
-    console.log('store_id:', store_id);
-    console.log('리뷰 데이터:', { taste, price, service, menu, content });
 
     try {
         if (!taste || !price || !service || !menu || !content || !store_id) {
