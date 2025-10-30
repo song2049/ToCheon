@@ -88,10 +88,13 @@ export async function refresh(req, res) {
 
     // 새 Access Token 발급 (10분 유효)
     const newAccessToken = jwt.sign(
-      { userId: decoded.userId, email: decoded.email },
+      { userId: decoded.userId, email: decoded.email, role: decoded.role, provider: "local"  },
       JWT_SECRET,
       { expiresIn: "10m" }
     );
+
+    //console.log(`userId: ${decoded.userId}, email: ${decoded.email}, role: ${decoded.role}, provider: "local"`);
+    
 
     res.json({
       message: "Access Token 재발급 성공",
