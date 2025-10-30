@@ -154,10 +154,12 @@ export async function postStore(req, res) {
     if (!name || !address || !tel_number || !latitude || !longitude) {
       return res.status(400).json({ error: "필수 정보가 누락되었습니다." });
     }
-
+    console.log(req.params);
+     
     // DB에 등록 (승인 전 상태)
+    const userId = req.user?.id || 1;
     const newStore = await Store.create({
-      USER_ID: 1,
+      USER_ID: userId,
       NAME: name,
       ADDRESS: address,
       TEL_NUMBER: tel_number,
