@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TODAY-CHEON</title>
-  <link rel="stylesheet" href="/css/font.css">
   <link rel="stylesheet" href="/css/common.css">
   <link rel="stylesheet" href="/css/detail.css">
   <link rel="stylesheet" href="/css/map.css">
@@ -37,7 +36,7 @@
         <div class="content">{{content}}</div>
         <div class="score">
           <span class="score-stars" data-rating="{{avgTotal}}"></span>
-          <span class="score-average">{{avgTotal}}</span>
+          <span class="score-average">&nbsp;{{avgTotal}}</span>
           <span class="score-total">{{reviewCount}}명의 평가</span>
         </div>
       </div>
@@ -59,7 +58,7 @@
           <p>아직 리뷰 이미지가 없어요 ㅜㅜ</p>
           {% else %}
           {% for photo in photoUrls %}
-          <img src="../{{ photo }}" alt="">
+          <img src="{{ photo }}" alt="">
           {% endfor %}
           {% endif %}
         </div>
@@ -72,15 +71,15 @@
           <div class="bar-area">
             <div class="bar-item">
               <div class="bar" data-score="{{avgTaste}}"></div>
-              <div>맛<span class="bar-label">{{avgTaste}}</span></div>
+              <span>맛&nbsp;<span class="bar-label">{{avgTaste}}</span></span>
             </div>
             <div class="bar-item">
               <div class="bar" data-score="{{avgPrice}}"></div>
-              <div>가격<span class="bar-label">{{avgPrice}}</span></div>
+              <span>가격&nbsp;<span class="bar-label">{{avgPrice}}</span></span>
             </div>
             <div class="bar-item">
               <div class="bar" data-score="{{avgService}}"></div>
-              <div>응대<span class="bar-label">{{avgService}}</span></div>
+              <span>응대&nbsp;<span class="bar-label">{{avgService}}</span></span>
             </div>
           </div>
         </div>
@@ -89,11 +88,15 @@
           <div class="menu-name">메뉴정보</div>
           <input type="checkbox" id="more-toggle" hidden>
           <div class="menu-grid">
-            {% for item in storeMenu %}
+            {% for item in storeMenu.slice(0, 6) %}
             <span>{{ item.NAME }}</span>
             <span class="price">{{ item.PRICE }}원</span>
             {% endfor %}
             <div class="hidden-items">
+              {% for item in storeMenu.slice(6) %}
+              <span>{{ item.NAME }}</span>
+              <span class="price">{{ item.PRICE }}원</span>
+              {% endfor %}
             </div>
           </div>
           <div class="more-button-area">
@@ -146,7 +149,7 @@
         <h4 class="field-title">메뉴 사진 <span id="require-dot">*</span></h4>
         <div class="photo-drop" id="upload-div">
           <img src="/image/upload_icon.png" alt="" width="50px" height="50px">
-          <input type="file" id="file-input" name="image" accept="image/*">
+          <input type="file" id="file-input" name="image" accept="image/*" multiple>
           <div class="drop-hint">맛있게 드셨나요?</div>
         </div>
         <button type="submit" class="btn-submit">리뷰 남기기</button>
@@ -168,9 +171,9 @@
               &nbsp;<span class="card-created">{{ review.CREATED_AT }}</span>
               <p class="card-text">{{ review.CONTENT }}</p>
               <div class="tags">
-                <span class="tag-item">맛:</span><span>{{ review.POINT_01 }}점</span><span> | </span>
-                <span class="tag-item">가격:</span><span>{{ review.POINT_02 }}점</span><span> | </span>
-                <span class="tag-item">응대:</span><span>{{ review.POINT_03 }}점</span><span> | </span>
+                <span class="tag-item">맛:</span><span class="tag-score">{{ review.POINT_01 }}점</span><span> | </span>
+                <span class="tag-item">가격:</span><span class="tag-score">{{ review.POINT_02 }}점</span><span> | </span>
+                <span class="tag-item">응대:</span><span class="tag-score">{{ review.POINT_03 }}점</span><span> | </span>
               </div>
               <div class="ordered-menu">주문한 메뉴:</div>
               <div>{{ review.ORDERED_ITEM }}</div>
@@ -178,10 +181,14 @@
             <div class="card-right">
               {% if review.Pictures and review.Pictures.length > 0 %}
               {% for picture in review.Pictures %}
-              <img src="/{{ picture.URL }}" alt="리뷰 사진">
+              {% if picture.URL.startsWith('http') %}
+              <img src="{{ picture.URL }}" alt="리뷰 사진">
+              {% else %}
+              <img src="/uploads/{{ picture.URL | replace('uploads/', '') }}" alt="리뷰 사진">
+              {% endif %}
               {% endfor %}
               {% else %}
-              <img src="../image/cafe.png">
+              <img src="../image/cafe.png" alt="기본 이미지">
               {% endif %}
             </div>
           </div>
