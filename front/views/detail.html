@@ -36,7 +36,7 @@
         <div class="content">{{content}}</div>
         <div class="score">
           <span class="score-stars" data-rating="{{avgTotal}}"></span>
-          <span class="score-average">{{avgTotal}}</span>
+          <span class="score-average">&nbsp;{{avgTotal}}</span>
           <span class="score-total">{{reviewCount}}명의 평가</span>
         </div>
       </div>
@@ -71,15 +71,15 @@
           <div class="bar-area">
             <div class="bar-item">
               <div class="bar" data-score="{{avgTaste}}"></div>
-              <div>맛<span class="bar-label">{{avgTaste}}</span></div>
+              <span>맛&nbsp;<span class="bar-label">{{avgTaste}}</span></span>
             </div>
             <div class="bar-item">
               <div class="bar" data-score="{{avgPrice}}"></div>
-              <div>가격<span class="bar-label">{{avgPrice}}</span></div>
+              <span>가격&nbsp;<span class="bar-label">{{avgPrice}}</span></span>
             </div>
             <div class="bar-item">
               <div class="bar" data-score="{{avgService}}"></div>
-              <div>응대<span class="bar-label">{{avgService}}</span></div>
+              <span>응대&nbsp;<span class="bar-label">{{avgService}}</span></span>
             </div>
           </div>
         </div>
@@ -167,9 +167,9 @@
               &nbsp;<span class="card-created">{{ review.CREATED_AT }}</span>
               <p class="card-text">{{ review.CONTENT }}</p>
               <div class="tags">
-                <span class="tag-item">맛:</span><span>{{ review.POINT_01 }}점</span><span> | </span>
-                <span class="tag-item">가격:</span><span>{{ review.POINT_02 }}점</span><span> | </span>
-                <span class="tag-item">응대:</span><span>{{ review.POINT_03 }}점</span><span> | </span>
+                <span class="tag-item">맛:</span><span class="tag-score">{{ review.POINT_01 }}점</span><span> | </span>
+                <span class="tag-item">가격:</span><span class="tag-score">{{ review.POINT_02 }}점</span><span> | </span>
+                <span class="tag-item">응대:</span><span class="tag-score">{{ review.POINT_03 }}점</span><span> | </span>
               </div>
               <div class="ordered-menu">주문한 메뉴:</div>
               <div>{{ review.ORDERED_ITEM }}</div>
