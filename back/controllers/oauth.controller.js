@@ -6,7 +6,7 @@ dotenv.config();
 
 /**
  * [POST] /oauth/kakao
- * 카카오 로그인 → Access / Refresh Token 발급
+ * 카카오 로그인 Access / Refresh Token 발급
  */
 export const kakaoLogin = async (req, res) => {
   const { client_id, redirect_uri, code } = req.body;
@@ -39,6 +39,7 @@ export const kakaoLogin = async (req, res) => {
       nickname: kakaoData.properties?.nickname || "unknown",
       thumbnail: kakaoData.properties?.thumbnail_image || null,
       email: kakaoData.kakao_account?.email || null,
+      role: "user",
       provider: "kakao",
     };
 
@@ -47,7 +48,7 @@ export const kakaoLogin = async (req, res) => {
       expiresIn: "1m",
     });
 
-    // 4. Refresh Token (1분)
+    // 4. Refresh Token (10분)
     const refreshToken = jwt.sign(
       userInfo,
       process.env.JWT_SECRET || "dev-secret",
@@ -57,7 +58,7 @@ export const kakaoLogin = async (req, res) => {
     // 5. 프론트로 반환
     return res.json({
       message: "Kakao login success",
-      user: userInfo,
+      //user: userInfo,
       token: jwt_token,
       refresh_token: refreshToken,
     });
@@ -80,20 +81,34 @@ export const refreshAccessToken = async (req, res) => {
     if (!refresh_token)
       return res.status(401).json({ error: "Refresh token missing" });
 
+    // 1. Refresh Token 검증
     const decoded = jwt.verify(
       refresh_token,
       process.env.JWT_SECRET || "dev-secret"
     );
 
+    // 2. 기존 kakaoLogin의 userInfo 구조 유지
+    const userInfo = {
+      id: decoded.id,
+      nickname: decoded.nickname || "unknown",
+      thumbnail: decoded.thumbnail || null,
+      email: decoded.email || null,
+      role: decoded.role || "user",
+      provider: decoded.provider || "kakao",
+    };
+
+    // 3. Access Token 재발급 (1분)
     const newAccessToken = jwt.sign(
-      { id: decoded.id, provider: decoded.provider },
+      userInfo,
       process.env.JWT_SECRET || "dev-secret",
       { expiresIn: "1m" }
     );
 
+    // 4. 프론트로 반환
     return res.json({
       message: "Access Token 재발급 성공",
       access_token: newAccessToken,
+      //user: userInfo,
     });
   } catch (err) {
     console.error("OAuth refresh error:", err.message);
@@ -101,6 +116,10 @@ export const refreshAccessToken = async (req, res) => {
   }
 };
 
+/**
+ * [GET] /oauth/debug
+ * 인가코드 디버깅용
+ */
 export const kakaoDebugCode = (req, res) => {
   const { code, error, error_description } = req.query;
 
