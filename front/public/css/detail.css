@@ -18,12 +18,12 @@ main .detail-container {margin: 0 7%;}
 .grid-2x2 .grid-right {grid-area: right; display: grid; grid-template-columns: repeat(3, 32%); grid-auto-rows: 24%; gap: 10px;}
 .grid-2x2 .grid-right img {width: 100%; height: 100%; border-radius: 8px; object-fit: cover;}
 /* grid(2,1) */
-.grid-2x2 .grid-score { grid-area: score; display: flex; justify-content: center; align-items: flex-end; gap: 40px; }
+.grid-2x2 .grid-score { grid-area: score; display: flex; justify-content: center; align-items: flex-start; gap: 40px; }
 .grid-2x2 .grid-score .score-area { text-align: center; }
 .grid-2x2 .grid-score .score-area .grid-total { font-weight: 500; font-size: 52px; }
 .grid-stars { margin: 10px 0; color: #2a6ff2; font-size: 40px; font-weight: 100;}
 .grid-2x2 .grid-score .score-area .grid-desc { font-weight: 350; font-size: 20px; }
-.grid-2x2 .grid-score .bar-area { display: flex; gap: 20px; align-items: flex-end; }
+.grid-2x2 .grid-score .bar-area { display: flex; gap: 20px; align-items: flex-end; height: 150px;}
 .grid-2x2 .grid-score .bar-area .bar-item .bar { width: 22px; height: 240px; margin: 0 auto 6px; border-radius: 4px; background: linear-gradient(to top, #2a6ff2, #bddcff); transition: height 0.8s ease-out; }
 .grid-2x2 .grid-score .bar-area .bar-item > div:last-child { text-align: center; font-size: 14px; }
 .grid-2x2 .grid-score .bar-area .bar-item .bar-label { display: in; margin-top: 4px; font-size: 13px; font-weight: 600; color: #2a6ff2; }
@@ -33,7 +33,7 @@ main .detail-container {margin: 0 7%;}
 .grid-2x2 .grid-menu .menu-grid {display: grid; grid-template-columns: 1fr auto 1fr auto; column-gap: 20px; row-gap: 10px; align-items: center; font-size: 15px; font-weight: 350; max-width: 500px;}
 .grid-2x2 .grid-menu .menu-grid .price {white-space: nowrap; text-align: right; font-size: 13px; font-weight: 350;}
 /* 더보기 */
-.menu-grid .hidden-items { grid-column: 1 / span 4; display: grid; grid-template-columns: subgrid; overflow: hidden; max-height: 200px; transition: max-height 0.3s ease-in-out; height: 60px;}
+.menu-grid .hidden-items { grid-column: 1 / span 4; display: grid; grid-template-columns: subgrid; overflow: hidden; max-height: 0; transition: max-height 0.3s ease-in-out; height: 350px;}
 #more-toggle:checked ~ .menu-grid .hidden-items { max-height: 500px; }
 .more-button-area { display: flex; justify-content: flex-start; margin-top: 15px; }
 .more-link { display: flex; align-items: center; cursor: pointer; user-select: none; padding: 5px 0; }

@@ -88,13 +88,19 @@
           <div class="menu-name">메뉴정보</div>
           <input type="checkbox" id="more-toggle" hidden>
           <div class="menu-grid">
-            {% for item in storeMenu %}
-            <span>{{ item.NAME }}</span>
-            <span class="price">{{ item.PRICE }}원</span>
-            {% endfor %}
-            <div class="hidden-items">
-            </div>
-          </div>
+  {# 앞 6개 #}
+  {% for item in storeMenu.slice(0, 6) %}
+    <span>{{ item.NAME }}</span>
+    <span class="price">{{ item.PRICE }}원</span>
+  {% endfor %}
+  <div class="hidden-items">
+    {# 7번째부터 #}
+    {% for item in storeMenu.slice(6) %}
+      <span>{{ item.NAME }}</span>
+      <span class="price">{{ item.PRICE }}원</span>
+    {% endfor %}
+  </div>
+</div>
           <div class="more-button-area">
             <label for="more-toggle" class="more-link">
               <span class="text show-text">더보기</span>
