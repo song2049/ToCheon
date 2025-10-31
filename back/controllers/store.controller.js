@@ -157,7 +157,7 @@ export async function postStore(req, res) {
     }
          
     // DB에 등록 (승인 전 상태)
-    const userId = req.user?.id || 1;
+    const userId = req.user?.userId || 1;
     const newStore = await Store.create({
       USER_ID: userId,
       NAME: name,
