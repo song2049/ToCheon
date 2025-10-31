@@ -96,41 +96,42 @@ const upload = multer({
 });
 
 const postReview = [upload.single('image'), async (req, res) => {
-    const { taste, price, service, menu, content, store_id } = req.body;
+  const { taste, price, service, menu, content, store_id } = req.body;
 
-    const imageFile = req.file;
-    const { access_token } = req.cookies;
+  const imageFile = req.file; // 변수명 일치시킴
+  const { access_token } = req.cookies;
 
-    try {
-        if (!taste || !price || !service || !menu || !content || !store_id) {
-            throw new Error("필수 값이 누락 되었습니다!");
-
-        };
-        const response = await axios.post(
-            `http://localhost:4000/api/reviews/${store_id}`,
-            {
-                point1: parseInt(taste),      // POINT_01 (맛)
-                point2: parseInt(price),       // POINT_02 (가격)
-                point3: parseInt(service),     // POINT_03 (친절도)
-                content: content,              // CONTENT
-                orderedItem: menu,             // ORDERED_ITEM
-                photos: imageFile ? [imageFile.path] : []  // Picture 테이블용
-            },
-            {
-                headers: {
-                    'Authorization': `Bearer ${access_token}`,  // Bearer 토큰 형식으로 전달
-                    'Content-Type': 'application/json'
-                }
-            }
-        )
-        return res.redirect(`/detail/${store_id}`);
-
+  try {
+    if (!taste || !price || !service || !menu || !content || !store_id) {
+      throw new Error("필수 값이 누락 되었습니다!");
     }
-    catch (error) {
-        console.error('리뷰 등록 오류:', error.response?.data || error.message);
-        res.status(500).json({ message: "리뷰 등록에 문제가 생겼습니다!" })
-    }
-}]
+
+    const photoPath = imageFile ? imageFile.filename : null;
+
+    const response = await axios.post(
+      `http://localhost:4000/api/reviews/${store_id}`,
+      {
+        point1: parseInt(taste),      // POINT_01 (맛)
+        point2: parseInt(price),       // POINT_02 (가격)
+        point3: parseInt(service),     // POINT_03 (친절도)
+        content: content,               // CONTENT
+        orderedItem: menu,              // ORDERED_ITEM
+        photos: photoPath ? [photoPath] : [] // 파일명만 저장
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${access_token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    return res.redirect(`/detail/${store_id}`);
+  } catch (error) {
+    console.error('리뷰 등록 오류:', error.response?.data || error.message);
+    res.status(500).json({ message: "리뷰 등록에 문제가 생겼습니다!" });
+  }
+}];
 
 module.exports = {
     getDetail,

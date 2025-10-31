@@ -1,4 +1,5 @@
 /* 공통 컨테이너 */
+body, textarea{font-family: "Noto Sans KR";}
 main .detail-container {margin: 0 7%;}
 /* 제목 */
 .info .title {margin-top: 50px; font-weight: 500; font-size: 35px; height: 50px;}
@@ -55,12 +56,10 @@ main .detail-container {margin: 0 7%;}
 .review-scores .radio-group { display: flex; align-items: center; gap: 12px; margin: 0; padding: 0; border: none; }
 .review-scores .radio-group span { font-size: 20px; font-weight: 500; width: 10%; }
 .review-form #require-dot { color: red; }
-.review-form textarea { width: 100%; height: 120px; padding: 12px; border: 1px solid #9E9E9E; border-radius: 8px; font-size: 14px; font-weight: 400; resize: vertical;}
+.review-form textarea { width: 100%; height: 130px; padding: 12px; border: 1px solid #9E9E9E; border-radius: 8px; font-size: 14px; font-weight: 400; resize: vertical;}
 .photo-drop { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 180px; border: 1px dashed #9E9E9E; border-radius: 10px; color: #9E9E9E; cursor: pointer; }
 .btn-submit { width: 100%; height: 48px; margin-top: 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; background: #5b8def; color: #fff; cursor: pointer;}
-.photo-drop input[type="file"] {
-    display: none;
-}
+.photo-drop input[type="file"] { display: none;}
 
 /* 리뷰 목록 */
 .review-list h3 { margin: 10px 0; font-weight: 500; font-size: 24px;}

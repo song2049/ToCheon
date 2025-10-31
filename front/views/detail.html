@@ -58,7 +58,7 @@
           <p>아직 리뷰 이미지가 없어요 ㅜㅜ</p>
           {% else %}
           {% for photo in photoUrls %}
-          <img src="../{{ photo }}" alt="">
+          <img src="{{ photo }}" alt="">
           {% endfor %}
           {% endif %}
         </div>
@@ -88,19 +88,17 @@
           <div class="menu-name">메뉴정보</div>
           <input type="checkbox" id="more-toggle" hidden>
           <div class="menu-grid">
-  {# 앞 6개 #}
-  {% for item in storeMenu.slice(0, 6) %}
-    <span>{{ item.NAME }}</span>
-    <span class="price">{{ item.PRICE }}원</span>
-  {% endfor %}
-  <div class="hidden-items">
-    {# 7번째부터 #}
-    {% for item in storeMenu.slice(6) %}
-      <span>{{ item.NAME }}</span>
-      <span class="price">{{ item.PRICE }}원</span>
-    {% endfor %}
-  </div>
-</div>
+            {% for item in storeMenu.slice(0, 6) %}
+            <span>{{ item.NAME }}</span>
+            <span class="price">{{ item.PRICE }}원</span>
+            {% endfor %}
+            <div class="hidden-items">
+              {% for item in storeMenu.slice(6) %}
+              <span>{{ item.NAME }}</span>
+              <span class="price">{{ item.PRICE }}원</span>
+              {% endfor %}
+            </div>
+          </div>
           <div class="more-button-area">
             <label for="more-toggle" class="more-link">
               <span class="text show-text">더보기</span>
@@ -151,7 +149,7 @@
         <h4 class="field-title">메뉴 사진 <span id="require-dot">*</span></h4>
         <div class="photo-drop" id="upload-div">
           <img src="/image/upload_icon.png" alt="" width="50px" height="50px">
-          <input type="file" id="file-input" name="image" accept="image/*">
+          <input type="file" id="file-input" name="image" accept="image/*" multiple>
           <div class="drop-hint">맛있게 드셨나요?</div>
         </div>
         <button type="submit" class="btn-submit">리뷰 남기기</button>
@@ -183,10 +181,14 @@
             <div class="card-right">
               {% if review.Pictures and review.Pictures.length > 0 %}
               {% for picture in review.Pictures %}
-              <img src="/{{ picture.URL }}" alt="리뷰 사진">
+              {% if picture.URL.startsWith('http') %}
+              <img src="{{ picture.URL }}" alt="리뷰 사진">
+              {% else %}
+              <img src="/uploads/{{ picture.URL | replace('uploads/', '') }}" alt="리뷰 사진">
+              {% endif %}
               {% endfor %}
               {% else %}
-              <img src="../image/cafe.png">
+              <img src="../image/cafe.png" alt="기본 이미지">
               {% endif %}
             </div>
           </div>
