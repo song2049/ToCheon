@@ -4,6 +4,6 @@ const dashboardController = require("./dashboard.controller.js");
 
 router.post("/admin/approve", dashboardController.postApprove);
 router.post("/admin/reject", dashboardController.postReject);
-
+router.delete("/admin/logout", dashboardController.deleteLogout);
 
 module.exports = router;

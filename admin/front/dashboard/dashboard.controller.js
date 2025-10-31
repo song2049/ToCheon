@@ -1,9 +1,10 @@
-const axios = require("axios")
+const axios = require("axios");
+const jwt = require("jsonwebtoken");
 
 const postApprove = async (req, res) => {
     try {
         const { ID, IMAGE_URL, EATING_TIME } = req.body;
-        if(!ID || !IMAGE_URL || !EATING_TIME) {
+        if (!ID || !IMAGE_URL || !EATING_TIME) {
             return res.status(400).json({ message: "ID, IMAGE_URL, EATING_TIME 중 값이 누락되었습니다." });
         }
         const { data } = await axios.post(`http://localhost:4000/api/admin/stores/${ID}/approve`, {
@@ -22,11 +23,11 @@ const postReject = async (req, res) => {
     try {
         const { ID } = req.body;
 
-        if(!ID) {
+        if (!ID) {
             return res.status(400).json({ message: "ID 값이 누락되었습니다." });
         }
 
-        const { data } =  await axios.post(`http://localhost:4000/api/admin/stores/${ID}/reject`)
+        const { data } = await axios.post(`http://localhost:4000/api/admin/stores/${ID}/reject`)
 
         res.status(200).json(data.message);
     } catch (error) {
@@ -34,8 +35,36 @@ const postReject = async (req, res) => {
     }
 }
 
+const deleteLogout = (req, res) => {
+    try {
+        const { access_token } = req.cookies;
+        console.log(access_token);
+
+        if (!access_token) {
+            return res.status(400).json({
+                message: "로그인 상태가 아닙니다."
+            });
+        }
+        const userInfo = jwt.decode(access_token);
+
+        if (userInfo.provider === "local") {
+            return res.clearCookie('access_token'),
+                res.clearCookie('refresh_token').json({
+                    message: "http://localhost:3000/auth/login"
+                })
+        };
+
+    } catch (error) {
+        res.status(401).json({
+            message: "로그아웃에 실패하였습니다."
+        });
+    };
+
+};
+
 
 module.exports = {
     postApprove,
-    postReject
+    postReject,
+    deleteLogout
 };

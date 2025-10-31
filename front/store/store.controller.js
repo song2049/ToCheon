@@ -40,7 +40,7 @@ const postCreate = async(req, res) => {
 
     const { data } = await axios.post("http://localhost:4000/api/stores/create", {...rest}, { 
       headers: {
-        Authoriztion: `Bearer ${access_token}`
+        Authorization: `Bearer ${access_token}`
       }
     });
     res.status(201).json({ success: true, message: data.message});

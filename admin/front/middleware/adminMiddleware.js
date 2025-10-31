@@ -32,7 +32,7 @@ const refresh = async (req, res, next) => {
             ]);
 
             console.log("새로운 엑세스 토큰 발급완료");
-            next();
+            return next();
         } catch (refreshError) {
             console.log("리프레시 실패" , refreshError.message);
             res.redirect("http://localhost:3000/auth/login");
