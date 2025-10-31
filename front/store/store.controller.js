@@ -24,13 +24,7 @@ const getCreate = async (req, res) => {
     });
 
     const storeData = response.data.documents[0];
-<<<<<<< HEAD
-    console.log(storeData);
-    
-    res.render("store/create/step2.html", { store: storeData || {} });
-=======
     res.render("store/create/step2.html", { store: storeData || {}, userInfo });
->>>>>>> 6d2a0d8 (Feat: 다른 페이지들 헤더 권한에 따라 분기처리하기)
 
   } catch (error) {
     console.error(error);
