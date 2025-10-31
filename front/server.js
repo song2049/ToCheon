@@ -9,7 +9,7 @@ const authRouter = require("./auth/auth.router");
 const storeRouter = require("./store/store.route.js");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
-const { refresh } = require("./middleware/adminMiddleware.js");
+const { refresh, oauthRefresh } = require("./middleware/adminMiddleware.js");
 
 app.use('/uploads', express.static('uploads'));
 app.use(cookieParser());
@@ -17,6 +17,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(refresh);
+app.use(oauthRefresh);
 
 app.set("view engine", "html");
 nunjucks.configure("views", { express: app });

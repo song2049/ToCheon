@@ -54,10 +54,10 @@ const getKakaoLogin = async (req, res) => {
             code: code
         });
 
-        res.setHeader(
-            "Set-Cookie",
-            `access_token=${data.token}; Domain=localhost; Path=/; httpOnly; secure;`
-        );
+        res.setHeader("Set-Cookie", [
+            `access_token=${data.token}; Domain=localhost; Path=/; HttpOnly; Secure`,
+            `refresh_token=${data.refresh_token}; Domain=localhost; Path=/; HttpOnly; Secure`
+        ]);
 
         res.redirect("http://localhost:3000/");
 
@@ -88,6 +88,7 @@ const deleteLogout = (req, res) => {
 
         if (userInfo.provider === "kakao") {
             res.clearCookie('access_token')
+            res.clearCookie('refresh_token')
             const REST_API_KEY = process.env.KAKAO_REST_API_KEY;
             const LOGOUT_REDIRECT_URI = process.env.LOGOUT_REDIRECT_URI;
             const kakaoLogoutUrl = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
@@ -105,10 +106,33 @@ const deleteLogout = (req, res) => {
 };
 
 
+// 카카오디버깅 라인
+const kakaoDebugCode = (req, res) => {
+    const { code, error, error_description } = req.query;
+
+    if (error) {
+        console.error("카카오 인증 실패:", error_description);
+        return res
+            .status(400)
+            .send(`카카오 인증 실패: ${error_description || error}`);
+    }
+
+    if (!code) {
+        return res
+            .status(400)
+            .send("인가 코드가 전달되지 않았습니다. (code 파라미터 없음)");
+    }
+
+    console.log("인가 코드:", code);
+    res.send(`인가 코드: ${code}`);
+};
+
+
 module.exports = {
     getLogin,
     postLogin,
     getOauthLogin,
     getKakaoLogin,
-    deleteLogout
+    deleteLogout,
+    kakaoDebugCode
 };
