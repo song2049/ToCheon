@@ -25,16 +25,16 @@ export async function getPendingStores(req, res) {
 export async function approveStore(req, res) {
   try {
     const { id } = req.params;
-    const { IMAGE_URL, EATING_TIME } = req.body;
+    const { CATEGORY, IMAGE_URL, EATING_TIME } = req.body;
 
     // 유효성 검사
-    if (!IMAGE_URL || !EATING_TIME) {
+    if (!CATEGORY || !IMAGE_URL || !EATING_TIME) {
       return res.status(400).json({ message: "필수 값 누락: IMAGE_URL 또는 EATING_TIME" });
     }
 
     // 승인 및 데이터 업데이트
     await Store.update(
-      { IS_APPROVED: 1, IMAGE_URL, EATING_TIME },
+      { IS_APPROVED: 1, CATEGORY, IMAGE_URL, EATING_TIME },
       { where: { ID: id } }
     );
 
