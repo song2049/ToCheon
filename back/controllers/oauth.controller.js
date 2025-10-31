@@ -1,84 +1,122 @@
-// 사용하지 않음 (프론트 서버에서 처리)
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { User } from "../models/user.js";
 
 dotenv.config();
 
+/**
+ * [POST] /oauth/kakao
+ * 카카오 로그인 → Access / Refresh Token 발급
+ */
 export const kakaoLogin = async (req, res) => {
+  const { client_id, redirect_uri, code } = req.body;
+  if (!code) return res.status(400).send("Authorization code not provided.");
+
   try {
-    // [BE-1] 프론트서버가 전달한 인가코드(code)와 redirectUri 수신
-    const { code, redirectUri } = req.body;
-    if (!code || !redirectUri) {
-      return res.status(400).json({ message: "Missing code or redirectUri" });
-    }
-
-    // 1. 인가코드로 Access Token 요청
-    const tokenResponse = await axios.post(
-      "https://kauth.kakao.com/oauth/token",
-      new URLSearchParams({
+    // 1. 카카오 Access Token 요청
+    const tokenResponse = await axios.post("https://kauth.kakao.com/oauth/token", null, {
+      params: {
         grant_type: "authorization_code",
-        client_id: process.env.KAKAO_REST_API_KEY,
-        redirect_uri: redirectUri,
-        code: code,
-        client_secret: process.env.KAKAO_CLIENT_SECRET || "",
-      }),
-      { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-    );
+        client_id,
+        redirect_uri,
+        code,
+      },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
 
-    const { access_token } = tokenResponse.data;
-    if (!access_token) throw new Error("No access token received");
+    const { access_token: kakao_token } = tokenResponse.data;
+    if (!kakao_token)
+      return res.status(401).json({ message: "token is not defined!" });
 
-    // 2. 카카오 API 서버로 사용자 정보 요청
+    // 2. 사용자 정보 요청
     const userResponse = await axios.get("https://kapi.kakao.com/v2/user/me", {
-      headers: { Authorization: `Bearer ${access_token}` },
+      headers: { Authorization: `Bearer ${kakao_token}` },
     });
 
     const kakaoData = userResponse.data;
-    const kakaoId = kakaoData.id.toString();
-    const kakaoEmail =
-      kakaoData.kakao_account?.email || `${kakaoId}@kakao-user.com`;
-    const kakaoName =
-      kakaoData.kakao_account?.profile?.nickname || "Kakao User";
+    const userInfo = {
+      id: kakaoData.id,
+      nickname: kakaoData.properties?.nickname || "unknown",
+      thumbnail: kakaoData.properties?.thumbnail_image || null,
+      email: kakaoData.kakao_account?.email || null,
+      provider: "kakao",
+    };
 
-    // 3. DB에 사용자 존재 여부 확인
-    let user = await User.findOne({ where: { KAKAO_ID: kakaoId } });
-    if (!user) {
-      user = await User.create({
-        EMAIL: kakaoEmail,
-        KAKAO_ID: kakaoId,
-        NAME: kakaoName,
-        ROLE: "USER",
-      });
-    }
+    // 3. Access Token (1분)
+    const jwt_token = jwt.sign(userInfo, process.env.JWT_SECRET || "dev-secret", {
+      expiresIn: "1m",
+    });
 
-    // 4. JWT 생성
-    const jwtToken = jwt.sign(
-      {
-        id: user.ID,
-        email: user.EMAIL,
-        name: user.NAME,
-        role: user.ROLE,
-      },
-      process.env.JWT_SECRET,
+    // 4. Refresh Token (1분)
+    const refreshToken = jwt.sign(
+      userInfo,
+      process.env.JWT_SECRET || "dev-secret",
+      { expiresIn: "10m" }
+    );
+
+    // 5. 프론트로 반환
+    return res.json({
+      message: "Kakao login success",
+      user: userInfo,
+      token: jwt_token,
+      refresh_token: refreshToken,
+    });
+  } catch (error) {
+    console.error("Kakao login failed:", error.message);
+    res.status(500).send({
+      error: "Kakao login Failed",
+      message: error.response?.data || error.message,
+    });
+  }
+};
+
+/**
+ * [POST] /oauth/refresh
+ * Refresh Token으로 Access Token 재발급
+ */
+export const refreshAccessToken = async (req, res) => {
+  try {
+    const { refresh_token } = req.body;
+    if (!refresh_token)
+      return res.status(401).json({ error: "Refresh token missing" });
+
+    const decoded = jwt.verify(
+      refresh_token,
+      process.env.JWT_SECRET || "dev-secret"
+    );
+
+    const newAccessToken = jwt.sign(
+      { id: decoded.id, provider: decoded.provider },
+      process.env.JWT_SECRET || "dev-secret",
       { expiresIn: "1m" }
     );
 
-    // 5. 클라이언트에 전달
-    return res.status(200).json({
-      message: "카카오 로그인 성공",
-      user: {
-        id: user.ID,
-        email: user.EMAIL,
-        name: user.NAME,
-        role: user.ROLE,
-      },
-      access_token: jwtToken,
-      provider: "kakao",
+    return res.json({
+      message: "Access Token 재발급 성공",
+      access_token: newAccessToken,
     });
   } catch (err) {
-    console.error("kakaoLogin error:", err);
-    res.status(500).json({ message: "카카오 로그인 실패", error: err.message });
+    console.error("OAuth refresh error:", err.message);
+    res.status(403).json({ error: "Invalid or expired refresh token" });
   }
+};
+
+export const kakaoDebugCode = (req, res) => {
+  const { code, error, error_description } = req.query;
+
+  if (error) {
+    console.error("카카오 인증 실패:", error_description);
+    return res
+      .status(400)
+      .send(`카카오 인증 실패: ${error_description || error}`);
+  }
+
+  if (!code) {
+    return res
+      .status(400)
+      .send("인가 코드가 전달되지 않았습니다. (code 파라미터 없음)");
+  }
+
+  console.log("인가 코드:", code);
+  res.send(`인가 코드: ${code}`);
 };
