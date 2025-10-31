@@ -210,48 +210,38 @@ main {
     margin-top: 40px;
     display: grid;
     grid-template-columns: repeat(3, minmax(200px, 1fr));
-    gap: 46px;
+    /* gap: 46px; */
     justify-content: start;
     align-content: start;
 }
 
 /* 음식점 카드들 요소 */
-/* .section-right-cardlist > .stores-card {
-    width: 200px;
-    height: 260px;
+
+.section-right-cardlist > .stores-card {
+    width: 266px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     padding: 10px;
     border-radius: 10px;
     box-sizing: border-box;
-} */
-
-.section-right-cardlist > .stores-card {
-  width: 200px;
-  height: 260px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 10px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
+    overflow: visible;
+    margin-bottom: 38px;
+    }
 
 /* 카드 이미지 */
 .stores-card-image {
-  flex-shrink: 0;
-  width: 150px;
-  height: 150px;
-  background-image: url("../image/cafe.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 15px;
-  margin-bottom: 5px;
+    flex-shrink: 0;
+    width: 150px;
+    height: 150px;
+    background-image: url("../image/cafe.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 15px;
+    margin-bottom: 10px;
 }
 
 /* 카드 제목 */
@@ -265,14 +255,11 @@ main {
 
 /* 카드들 해시태그 */
 .stores-card-hashtag {
-  flex-grow: 1;
-  max-height: 40px;
-  overflow-y: auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  align-items: flex-start;
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
 }
 
 /* 앞의 2개 해시태그 */
