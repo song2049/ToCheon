@@ -33,7 +33,7 @@ header > .header-left {
     gap: 8px;
 }
 
-/* 헤더의 투데이천호 텍스트 */
+/* 투천 관리자 텍스트 */
 header > .header-left > a {
     align-items: center;
     font-family: 'Pretendard';
@@ -43,12 +43,13 @@ header > .header-left > a {
     color: black;
 }
 
-/* 메뉴버튼 */
-header > .header-right > a {
-    font-size: 15px;
-    padding-right: 20px;
-    cursor: pointer;
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
+
+/* 메뉴버튼 */
 
 /* 버튼 색상 및 크기 */
 header > .header-right > button {
@@ -59,4 +60,9 @@ header > .header-right > button {
     width: 62px;
     height: 32px;
     cursor: pointer;
+}
+
+header > .header-right > button:hover {
+  background-color: #F8F8FF; 
+  transition-duration: 0.2s;
 }
