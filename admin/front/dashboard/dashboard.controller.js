@@ -3,13 +3,15 @@ const jwt = require("jsonwebtoken");
 
 const postApprove = async (req, res) => {
     try {
-        const { ID, IMAGE_URL, EATING_TIME } = req.body;
-        if (!ID || !IMAGE_URL || !EATING_TIME) {
-            return res.status(400).json({ message: "ID, IMAGE_URL, EATING_TIME 중 값이 누락되었습니다." });
+        const { ID, IMAGE_URL, EATING_TIME, CATEGORY } = req.body;
+        
+        if (!ID || !IMAGE_URL || !EATING_TIME || !CATEGORY) {
+            return res.status(400).json({ message: "ID, IMAGE_URL, EATING_TIME, CATEGORY 중 값이 누락되었습니다." });
         }
         const { data } = await axios.post(`http://localhost:4000/api/admin/stores/${ID}/approve`, {
             IMAGE_URL: IMAGE_URL,
-            EATING_TIME: EATING_TIME
+            EATING_TIME: EATING_TIME,
+            CATEGORY: CATEGORY
         });
 
         res.status(200).json(data.message);

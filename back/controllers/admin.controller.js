@@ -27,6 +27,9 @@ export async function approveStore(req, res) {
     const { id } = req.params;
     const { CATEGORY, IMAGE_URL, EATING_TIME } = req.body;
 
+    console.log(CATEGORY, IMAGE_URL, EATING_TIME);
+    
+
     // 유효성 검사
     if (!CATEGORY || !IMAGE_URL || !EATING_TIME) {
       return res.status(400).json({ message: "필수 값 누락: IMAGE_URL 또는 EATING_TIME" });

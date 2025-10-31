@@ -76,8 +76,18 @@
                         <input type="text" name="storeId" value="{{ store.ID }}" readonly>
                         <li>{{ store.User.NAME }}</li>
                         <li>{{ store.NAME }}</li>
-                        <li>{{ store.ADDRESS }}</li>
-                        <li>{{ store.CATEGORY }}</li>
+                        <li><a href="{{ store.MAP_URL }}">{{ store.ADDRESS }}</a></li>
+                        <li>
+                            <select class="category" name="category">
+                                <option value="">카테고리</option>
+                                <option value="디저트">디저트</option>
+                                <option value="국밥">국밥</option>
+                                <option value="카페">카페</option>
+                                <option value="중식">중식</option>
+                                <option value="한식">한식</option>
+                                <option value="양식">양식</option>
+                            </select>
+                        </li>
                         <li>{{ store.DESCRIPTION }}</li>
                         <input type="text" name="imgurl" placeholder="이미지 URL을 넣어주세요.">
                         <li>
@@ -95,13 +105,14 @@
                     <span>&lt;</span>
                     {% for p in pages %}
                     <a href="/admin/?page={{ p }}{% if stores %}&stores={{ stores }}{% endif %}"
-                    class="{% if p == page %}on{% endif %}">{{ p }}</a>
+                        class="{% if p == page %}on{% endif %}">{{ p }}</a>
                     {% endfor %}
                     <span>&gt;</span>
-            </div>
+                </div>
     </main>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/approve.js"></script>
 <script src="/js/adminBtn.js"></script>
+
 </html>

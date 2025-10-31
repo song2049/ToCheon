@@ -10,6 +10,11 @@ awaitingRows.forEach((form) => {
         const open = e.target.open.value;
         const close = e.target.close.value;
         const eatTime = `${open} ~ ${close}`;
+        const category = e.target.category.value;
+
+        console.log(category);
+        
+
 
         if (imgurl.length === 0 || open.length === 0 || close.length === 0) {
             alert("이미지 주소 또는 영업시간이 올바르게 입력되지 않았습니다.")
@@ -20,7 +25,8 @@ awaitingRows.forEach((form) => {
             const { data } = await axios.post("/admin/approve", {
                 ID: storeId,
                 IMAGE_URL: imgurl,
-                EATING_TIME: eatTime
+                EATING_TIME: eatTime,
+                CATEGORY: category
             });
 
             alert(data);
