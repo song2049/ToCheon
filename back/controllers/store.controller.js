@@ -140,6 +140,7 @@ export async function getStoreDetail(req, res) {
 export async function postStore(req, res) {
   try {
     const {
+      category,    // 카테고리
       name,        // 가게 이름
       address,     // 주소
       tel_number,  // 전화번호
@@ -160,6 +161,7 @@ export async function postStore(req, res) {
     const userId = req.user?.userId || 1;
     const newStore = await Store.create({
       USER_ID: userId,
+      CATEGORY: category,
       NAME: name,
       ADDRESS: address,
       TEL_NUMBER: tel_number,
