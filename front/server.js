@@ -21,7 +21,7 @@ app.use(refresh);
 app.set("view engine", "html");
 nunjucks.configure("views", { express: app });
 
-app.get("/", refresh, async (req, res) => {
+app.get("/", async (req, res) => {
 
     const userInfo = req.userInfo;
     
