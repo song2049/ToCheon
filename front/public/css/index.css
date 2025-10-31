@@ -205,21 +205,26 @@ main {
     align-items: center;
 }
 
-/* 카드 리스트 ,, 기존 flex-warp 에서 그리드 형태로 바꿈 */
+/* 음식점 카드들 요소 */
+
 .section-right-cardlist {
-    margin-top: 40px;
     display: grid;
     grid-template-columns: repeat(3, minmax(200px, 1fr));
-    /* gap: 46px; */
     justify-content: start;
     align-content: start;
 }
 
-/* 음식점 카드들 요소 */
-
-.section-right-cardlist > .stores-card {
+.section-right-cardlist > .stores {
+    margin-top: 30px;
     width: 266px;
-    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stores .stores-card {
+    width: 206px;
+    height: 266px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -228,8 +233,7 @@ main {
     border-radius: 10px;
     box-sizing: border-box;
     overflow: visible;
-    margin-bottom: 38px;
-    }
+}
 
 /* 카드 이미지 */
 .stores-card-image {
@@ -283,27 +287,28 @@ main {
 
 /* 페이지네이션 버튼 */
 .pagination {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  gap: 8px;
-  flex-wrap: nowrap;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+    flex-wrap: nowrap;
 }
 
 .page-btn {
-  border: none;
-  background: #eee;
-  padding: 6px 12px;
-  border-radius: 6px;
-  text-decoration: none;
-  color: #333;
-  min-width: 30px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+    border: none;
+    background: #eee;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+    min-width: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 /* 현재페이지 */
 .page-btn.on {
-  background: #6299EB;
-  color: #fff;
+    background: #6299EB;
+    color: #fff;
 }

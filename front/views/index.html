@@ -60,13 +60,16 @@
             </div>
             <div class="section-right-cardlist">
                 {% for store in data %}
-                <div class="stores-card">
-                    <div class="stores-card-image"></div>
-                    <a href="/detail/{{ store.ID }}" class="stores-card-title">{{ store.NAME }}</a>
-                    <div class="stores-card-hashtag">
-                        {% for hashtag in store.hashtags %}
-                        <p>{{ hashtag }}</p>
-                        {% endfor %}
+                <div class="stores">
+                    <div class="stores-card">
+                        <div class="stores-card-image"></div>
+                        <a href="/detail/{{ store.ID }}" class="stores-card-title">{{ store.NAME }}</a>
+                        <div class="stores-card-hashtag">
+                            {% for hashtag in store.hashtags %}
+                            <p>{{ hashtag }}</p>
+                            {% endfor %}
+                            <p>#{{ store.CATEGORY }}</p>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
