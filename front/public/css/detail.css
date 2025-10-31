@@ -4,7 +4,7 @@ main .detail-container {margin: 0 7%;}
 .info .title {margin-top: 50px; font-weight: 500; font-size: 35px; height: 50px;}
 .info .content {margin-top: 7px; color: #9E9E9E; font-weight: 350; font-size: 16px; height: 19px;}
 .info .score {margin-top: 7px; height: 32px;}
-.info .score .score-stars {color: #006FFF; font-size: 26px;}
+.info .score .score-stars {color: #006FFF; font-size: 26px;font-weight: 100;}
 .info .score .score-average {font-weight: 500; font-size: 22px;}
 .info .score .score-total {color: #9E9E9E; font-weight: 350; font-size: 15px;}
 /* grid(1,1) */
@@ -21,7 +21,7 @@ main .detail-container {margin: 0 7%;}
 .grid-2x2 .grid-score { grid-area: score; display: flex; justify-content: center; align-items: flex-end; gap: 40px; }
 .grid-2x2 .grid-score .score-area { text-align: center; }
 .grid-2x2 .grid-score .score-area .grid-total { font-weight: 500; font-size: 52px; }
-.grid-stars { margin: 10px 0; color: #2a6ff2; font-size: 40px; }
+.grid-stars { margin: 10px 0; color: #2a6ff2; font-size: 40px; font-weight: 100;}
 .grid-2x2 .grid-score .score-area .grid-desc { font-weight: 350; font-size: 20px; }
 .grid-2x2 .grid-score .bar-area { display: flex; gap: 20px; align-items: flex-end; }
 .grid-2x2 .grid-score .bar-area .bar-item .bar { width: 22px; height: 240px; margin: 0 auto 6px; border-radius: 4px; background: linear-gradient(to top, #2a6ff2, #bddcff); transition: height 0.8s ease-out; }
@@ -73,7 +73,7 @@ main .detail-container {margin: 0 7%;}
 .card-left .tags { margin-top: 10px; }
 .card-right { flex: 1; display: flex; gap: 6px; justify-content: flex-end; align-items: flex-start; }
 .card-right img { width: 50%; height: 100%; object-fit: cover; border-radius: 18px; }
-.card-stars { color: #006FFF; font-size: 18px; }
+.card-stars { color: #006FFF; font-size: 18px; font-weight: 100;}
 .card-score { font-size: 15px; }
 .card-created { color: #9E9E9E; font-size: 13px; }
 .card-text, .tag-score, .ordered-menu { margin-top: 10px; font-weight: 350; font-size: 17px; }
