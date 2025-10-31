@@ -6,8 +6,9 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 const loginVerifyToken = (req, res, next) => {
     // 토큰이 정상이야? 넌 그럼 못 들어가 로그인 페이지로
+    const { access_token: token, refresh_token } = req.cookies;
+    
     try {
-        const { access_token: token, refresh_token } = req.cookies;
 
         jwt.verify(token, JWT_SECRET);
 
@@ -46,8 +47,12 @@ const refresh = async (req, res, next) => {
             console.log("새로운 엑세스 토큰 발급완료");
             next();
         } catch (refreshError) {
-            console.log("넌 리프레시 토큰마저 만료 됐다..");
-            
+            // 이미 삭제 됐어? 그럼 걍 넘어가~
+            if (!token) {
+                req.userInfo = {};      // 토큰 없으면 빈 객체로 처리
+                return next();
+            }
+
             const userInfo = jwt.decode(token);
             // 리프레시 토큰마저 만료되면..로그아웃 진행!
             if (userInfo.provider === "local") {

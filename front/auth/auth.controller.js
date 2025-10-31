@@ -16,7 +16,7 @@ const postLogin = async (req, res) => {
             email: email,
             password: password
         });
-        
+
         const access_token = data.access_token;
         const refresh_token = data.refresh_token;
 
@@ -80,9 +80,10 @@ const deleteLogout = (req, res) => {
         const userInfo = jwt.decode(access_token);
 
         if (userInfo.provider === "local") {
-            return res.clearCookie('access_token').json({
-                message: "http://localhost:3000"
-            })
+            return res.clearCookie('access_token'),
+                res.clearCookie('refresh_token').json({
+                    message: "http://localhost:3000"
+                })
         };
 
         if (userInfo.provider === "kakao") {

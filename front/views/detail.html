@@ -18,7 +18,7 @@
       <a href="/">TODAY-CHEON</a>
     </div>
     <div class="header-right">
-      <a>메뉴</a>
+      <button onclick="location.href = `/store/create`">맛집 등록</button>
       {% if userInfo and userInfo | length > 0 %}
       {% if userInfo.role == "ADMIN" %}
       <button class="admin-btn">관리자</button>
@@ -212,4 +212,5 @@
 <script src="../js/detailMap.js"></script>
 <script src="../js/logout.js"></script>
 <script src="../js/admin.js"></script>
+
 </html>

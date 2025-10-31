@@ -13,7 +13,8 @@ const refresh = async (req, res, next) => {
 
     try {
         // 액세스 토큰을 검증했는데 상태 괜찮다 그럼 통과
-        jwt.verify(token, JWT_SECRET);
+        const payload = jwt.verify(token, JWT_SECRET);
+        req.userInfo = payload;
         return next();
     } catch (error) {
         // 만료가 되었다면 리프레시 시도

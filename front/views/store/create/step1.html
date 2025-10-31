@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="/css/store/create-body.css">
     <link rel="stylesheet" href="/css/store/create-header.css">
 </head>
+
 <body>
     <header>
         <div class="header-left">
@@ -18,8 +20,15 @@
             <a href="/">TODAY-CHEON</a>
         </div>
         <div class="header-right">
-            <a>메뉴</a>
-            <button onclick="location.href = './login.html'">로그인</button>
+            <button onclick="location.href = `/store/create`">맛집 등록</button>
+            {% if userInfo and userInfo | length > 0 %}
+            {% if userInfo.role == "ADMIN" %}
+            <button class="admin-btn">관리자</button>
+            {% endif %}
+            <button class="logout-btn" type="button">로그아웃</button>
+            {% else %}
+            <button onclick="location.href = `/auth/login`">로그인</button>
+            {% endif %}
         </div>
     </header>
     <main>
@@ -47,7 +56,9 @@
         </div>
     </main>
 
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04fd39e295af49fa4ea7997c9d242b5f&libraries=services"></script>
     <script src="/js/registerMap.js"></script>
 </body>
+
 </html>
