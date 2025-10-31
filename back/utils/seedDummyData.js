@@ -1,4 +1,3 @@
-// utils/seedDummyData.js
 import { User, Store, Menu, Review, Picture } from "../models/index.js";
 
 export async function seedDummyData() {
@@ -33,6 +32,13 @@ export async function seedDummyData() {
   const descs = ["국밥 맛집", "짜장면 명가", "파스타 레스토랑", "초밥 전문점", "분위기 좋은 카페", "달콤한 디저트"];
   const tags = ["#맛집", "#가성비", "#데이트코스", "#직장인점심", "#청결한", "#분위기좋은"];
 
+  
+  function getRandomTags() {
+    const count = Math.floor(Math.random() * 3) + 1; // 1~3개
+    const shuffled = [...tags].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count).join(" ");
+  }
+
   for (let i = 1; i <= 10; i++) {
     const user = createdUsers[Math.floor(Math.random() * createdUsers.length)];
     stores.push({
@@ -44,7 +50,7 @@ export async function seedDummyData() {
       LONGITUDE: 127.1245 + (Math.random() - 0.5) * 0.005,
       TEL_NUMBER: `02-${4000 + i}-${1000 + i}`,
       DESCRIPTION: descs[i % descs.length],
-      HASH_TAG: tags[i % tags.length],
+      HASH_TAG: getRandomTags(),
       EATING_TIME: "09:00~20:00",
       IS_APPROVED: 1,
       CREATED_AT: new Date(),
