@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 
 const postApprove = async (req, res) => {
     try {
+        console.log(req.body);
+        
         const { ID, IMAGE_URL, EATING_TIME } = req.body;
         if (!ID || !IMAGE_URL || !EATING_TIME) {
             return res.status(400).json({ message: "ID, IMAGE_URL, EATING_TIME 중 값이 누락되었습니다." });

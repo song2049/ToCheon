@@ -269,3 +269,21 @@ main {
   background-color: #006FFF;
   color: #FFFFFF;
 }
+
+/* 카테고리 드롭다운 */
+.category {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0 10px;
+  height: 40px;
+  line-height: 28px;
+  border: 1px solid #808080;
+  border-radius: 6px;
+  font-size: 15px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Noto Sans KR';
+}
