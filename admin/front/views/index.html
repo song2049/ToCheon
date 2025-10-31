@@ -13,11 +13,18 @@
 <body>
     <header>
         <div class="header-left">
-            <a href="/admin">투천 관리자</p>
+            <a href="/admin">투천 관리자</a>
         </div>
         <div class="header-right">
-            <a>메뉴</a>
-            <button>로그인</button>
+            <button onclick="location.href = `/store/create`">맛집 등록</button>
+            {% if userInfo and userInfo | length > 0 %}
+            {% if userInfo.role == "ADMIN" %}
+            <p>{{ userInfo.role }}</p>
+            {% endif %}
+            <button class="logout-btn" type="button">로그아웃</button>
+            {% else %}
+            <button onclick="location.href = `/auth/login`">로그인</button>
+            {% endif %}
         </div>
     </header>
     <main>

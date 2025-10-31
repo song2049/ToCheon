@@ -27,7 +27,7 @@ header {
     height: 65px;
     border-bottom: 1px solid #DFE6EB;
     align-items: center;
-    padding: 0 5vw;
+    padding: 0 202px;
 }
 
 header > .header-left {
@@ -37,19 +37,20 @@ header > .header-left {
 
 /* 헤더의 투데이천호 텍스트 */
 header > .header-left > a {
+    display: flex;
     font-family: 'Pretendard';
-    width: 198px;
-    height: 28px;
+    font-size: 20px;
     font-weight: 700;
     text-decoration: none;
     color: black;
+    align-items: center;
 }
 
 /* 헤더의 로고 아이콘 */
 header > .header-left > .logo-icon {
     display: inline-block;
-    width: 16px;
-    height: 24px;
+    width: 25px;
+    height: 38px;
     background-image: url("../image/toodayChoen-Marker.png");
     background-size: contain;
     
@@ -83,14 +84,14 @@ footer {
     height: 85px;
     border-top: 1px solid #DFE6EB;
     align-items: center;
-    padding: 0 5vw;
+    padding: 0 202px;
     color: #555555;
     font-size: 15px;
+    
 }
 
 footer > .footer-left {
     font-family: 'Pretendard';
-    
 }
 
 /* 개인정보처리방침, 이용약관, 문의하기 */

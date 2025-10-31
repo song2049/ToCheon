@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +10,9 @@
   <link rel="stylesheet" href="/css/store/create-common.css">
   <link rel="stylesheet" href="/css/store/create-header.css" />
   <link rel="stylesheet" href="/css/store/create-step2-form.css" />
+  <link rel="stylesheet" href="/css/store/create-step2-popup.css" />
 </head>
+
 <body>
   <header>
     <div class="header-left">
@@ -17,8 +20,15 @@
       <a href="/">TODAY-CHEON</a>
     </div>
     <div class="header-right">
-      <a>메뉴</a>
-      <button onclick="location.href = './login.html'">로그인</button>
+      <button onclick="location.href = `/store/create`">맛집 등록</button>
+      {% if userInfo and userInfo | length > 0 %}
+      {% if userInfo.role == "ADMIN" %}
+      <button class="admin-btn">관리자</button>
+      {% endif %}
+      <button class="logout-btn" type="button">로그아웃</button>
+      {% else %}
+      <button onclick="location.href = `/auth/login`">로그인</button>
+      {% endif %}
     </div>
   </header>
 
@@ -27,21 +37,21 @@
       <div class="create-header">
         <div class="create-header-nav">
           <div>
-              <i class="google-marker"></i>
-              <span>맛집 등록</span>
+            <i class="google-marker"></i>
+            <span>맛집 등록</span>
           </div>
           <span>Step 2</span>
         </div>
         <div class="create-header-headline">
-            <span>맛집</span> <span>정보를</span> <span>확인해보세요!</span>
+          <span>맛집</span> <span>정보를</span> <span>확인해보세요!</span>
         </div>
       </div>
       <form class="create-form" method="POST" action="/store/create">
         <label>상호명 <span class="required">*</span></label>
-        <input type="text" name="store_name" value="{{ store.place_name }}" required />
+        <input type="text" name="store_name" value="{{ store.place_name }}" />
 
         <label>주소 <span class="required">*</span></label>
-        <input type="text" name="address" value="{{ store.road_address_name or store.address_name }}" required />
+        <input type="text" name="address" value="{{ store.road_address_name or store.address_name }}" />
 
         <label>전화번호</label>
         <input type="text" name="phone" value="{{ store.phone }}" />
@@ -49,6 +59,7 @@
         <label>맛집 설명</label>
         <textarea name="description" placeholder="가게 설명을 작성해주세요."></textarea>
 
+        <input type="hidden" name="map_address" value="{{ store.place_url }}" />
         <input type="hidden" name="lat" value="{{ store.y }}" />
         <input type="hidden" name="lng" value="{{ store.x }}" />
 
@@ -60,24 +71,77 @@
     </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="/render/errorPopup.js"></script>
+  <script src="/render/successPopup.js"></script>
   <script>
-    document.querySelector(".create-form").addEventListener("submit", async(e) => {
+    document.querySelector(".create-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const { store_name, address, phone, description, lat, lng } = e.target;
+      const { store_name, address, map_address, phone, description, lat, lng } = e.target;
 
-      console.log("store_name", store_name.value);
-      console.log("address", address.value);
-      console.log("phone", phone.value);
-      console.log("description", description.value);
-      console.log("lat", lat.value);
-      console.log("lng", lng.value);
-      try {
-        // await axios.post("http://localhost:4000/api/stores/create", {})
-        // window.location.href = "/";
-      } catch (error) {
-        console.log(error);
+      // 공통 팝업 표시 함수
+      const showPopup = (popupHTML, redirect = false) => {
+        // DOM 삽입
+        document.body.insertAdjacentHTML("beforeend", popupHTML);
+
+        // 팝업 표시
+        const popup = document.getElementById("popup");
+        popup.classList.remove("hidden");
+
+        // 버튼 이벤트
+        const checkBtn = document.getElementById("popupCheckBtn");
+        checkBtn.addEventListener("click", () => {
+          popup.remove();
+          if (redirect) window.location.href = "/";
+        });
+      };
+
+      // 입력값 유효성 검사
+      if (!store_name.value) {
+        const popupHTML = renderStoreCreateErrorPopup("상호명 ");
+        return showPopup(popupHTML);
       }
-    })
+      if (!address.value) {
+        const popupHTML = renderStoreCreateErrorPopup("주소 ");
+        return showPopup(popupHTML);
+      }
+      if (!lat.value || !lng.value) {
+        const popupHTML = renderStoreCreateErrorPopup("위치값 ");
+        return showPopup(popupHTML);
+      }
+
+      try {
+        // 실제 요청 (주석 해제 시 활성화)
+        const { data } = await axios.post("http://localhost:3000/store/create", {
+          name: store_name.value.trim(),
+          address: address.value.trim(),
+          map_address: map_address.value.trim(),
+          tel_number: phone.value.trim(),
+          latitude: lat.value,
+          longitude: lng.value,
+          description: description.value.trim()
+        });
+
+        // 성공 팝업 표시
+        const popupHTML = renderStoreCreateSuccessPopup();
+        showPopup(popupHTML, true);
+
+      } catch (error) {
+        if (error.response) {
+          const status = error.response.status;
+          const message = error.response.data?.error || "알 수 없는 오류가 발생했습니다.";
+
+          if (status === 500) {
+            const popupHTML = renderStoreCreateErrorPopup("서버 오류");
+            showPopup(popupHTML);
+          } else {
+            alert(`예상치 못한 오류(${status})가 발생했습니다: ${message}`);
+          }
+        }
+        console.error("맛집 등록 요청 실패:", error);
+      }
+    });
   </script>
+
 </body>
+
 </html>
