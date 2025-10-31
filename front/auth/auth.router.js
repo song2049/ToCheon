@@ -12,6 +12,7 @@ router.delete("/auth/logout", authController.deleteLogout);
 // 카카오 로그인
 router.get("/oauth/login", authController.getOauthLogin);
 router.get("/kakao/login", authController.getKakaoLogin);
-
+// 카카오 디버깅 코드
+router.get("/kakao/debug", authController.kakaoDebugCode);
 
 module.exports = router;
