@@ -21,6 +21,8 @@ const getCreate = async (req, res) => {
     });
 
     const storeData = response.data.documents[0];
+    console.log(storeData);
+    
     res.render("store/create/step2.html", { store: storeData || {} });
 
   } catch (error) {
@@ -30,12 +32,17 @@ const getCreate = async (req, res) => {
 };
 
 
-const postCreate = (req, res) => {
+const postCreate = async(req, res) => {
   try {
-    const {...rest} = req.body;
-    console.log(rest);
-    res.json(rest);
-    console.log(rest);
+    const { ...rest } = req.body
+    const { access_token } = req.cookies;
+
+    const { data } = await axios.post("http://localhost:4000/api/stores/create", {...rest}, { 
+      headers: {
+        Authoriztion: `Bearer ${access_token}`
+      }
+    });
+    res.status(201).json({ success: true, message: data.message});
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "서버에 문제가 생겼습니다."})
