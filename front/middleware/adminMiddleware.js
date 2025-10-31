@@ -22,6 +22,15 @@ const loginVerifyToken = (req, res, next) => {
 // 그냥 로그인하면 유지할 수 있게 리프레시만 해주는애임
 const refresh = async (req, res, next) => {
     const { access_token: token, refresh_token } = req.cookies;
+    
+    if (token) {
+        const auth = jwt.decode(token);
+        const provider = auth.provider;
+        if (provider !== "local") {
+            return next()
+        }
+    }
+    
 
     try {
         // 액세스 토큰을 검증했는데 상태 괜찮다 그럼 통과
@@ -60,7 +69,7 @@ const refresh = async (req, res, next) => {
                 res.clearCookie('refresh_token');
             };
             req.userInfo = {};
-            next();
+            return next();
         }
     }
 };
