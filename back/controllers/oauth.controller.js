@@ -35,7 +35,7 @@ export const kakaoLogin = async (req, res) => {
 
     const kakaoData = userResponse.data;
     const userInfo = {
-      id: kakaoData.id,
+      userId: kakaoData.id,
       nickname: kakaoData.properties?.nickname || "unknown",
       thumbnail: kakaoData.properties?.thumbnail_image || null,
       email: kakaoData.kakao_account?.email || null,
