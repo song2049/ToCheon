@@ -47,17 +47,24 @@
                 <span>Today-cheon(Ho) List</span>
             </div>
             <form action="/" class="section-right-search" method="post">
-                <input type="text" id="searchInput" name="stores" placeholder="음식점 리스트를 입력하세요">
+                <input type="text" id="searchInput" name="stores" placeholder="음식점 리스트를 입력하세요" maxlength="100">
                 <button type="submit" class="search-btn"></button>
             </form>
             <div class="section-right-hashtag">
-                <!-- 아래는 js으로 치면 배열 선언임 -->
-                {% set tags = ["디저트","국밥","카페","중식","한식","양식"] %}
-                <!-- 태그를 순회하며 a태그들을 만드는데 이때 내가 server.js에서 준 stores의 정보와 일치하다면 클래스명에 on을 붙여줌 -->
-                {% for tag in tags %}
+            <!-- 아래는 js로 치면 배열 선언임 -->
+            {% set tags = ["전체", "디저트", "국밥", "카페", "중식", "한식", "양식"] %}
+
+            <!-- 태그를 순회하며 a태그들을 만드는데, 
+                server.js에서 전달받은 stores 값과 일치하면 클래스명에 'on'을 붙여줌 -->
+            {% for tag in tags %}
+                {% if stores == "전체" or stores == "" %}
+                <a href="#" class="hashtag {% if tag == '전체' %}on{% endif %}">#{{ tag }}</a>
+                {% else %}
                 <a href="#" class="hashtag {% if stores == tag %}on{% endif %}">#{{ tag }}</a>
-                {% endfor %}
+                {% endif %}
+            {% endfor %}
             </div>
+
             <div class="section-right-cardlist">
                 {% for store in data %}
                 <div class="stores">
