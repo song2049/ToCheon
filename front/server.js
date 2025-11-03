@@ -22,6 +22,19 @@ app.use(oauthRefresh);
 app.set("view engine", "html");
 nunjucks.configure("views", { express: app });
 
+const filterData = (stores, data) => {
+    if(!stores || stores === "" || stores === "전체") return data;
+    const findData = stores
+        // 검색어 없으면 밑에 삼항연산자로 통째 data를 줄거고 있으면 아래의 필터로직을 거침.
+        ? data.filter(store =>
+            store.NAME.toLowerCase().includes(stores.toLowerCase()) ||
+            store.CATEGORY.toLowerCase().includes(stores.toLowerCase()) ||
+            store.HASH_TAG.toLowerCase().includes(stores.toLowerCase())
+        )
+    : data;
+    return findData
+}
+
 app.get("/", async (req, res) => {
 
     const userInfo = req.userInfo;
@@ -38,15 +51,8 @@ app.get("/", async (req, res) => {
     try {
         const { data } = await axios.get("http://localhost:4000/api/stores");
 
-        const findData = stores
-            // 검색어 없으면 밑에 삼항연산자로 통째 data를 줄거고 있으면 아래의 필터로직을 거침.
-            ? data.filter(store =>
-                store.NAME.toLowerCase().includes(stores.toLowerCase()) ||
-                store.CATEGORY.toLowerCase().includes(stores.toLowerCase()) ||
-                store.HASH_TAG.toLowerCase().includes(stores.toLowerCase())
-            )
-            : data;
-
+        const findData = filterData(stores, data);
+        
         // 해시태그 문자열이 있으면 배열로 변환, 없으면 빈 배열
         const processedData = findData.map(store => {
             const hashtags = store.HASH_TAG
@@ -58,7 +64,7 @@ app.get("/", async (req, res) => {
                 hashtags
             };
         });
-
+        
         //  페이지 네이션을 위해 아래와 같은 로직을 거침
         const totalItems = processedData.length;
         const totalPages = Math.ceil(totalItems / limit);

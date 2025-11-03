@@ -1,12 +1,13 @@
 body {
     font-family: 'Noto Sans KR', sans-serif;
+    overflow: hidden;
 }
 
 main {
     padding: 60px 0px;
 }
 
-main > #inner {
+main>#inner {
     display: flex;
     flex-direction: column;
     justify-content: center;

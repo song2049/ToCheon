@@ -73,6 +73,7 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/render/errorPopup.js"></script>
   <script src="/render/successPopup.js"></script>
+  <script src="/render/serverErrorPopup.js"></script>
   <script>
     document.querySelector(".create-form").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -97,15 +98,15 @@
 
       // 입력값 유효성 검사
       if (!store_name.value) {
-        const popupHTML = renderStoreCreateErrorPopup("상호명 ");
+        const popupHTML = renderStoreCreateErrorPopup("상호명이 ");
         return showPopup(popupHTML);
       }
       if (!address.value) {
-        const popupHTML = renderStoreCreateErrorPopup("주소 ");
+        const popupHTML = renderStoreCreateErrorPopup("주소가 ");
         return showPopup(popupHTML);
       }
       if (!lat.value || !lng.value) {
-        const popupHTML = renderStoreCreateErrorPopup("위치값 ");
+        const popupHTML = renderStoreCreateErrorPopup("위치값이 ");
         return showPopup(popupHTML);
       }
 
@@ -128,16 +129,18 @@
       } catch (error) {
         if (error.response) {
           const status = error.response.status;
-          const message = error.response.data?.error || "알 수 없는 오류가 발생했습니다.";
+          const message = error.response.data?.error || "알 수 없는 오류가 발생했습니다. 다시 시도 바랍니다.";
 
-          if (status === 500) {
-            const popupHTML = renderStoreCreateErrorPopup("서버 오류");
-            showPopup(popupHTML);
-          } else {
-            alert(`예상치 못한 오류(${status})가 발생했습니다: ${message}`);
-          }
+          console.log(error.response.data);
+
+          const popupHTML = renderStoreServerErrorPopup(
+            `예상치 못한 오류 (${status})`,
+            message
+          );
+          showPopup(popupHTML);
+        } else {
+          console.error("맛집 등록 요청 실패:", error);
         }
-        console.error("맛집 등록 요청 실패:", error);
       }
     });
   </script>
