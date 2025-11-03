@@ -21,6 +21,40 @@ export async function getPendingStores(req, res) {
   }
 }
 
+// 승인된 맛집 목록 (IS_APPROVED = 1)
+export async function getApprovedStores(req, res) {
+  try {
+    const stores = await Store.findAll({
+      where: { IS_APPROVED: 1 },
+      include: [{ model: User, attributes: ["NAME"] }],
+      order: [["UPDATED_AT", "DESC"]],
+    });
+    res.json({ items: stores });
+  } catch (error) {
+    console.error("getApprovedStores error:", error);
+    res.status(500).json({ error: "승인된 맛집 목록 조회 중 오류 발생" });
+  }
+}
+
+//맛집 상세 (관리자용)
+export async function getAdminStoreDetail(req, res) {
+  try {
+    const { store_id } = req.params;
+    const store = await Store.findByPk(store_id, {
+      include: [{ model: User, attributes: ["NAME"] }],
+    });
+
+    if (!store) {
+      return res.status(404).json({ message: "해당 맛집을 찾을 수 없습니다." });
+    }
+
+    res.json(store);
+  } catch (error) {
+    console.error("getAdminStoreDetail error:", error);
+    res.status(500).json({ error: "맛집 상세 조회 중 오류 발생" });
+  }
+}
+
 // 승인 처리
 export async function approveStore(req, res) {
   try {
@@ -67,4 +101,40 @@ export async function deleteReview(req, res) {
   const { id } = req.params;
   await Review.destroy({ where: { ID: id } });
   res.json({ message: "리뷰 삭제 완료" });
+}
+
+// 최신 리뷰 목록
+export async function getLatestReviews(req, res) {
+  try {
+    const reviews = await Review.findAll({
+      include: [
+        { model: User, attributes: ["NAME"] },
+        { model: Store, attributes: ["NAME"] },
+      ],
+      order: [["CREATED_AT", "DESC"]],
+      limit: 10,
+    });
+    res.json({ items: reviews });
+  } catch (error) {
+    console.error("getLatestReviews error:", error);
+    res.status(500).json({ error: "최신 리뷰 조회 중 오류 발생" });
+  }
+}
+
+// 회원 통계 (예시: 가입 수, 등록 수)
+export async function getUserStats(req, res) {
+  try {
+    const totalUsers = await User.count();
+    const registeredStores = await Store.count({
+      where: { IS_APPROVED: 1 },
+    });
+
+    res.json({
+      totalUsers,
+      registeredStores,
+    });
+  } catch (error) {
+    console.error("getUserStats error:", error);
+    res.status(500).json({ error: "회원 통계 조회 중 오류 발생" });
+  }
 }
